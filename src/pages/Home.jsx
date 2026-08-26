@@ -10,6 +10,7 @@ import {
 import CauseCard from "../components/CauseCard.jsx";
 import HeroCurve from "../components/HeroCurve.jsx";
 import HeroRipple from "../components/HeroRipple.jsx";
+import VerifiedTotal from "../components/VerifiedTotal.jsx";
 import { charities } from "../data/charities.js";
 import { money } from "../lib/format.js";
 import { useTally } from "../lib/tally.js";
@@ -201,6 +202,10 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* The public counterpart to the private strip above: renders itself only
+          once there is a figure worth showing. */}
+      <VerifiedTotal />
 
       <section className="section section--mist">
         <div className="wrap wrap--narrow" style={{ textAlign: "center" }}>

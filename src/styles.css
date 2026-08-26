@@ -2239,6 +2239,30 @@ button.gave:hover {
   border-color: var(--blue);
 }
 
+/* Deliberately quieter than .tallyStrip and not a link: it states a fact and
+   asks nothing. Centred so it reads as a standing figure rather than a row. */
+.verifiedTotal {
+  padding: 22px 24px;
+  border: 1px solid var(--mist-deep);
+  border-radius: var(--r-lg);
+  background: var(--mist);
+  text-align: center;
+}
+.verifiedTotal__figure {
+  margin: 0;
+  color: var(--navy);
+  font-size: 16px;
+}
+.verifiedTotal__figure strong {
+  font-size: 1.35em;
+}
+.verifiedTotal__note {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
 .tallyTotal {
   display: flex;
   flex-wrap: wrap;
@@ -3008,6 +3032,7 @@ button.gave:hover {
   .skip-link,
   .tools,
   .tallyStrip,
+  .verifiedTotal,
   .cadence,
   .customAmount,
   .gave,
