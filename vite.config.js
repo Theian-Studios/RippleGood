@@ -4,16 +4,16 @@ import react from "@vitejs/plugin-react";
 // GitHub Pages serves a project repo from https://<user>.github.io/<repo>/, so
 // every asset URL needs that prefix baked in at build time.
 //
-//   • Deploying to a project page (github.io/ripple)? Leave BASE as "/ripple/"
-//     and rename it if your repo is called something else.
-//   • Deploying to a custom domain (ripple-good.org) or a <user>.github.io repo?
-//     Set BASE to "/" — a subpath prefix would break every asset.
+// This site ships on the custom domain in public/CNAME (ripple-good.org), which
+// is served from the root — so "/" is both the production and the local default.
+// A project page at github.io/<repo> would need "/<repo>/" instead; the workflow
+// works that out on its own from the repo name.
 //
 // In CI this is set for you: .github/workflows/deploy.yml derives it from the
 // repo name (and uses "/" when public/CNAME exists), so the deployed site is
 // correct wherever it lands without anyone editing this file.
 // The constant below only matters for local builds.
-const BASE = process.env.SITE_BASE || "/ripple/";
+const BASE = process.env.SITE_BASE || "/";
 
 export default defineConfig({
   base: BASE,
