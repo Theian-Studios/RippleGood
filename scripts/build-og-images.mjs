@@ -13,8 +13,8 @@
  * real, static HTML file carrying that cause's Open Graph tags, which bounces a
  * human visitor straight on to the app.
  *
- *   Share this:  ripplegood.org/share/global-health
- *   Reader gets: ripplegood.org/#/cause/global-health
+ *   Share this:  ripple-good.org/share/global-health
+ *   Reader gets: ripple-good.org/#/cause/global-health
  *
  * Runs as part of `npm run build`. Output is committed: regenerate whenever a
  * headline, category, or cost figure changes.
@@ -166,7 +166,7 @@ function render(charity) {
 /** Absolute URLs are the safest form for Open Graph consumers. */
 // VERIFY: must match where the site actually lives, or previews will 404.
 // Override per build with: SITE_URL=https://ian.github.io/ripple npm run build
-const SITE_URL = (process.env.SITE_URL || "https://ripplegood.org").replace(/\/$/, "");
+const SITE_URL = (process.env.SITE_URL || "https://ripple-good.org").replace(/\/$/, "");
 
 const escape = (s) =>
   String(s).replace(

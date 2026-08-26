@@ -143,8 +143,8 @@ export default function HonorCard({ card, canvasRef }) {
       ctx.fillStyle = MUTED;
       ctx.font = "400 24px Poppins, sans-serif";
       const credit = from
-        ? `From ${from} · via ${charity} · ripplegood.org`
-        : `via ${charity} · ripplegood.org`;
+        ? `From ${from} · via ${charity} · ripple-good.org`
+        : `via ${charity} · ripple-good.org`;
       wrap(ctx, credit, 84, Math.min(afterOutcome + 46, H - 52), W - 168, 32, 2);
     }
 

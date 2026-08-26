@@ -94,12 +94,12 @@ npm run build:og
 [`vite.config.js`](vite.config.js) has a `BASE` constant at the top:
 
 ```js
-const BASE = "/ripple/"; // must match the GitHub repo name, or be "/" on ripplegood.org
+const BASE = "/ripple/"; // must match the GitHub repo name, or be "/" on ripple-good.org
 ```
 
 - **Project page** (`https://<user>.github.io/ripple/`) → leave it as `/ripple/`,
   renamed to match your repo if the repo isn't called `ripple`.
-- **Custom domain** (`ripplegood.org`) or a `<user>.github.io` repo → set it to `"/"`.
+- **Custom domain** (`ripple-good.org`) or a `<user>.github.io` repo → set it to `"/"`.
   A subpath prefix on a custom domain breaks every asset.
 
 One-off override without editing the file:
@@ -131,10 +131,10 @@ two to appear.
 
 Redeploying later is just `npm run deploy` again.
 
-### 4. Custom domain (ripplegood.org)
+### 4. Custom domain (ripple-good.org)
 
 1. Set `BASE = "/"` in `vite.config.js`.
-2. Create `public/CNAME` containing one line: `ripplegood.org`
+2. Create `public/CNAME` containing one line: `ripple-good.org`
 3. At your DNS provider, point the apex `A` records at GitHub Pages'
    IPs and add a `CNAME` for `www` → `<user>.github.io`. (GitHub's Pages
    settings page shows the current IPs — use those, they change rarely but do
@@ -149,10 +149,10 @@ over the build output.
 
 GitHub Pages serves static files with no rewrite rule, so a hard refresh on
 `/cause/climate` would 404. The hash keeps every route on `index.html`. URLs
-look like `ripplegood.org/#/cause/climate`.
+look like `ripple-good.org/#/cause/climate`.
 
 `public/404.html` covers the remaining gap: if someone shares a hashless link
-(`ripplegood.org/cause/climate`), GitHub serves the 404 page, whose script forwards
+(`ripple-good.org/cause/climate`), GitHub serves the 404 page, whose script forwards
 them to the matching `/#/` route — on both project pages and custom domains.
 
 ---
@@ -196,11 +196,11 @@ The site is a HashRouter SPA, so crawlers never see past the `#` and can't read
 per-route meta tags. `scripts/build-og-images.mjs` solves that by emitting a
 real static page per cause:
 
-- **Share `ripplegood.org/share/global-health`** — a crawler reads that cause's own
+- **Share `ripple-good.org/share/global-health`** — a crawler reads that cause's own
   title, description, and 1200×630 card; a person is forwarded straight to
   `#/cause/global-health`. The "Share this cause" button on each cause page
   copies this URL.
-- Set the domain at build time if it isn't ripplegood.org:
+- Set the domain at build time if it isn't ripple-good.org:
 
 ```bash
 SITE_URL=https://ian.github.io/ripple npm run build

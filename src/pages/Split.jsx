@@ -81,7 +81,7 @@ export default function Split() {
           r.outcome || r.charity.headline
         }\n  ${r.charity.donateUrl}`,
     );
-    const text = `My giving plan — ${money(planned)} total\n\n${lines.join("\n\n")}\n\nBuilt with ripplegood.org`;
+    const text = `My giving plan — ${money(planned)} total\n\n${lines.join("\n\n")}\n\nBuilt with ripple-good.org`;
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);

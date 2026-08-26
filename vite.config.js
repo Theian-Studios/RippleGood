@@ -6,7 +6,7 @@ import react from "@vitejs/plugin-react";
 //
 //   • Deploying to a project page (github.io/ripple)? Leave BASE as "/ripple/"
 //     and rename it if your repo is called something else.
-//   • Deploying to a custom domain (ripplegood.org) or a <user>.github.io repo?
+//   • Deploying to a custom domain (ripple-good.org) or a <user>.github.io repo?
 //     Set BASE to "/" — a subpath prefix would break every asset.
 //
 // In CI this is set for you: .github/workflows/deploy.yml derives it from the
