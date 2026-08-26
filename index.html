@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="theme-color" content="#0A1B33" />
+
+    <title>Ripple Good — make the biggest ripple.</title>
+    <meta
+      name="description"
+      content="The most effective charities are roughly 100x more impactful than typical ones. Ripple Good names the best-evidenced charity in each cause, translating the research of GiveWell, ACE, and Giving Green."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ripple Good" />
+    <meta property="og:title" content="Ripple Good — make the biggest ripple." />
+    <meta
+      property="og:description"
+      content="The most effective charity within the cause you already care about. Results first, math underneath."
+    />
+    <meta property="og:url" content="https://ripplegood.org/" />
+    <!-- VERIFY: absolute URL, so it must match the site's real home. Built by
+         scripts/build-og-images.mjs; per-cause previews live at /share/<id>. -->
+    <meta property="og:image" content="https://ripplegood.org/og/default.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ripplegood.org/og/default.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- VERIFY: the urls below assume the final home is https://ripplegood.org/ —
+         update them if the site ships on a github.io address instead. -->
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Ripple Good",
+          "url": "https://ripplegood.org/",
+          "logo": "https://ripplegood.org/favicon.svg",
+          "slogan": "One goal: the most good for every dollar.",
+          "description": "An effective-giving directory: the best-evidenced charity within each cause, translating the research of GiveWell, Animal Charity Evaluators, Giving Green and Founders Pledge."
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Ripple Good",
+          "url": "https://ripplegood.org/"
+        }
+      ]
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

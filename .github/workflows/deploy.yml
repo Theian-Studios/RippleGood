@@ -1,0 +1,82 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Lets you re-run a deploy by hand from the Actions tab.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer push supersedes one still in flight.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # A project repo is served from /<repo>/, a user site from the root, so
+      # the base path is derived from the repo's own name rather than pinned.
+      # A custom domain (CNAME in public/) is served from the root too.
+      - name: Work out the base path
+        run: |
+          repo="${{ github.event.repository.name }}"
+          if [[ "$repo" == *.github.io ]] || [ -f public/CNAME ]; then
+            echo "SITE_BASE=/" >> "$GITHUB_ENV"
+          else
+            echo "SITE_BASE=/$repo/" >> "$GITHUB_ENV"
+          fi
+
+      # Absolute URLs in the share cards and Open Graph tags have to match where
+      # the site actually lands, or every social preview 404s.
+      - name: Work out the public site URL
+        run: |
+          if [ -f public/CNAME ]; then
+            echo "SITE_URL=https://$(head -n1 public/CNAME | tr -d '[:space:]')" >> "$GITHUB_ENV"
+          else
+            echo "SITE_URL=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" >> "$GITHUB_ENV"
+          fi
+
+      # Public by design — RLS denies the anon key every row, and its only
+      # permitted call is the donation_totals() aggregate. Absent, the site
+      # simply shows no verified totals.
+      - run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+          VITE_EVERYORG_LINK_TOKEN: ${{ vars.VITE_EVERYORG_LINK_TOKEN }}
+
+      # A dead donate button is the worst failure this site can ship, and the
+      # Giving Green URL has already 404'd once in production.
+      - name: Check no donate or evaluator link is dead
+        run: npm run check:links
+        continue-on-error: true
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>XGood</title>
+    <script>
+      // GitHub Pages serves this file for any path that isn't a real file.
+      // With a HashRouter every real route lives under /#/, so a hashless deep
+      // link like /cause/climate lands here — recover it instead of dead-ending:
+      //   /cause/climate            ->  /#/cause/climate         (custom domain)
+      //   /xgood/cause/climate      ->  /xgood/#/cause/climate   (project page)
+      (function () {
+        var segs = location.pathname.split("/").filter(Boolean);
+        // On a *.github.io project page the first segment is the repo name and
+        // must stay outside the hash; on a custom domain the base is just "/".
+        var isProjectPage =
+          location.hostname.endsWith(".github.io") && segs.length > 0;
+        var base = isProjectPage ? "/" + segs[0] + "/" : "/";
+        var route = (isProjectPage ? segs.slice(1) : segs).join("/");
+        location.replace(base + "#/" + route + location.search);
+      })();
+    </script>
+  </head>
+  <body>
+    Redirecting to the <a href="/#/">XGood home page</a>…
+  </body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "name": "ripple-good",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Ripple Good \u2014 the most effective charity within the cause you already care about.",
+  "scripts": {
+    "dev": "vite",
+    "prebuild": "node scripts/build-og-images.mjs",
+    "build": "vite build",
+    "build:og": "node scripts/build-og-images.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "db:link": "supabase link --project-ref $SUPABASE_PROJECT_REF",
+    "db:push": "supabase db push",
+    "fn:deploy": "supabase functions deploy everyorg-webhook --no-verify-jwt",
+    "fn:logs": "supabase functions logs everyorg-webhook"
+  },
+  "dependencies": {
+    "lucide-react": "^0.460.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "^1.0.6",
+    "@vitejs/plugin-react": "^4.3.4",
+    "gh-pages": "^6.2.0",
+    "supabase": "^2.116.0",
+    "vite": "^5.4.11"
+  }
+}
