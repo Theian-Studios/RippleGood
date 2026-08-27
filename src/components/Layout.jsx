@@ -1,22 +1,14 @@
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { Droplets, Globe, HandHeart, Lock, Users } from "lucide-react";
+import { Lock } from "lucide-react";
 import Logo from "./Logo.jsx";
 import Wallpaper from "./Wallpaper.jsx";
 
 /** The brand's four values. Rendered on every page, in the footer band. */
 const PILLARS = [
-  { icon: HandHeart, title: "Compassion", body: "We care deeply." },
-  {
-    icon: Droplets,
-    title: "Impact",
-    body: "Small actions create lasting change.",
-  },
-  { icon: Users, title: "Community", body: "We're stronger together." },
-  {
-    icon: Globe,
-    title: "Integrity",
-    body: "We give with transparency and trust.",
-  },
+  { title: "Compassion", body: "We care deeply." },
+  { title: "Impact", body: "Small actions create lasting change." },
+  { title: "Community", body: "We're stronger together." },
+  { title: "Integrity", body: "We give with transparency and trust." },
 ];
 
 function Header() {
@@ -70,9 +62,8 @@ function Footer() {
     <footer className="siteFooter onDark">
       <div className="wrap siteFooter__pillars">
         <div className="pillars pillars--divided">
-          {PILLARS.map(({ icon: Icon, title, body }) => (
+          {PILLARS.map(({ title, body }) => (
             <div className="pillar" key={title}>
-              <Icon className="pillar__icon" size={26} strokeWidth={1.75} aria-hidden="true" />
               <h3>{title}</h3>
               <p>{body}</p>
             </div>

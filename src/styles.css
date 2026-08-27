@@ -271,13 +271,10 @@ main {
   stop-color: var(--blue-600);
 }
 
-.logo--onDark .logo__stop-a {
-  stop-color: #9ccbf6;
-}
-
-.logo--onDark .logo__stop-b {
-  stop-color: #4d95e8;
-}
+/* No dark-background variant. The mark used to lighten on navy — #9ccbf6 to
+   #4d95e8 — which meant the header logo and the footer logo were visibly two
+   different blues on the same page. One blue everywhere is worth more than the
+   extra contrast the lighter pair bought. */
 
 /* "Ripple" in the sans, "Good" in the script, sitting on a shared baseline. */
 .logo__word {
@@ -720,10 +717,6 @@ a.mark:hover {
   }
 }
 
-.pillar__icon {
-  color: var(--blue);
-  margin-bottom: 12px;
-}
 
 .pillar h3 {
   font-size: 13px;
@@ -2602,6 +2595,13 @@ button.gave:hover {
 /* Plain colour, not the underlined .mark: across two lines that rule drew a
    separate bar under each fragment and read as a mistake. */
 .hero__accent {
+  color: var(--sky);
+}
+
+/* The eyebrow takes the headline accent's colour rather than the darker
+   --blue-600 it inherits from .eyebrow, which was mixed for light pages and
+   sits too close to the navy here. */
+.hero .eyebrow {
   color: var(--sky);
 }
 

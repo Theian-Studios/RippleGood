@@ -89,12 +89,16 @@ export default function Home() {
             </p>
 
             <div className="hero__actions">
-              <Link to="/#causes" className="btn btn--primary btn--lg">
-                Pick your cause
+              {/* The label is the brand name, so the accessible name says where
+                  the button actually goes — "Ripple Good" alone would tell a
+                  screen reader nothing about the destination. */}
+              <Link
+                to="/#causes"
+                className="btn btn--primary btn--lg"
+                aria-label="Ripple Good — pick your cause"
+              >
+                Ripple Good
                 <ArrowRight size={19} aria-hidden="true" />
-              </Link>
-              <Link to="/methodology" className="btn btn--outline btn--lg">
-                How we choose
               </Link>
             </div>
 
