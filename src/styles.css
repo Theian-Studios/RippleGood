@@ -2568,16 +2568,17 @@ button.gave:hover {
 .hero {
   position: relative;
   overflow: hidden;
-  /* The bottom padding is the ripple's room: the copy has to clear it entirely,
-     or the trust line ends up sitting on the rings. */
-  padding: 64px 0 250px;
+  /* Bottom padding clears the curve at the foot of the hero. It used to be far
+     larger to leave room for the ripple graphic; with that gone the extra was
+     just empty navy. */
+  padding: 64px 0 140px;
   background: var(--navy);
   text-align: center;
 }
 
 @media (min-width: 720px) {
   .hero {
-    padding: 92px 0 330px;
+    padding: 92px 0 190px;
   }
 }
 
@@ -2628,36 +2629,12 @@ button.gave:hover {
 
 /* Sits low and centred, just above the curve, at a size that reads as one
    disturbance on the water rather than as the background of the section. */
-.heroRipple {
-  position: absolute;
-  left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
-  width: min(660px, 104%);
-  height: auto;
-  pointer-events: none;
-}
 
-@media (min-width: 720px) {
-  .heroRipple {
-    bottom: 34px;
-  }
-}
 
 /* The drop lands once on arrival: the rings expand out of the centre and
    settle. Deliberately not a loop — background motion that never stops
    competes with the reading, and the whole site is built to be read. */
-.heroRipple__rings {
-  transform-origin: 50% 50%; /* CX/920, CY/400 — the point of impact */
-  animation: ripple-out 1.15s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-}
 
-@keyframes ripple-out {
-  from {
-    opacity: 0;
-    transform: scale(0.55);
-  }
-}
 
 /* The arc where the water meets the page. */
 .heroCurve {

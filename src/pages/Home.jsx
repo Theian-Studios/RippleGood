@@ -7,7 +7,6 @@ import {
 } from "lucide-react";
 import CauseCard from "../components/CauseCard.jsx";
 import HeroCurve from "../components/HeroCurve.jsx";
-import HeroRipple from "../components/HeroRipple.jsx";
 import VerifiedTotal from "../components/VerifiedTotal.jsx";
 import { charities } from "../data/charities.js";
 import { money } from "../lib/format.js";
@@ -72,7 +71,6 @@ export default function Home() {
   return (
     <>
       <section className="hero hero--dark onDark">
-        <HeroRipple />
         <div className="wrap">
           <div className="hero__inner">
             {/* VERIFY: the brand sheet's tagline is "Dozens of charities. One
