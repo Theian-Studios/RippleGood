@@ -79,7 +79,7 @@ function encodeMetadata(obj) {
  */
 export function everyOrgUrl(
   charity,
-  { amount, monthly, ref, returnUrl } = {},
+  { amount, monthly, ref, returnUrl, exitUrl } = {},
 ) {
   if (!charity.everyOrg) return null;
 
@@ -119,9 +119,12 @@ export function everyOrgUrl(
   // the cause and the amount — enough for a thank-you page, nothing private.
   if (returnUrl) params.set("success_url", returnUrl);
 
-  // `exit_url` is documented but does not work: pressing exit on the modal
-  // does not come back here, tested by hand. Not sent, so nobody reads the
-  // code and assumes the back-route is covered.
+  // Where cancelling goes. This was dropped once as broken, on a test done
+  // while it was still a "/#/cause/..." URL — the same hash that success_url
+  // was losing. Hashless, it has a chance the first version never had, and
+  // matters more now that giving happens in the tab the reader is already in:
+  // without it, cancelling leaves them on Every.org with nothing to close.
+  if (exitUrl) params.set("exit_url", exitUrl);
 
   return `${EVERY_ORG}/${charity.everyOrg.slug}/donate?${params.toString()}`;
 }
@@ -149,4 +152,15 @@ export function thanksUrl({ causeId, amount, monthly }) {
     ...(monthly ? { monthly: "1" } : {}),
   });
   return `${origin}${base}thanks?${q.toString()}`;
+}
+
+/**
+ * The absolute cause-page URL, for exit_url. Hashless for the same reason
+ * thanksUrl is: 404.html puts the hash back, and a redirect target that has
+ * no "#" in it cannot be truncated at one. Verified against the live site.
+ */
+export function causeUrl(causeId) {
+  const { origin } = window.location;
+  const base = import.meta.env.BASE_URL || "/";
+  return `${origin}${base}cause/${causeId}`;
 }

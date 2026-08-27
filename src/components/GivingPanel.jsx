@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { ArrowUpRight, Check, Info } from "lucide-react";
 import { getDefaultLevel } from "../data/charities.js";
-import { everyOrgUrl, thanksUrl } from "../lib/donate.js";
+import { causeUrl, everyOrgUrl, thanksUrl } from "../lib/donate.js";
 import { newDonationRef, rememberDonation } from "../lib/donationRef.js";
 import { approxOutcome, displayHost, money, unitsFor } from "../lib/format.js";
 import GaveButton from "./GaveButton.jsx";
@@ -61,6 +61,7 @@ export default function GivingPanel({ charity }) {
     monthly,
     ref,
     returnUrl: thanksUrl({ causeId: charity.id, amount, monthly }),
+    exitUrl: causeUrl(charity.id),
   });
 
   /** The one thing that genuinely belongs in the gesture: the local record. */
