@@ -33,16 +33,28 @@ const EVERY_ORG = "https://www.every.org";
  * the query string, and while URLSearchParams escapes it to %23, there is no
  * documented promise that Every.org unescapes it. The AA-safe blue, matching
  * --blue-ink in styles.css.
+ *
+ * Verified against the live modal rather than the docs, which don't give the
+ * format: with this parameter set, 35 elements of Every.org's own UI render in
+ * rgb(26, 96, 207). Bare hex is right; don't "fix" it by adding the #.
  */
 const THEME_COLOR = "1A60CF";
 
-/** Up to five, per the documented limit, in the order the cause page shows them. */
-function suggestedAmounts(charity) {
-  return (charity.givingLevels ?? [])
-    .slice(0, 5)
-    .map((l) => l.amount)
-    .join(",");
-}
+/* ── Two documented parameters we deliberately do NOT send ──────────────────
+ *
+ * `suggestedAmounts` renders as +6/+12/+60 buttons under the amount field —
+ * but only when `amount` is absent. We always prefill an amount, because the
+ * whole cause page is about choosing a result first, so Every.org skips the
+ * amount step and those buttons can never appear. Confirmed both ways against
+ * the live modal.
+ *
+ * `no_exit` is documented as hiding the background behind the donation modal.
+ * Sending it changed nothing we could measure on the /donate path — identical
+ * scroll height, identical text, same nonprofit profile behind the modal, with
+ * and without. The /donate deep link already opens the modal on its own.
+ *
+ * Both are omitted because they do nothing here, not because they're unknown.
+ */
 
 /** Base64 for a small ASCII JSON object, safe in a URL parameter. */
 function encodeMetadata(obj) {
@@ -72,12 +84,6 @@ export function everyOrgUrl(
     theme_color: THEME_COLOR,
   });
 
-  // Note the camelCase: every other parameter Every.org documents is
-  // snake_case, and this one alone is not. Renaming it "fixes" nothing and
-  // silently drops the buttons.
-  const suggested = suggestedAmounts(charity);
-  if (suggested) params.set("suggestedAmounts", suggested);
-
   if (ref) {
     params.set("partner_donation_id", ref);
 
@@ -98,9 +104,10 @@ export function everyOrgUrl(
   // the cause and the amount — enough for a thank-you page, nothing private.
   if (returnUrl) params.set("success_url", returnUrl);
 
-  // Where the exit button goes. Back to the cause they were reading, not to
-  // our home page: someone who backs out is still deciding, and dropping them
-  // at the top of the site throws away everything they'd read.
+  // Where the exit button goes, if the modal shows one — a text and aria-label
+  // search of the live page found no close control, so this may never fire.
+  // Kept because it costs one parameter and the alternative, if an exit does
+  // exist, is dropping a reader who was still deciding at the site root.
   if (exitUrl) params.set("exit_url", exitUrl);
 
   return `${EVERY_ORG}/${charity.everyOrg.slug}/donate?${params.toString()}`;
