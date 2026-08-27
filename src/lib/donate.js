@@ -127,7 +127,19 @@ export function everyOrgUrl(
 }
 
 
-/** The absolute /thanks URL for this deployment, wherever it is hosted. */
+/**
+ * The absolute /thanks URL for this deployment, wherever it is hosted.
+ *
+ * Deliberately hashless — "/thanks?…", not "/#/thanks?…". Truncating a
+ * redirect target at the # is a common bug, and Every.org's `exit_url` already
+ * doesn't work, so this is not a hypothetical failure mode for their redirects.
+ * A hashless path can't be truncated that way: GitHub Pages serves 404.html for
+ * it, which puts the hash back and preserves the query string. Verified against
+ * the live site.
+ *
+ * The donation itself is unaffected either way — this only decides whether the
+ * donor lands on the thank-you page or on the home page.
+ */
 export function thanksUrl({ causeId, amount, monthly }) {
   const { origin } = window.location;
   const base = import.meta.env.BASE_URL || "/";
@@ -136,5 +148,5 @@ export function thanksUrl({ causeId, amount, monthly }) {
     amount: String(amount),
     ...(monthly ? { monthly: "1" } : {}),
   });
-  return `${origin}${base}#/thanks?${q.toString()}`;
+  return `${origin}${base}thanks?${q.toString()}`;
 }

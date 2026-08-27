@@ -187,11 +187,15 @@ export default function GivingPanel({ charity }) {
       )}
 
       <div className="give__foot">
+        {/* Same tab, not a new one. Giving is the thing the reader came to do,
+            so it gets the tab they're in; success_url brings them back to
+            /thanks, and that URL is hashless precisely so it can't be lost on
+            the way. Evaluator and source links elsewhere still open beside the
+            page, because those are asides you read and come back from. */}
         <a
           className="donate"
           href={everyUrl || charity.donateUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          rel="noreferrer"
           onClick={everyUrl ? openEveryOrg : undefined}
         >
           Give {priceLabel(amount)} to {charity.name}
@@ -219,7 +223,7 @@ export default function GivingPanel({ charity }) {
 
             <p className="altRoute">
               Rather skip the middleman?{" "}
-              <a href={charity.donateUrl} target="_blank" rel="noopener noreferrer">
+              <a href={charity.donateUrl} rel="noreferrer">
                 Give directly on {host}
               </a>{" "}
               — nothing in between, though you'll type the amount in yourself.
@@ -230,7 +234,7 @@ export default function GivingPanel({ charity }) {
           <p className="handoff">
             <Info size={15} aria-hidden="true" />
             <span>
-              This opens {host} in a new tab, where you'll enter the amount
+              This opens {host}, where you'll enter the amount
               {monthly ? " and set it to repeat" : ""} yourself. Ripple never sees or
               handles your donation.
             </span>
