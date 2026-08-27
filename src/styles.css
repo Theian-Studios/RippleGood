@@ -527,7 +527,12 @@ a.mark:hover {
 .hero h1 {
   font-size: clamp(2.4rem, 6.6vw, 4.4rem);
   letter-spacing: -0.035em;
+  /* 15ch keeps the headline to two lines. The auto margins are what centre it:
+     without them the capped box sits flush left inside a centred hero, so the
+     heading drifts away from every element under it as the window widens —
+     invisible while 15ch still exceeds the container, obvious past that. */
   max-width: 15ch;
+  margin-inline: auto;
 }
 
 .hero__sub {
@@ -544,25 +549,8 @@ a.mark:hover {
   margin-top: 32px;
 }
 
-.hero__note {
-  margin-top: 26px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 22px;
-  font-size: 14.5px;
-  color: var(--ink-faint);
-}
 
-.hero__note span {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
 
-.hero__note svg {
-  color: var(--blue-600);
-  flex: none;
-}
 
 @media (min-width: 720px) {
   .hero {
@@ -2623,20 +2611,7 @@ button.gave:hover {
   color: rgba(255, 255, 255, 0.76);
 }
 
-/* The sourced figure inside the subhead: underlined rather than coloured, so
-   it reads as a citation and not as the sentence's emphasis. */
-.hero__cite {
-  color: var(--white);
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: var(--blue);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-}
 
-.hero__cite:hover {
-  text-decoration-color: var(--sky);
-}
 
 .hero__actions {
   display: flex;
@@ -2646,26 +2621,8 @@ button.gave:hover {
   margin-top: 34px;
 }
 
-.hero__note {
-  margin-top: 28px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 24px;
-  font-size: 14.5px;
-  color: rgba(255, 255, 255, 0.55);
-}
 
-.hero__note span {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
 
-.hero__note svg {
-  color: var(--sky);
-  flex: none;
-}
 
 /* ------------------------------------------------------- hero ripple -- */
 

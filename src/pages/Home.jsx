@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import {
   ArrowRight,
   Gift,
-  Lock,
-  Search,
   SlidersHorizontal,
   Sparkles,
 } from "lucide-react";
@@ -89,15 +87,7 @@ export default function Home() {
             </h1>
             <p className="hero__sub">
               We connect your generosity to the charities proven to create the most
-              impact — and the best of them are{" "}
-              <Link
-                to="/methodology#the-100x-claim"
-                className="hero__cite"
-                aria-label="roughly 100 times more impactful — see where this figure comes from"
-              >
-                ~100x
-              </Link>{" "}
-              more impactful than typical ones.
+              impact.
             </p>
 
             <div className="hero__actions">
@@ -110,16 +100,6 @@ export default function Home() {
               </Link>
             </div>
 
-            <p className="hero__note">
-              <span>
-                <Lock size={15} aria-hidden="true" />
-                We never handle your money
-              </span>
-              <span>
-                <Search size={15} aria-hidden="true" />
-                Every claim shows its source
-              </span>
-            </p>
           </div>
         </div>
         <HeroCurve />
