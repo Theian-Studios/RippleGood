@@ -11,10 +11,21 @@ permissions:
   pages: write
   id-token: write
 
-# One deploy at a time; a newer push supersedes one still in flight.
+# One deploy at a time, and a deploy in flight is allowed to finish.
+#
+# This was cancel-in-progress: true, which broke deploying entirely. Killing a
+# run mid-deploy does not withdraw the deployment it already opened on Pages'
+# side — that one is left in progress forever, and every later deploy is then
+# rejected with "due to in progress deployment. Please cancel <sha> first".
+# Recovering meant waiting for the orphan to time out.
+#
+# So a superseded push now waits its turn instead of cancelling. It costs a
+# minute of queueing; the alternative cost the site its deployments. This also
+# matches GitHub's own starter workflow for Pages, which sets it false for
+# exactly this reason.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
