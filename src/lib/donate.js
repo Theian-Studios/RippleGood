@@ -39,7 +39,7 @@ function encodeMetadata(obj) {
 /**
  * Prefilled Every.org link, or null for causes routed direct-only.
  *
- * `ref` is the partner donation id minted by donationRef.startDonation() — pass
+ * `ref` is the partner donation id minted by donationRef.newDonationRef() — pass
  * it when you want this donation attributable to this site; omit it and the
  * link still works, just anonymously to us as well as to Every.org.
  */

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowUpRight, Check, Info } from "lucide-react";
 import { getDefaultLevel } from "../data/charities.js";
 import { everyOrgUrl, thanksUrl } from "../lib/donate.js";
-import { startDonation } from "../lib/donationRef.js";
+import { newDonationRef, rememberDonation } from "../lib/donationRef.js";
 import { approxOutcome, displayHost, money, unitsFor } from "../lib/format.js";
 import GaveButton from "./GaveButton.jsx";
 import Pictogram from "./Pictogram.jsx";
@@ -41,25 +41,33 @@ export default function GivingPanel({ charity }) {
   const customOutcome = customAmount === null ? null : outcomeFor(customAmount);
 
   /**
-   * Built at click time, not at render time. The reference has to be minted in
-   * the same gesture that opens the tab, so a reader who changes the amount
-   * five times mints one id for the gift they actually make rather than five
-   * for the ones they didn't.
+   * Minted during render, not on click, so the attribution is already in the
+   * href. A donor who cmd-clicks or opens the button in a new tab never fires
+   * the click handler — if the reference were added there, their gift would
+   * reach Every.org with no webhook_token and never be counted at all.
+   *
+   * A new id per amount or cadence change, so the id that travels always
+   * describes the gift actually being made.
    */
-  function openEveryOrg(event) {
-    const ref = startDonation({ causeId: charity.id, amount, monthly });
-    event.currentTarget.href = everyOrgUrl(charity, {
-      amount,
-      monthly,
-      ref,
-      returnUrl: thanksUrl({ causeId: charity.id, amount, monthly }),
-    });
-    // The browser follows the freshly-set href; no preventDefault needed.
-  }
+  const ref = useMemo(
+    () => newDonationRef(),
+    [charity.id, amount, monthly],
+  );
 
-  // Rendered href, so the link is real and right-clickable before any JS runs.
-  // openEveryOrg upgrades it with the attribution reference on the way out.
-  const everyUrl = everyOrgUrl(charity, { amount, monthly });
+  // Complete before any JS runs, and identical to what the click handler would
+  // have produced — the handler now only records, it no longer rewrites.
+  const everyUrl = everyOrgUrl(charity, {
+    amount,
+    monthly,
+    ref,
+    returnUrl: thanksUrl({ causeId: charity.id, amount, monthly }),
+  });
+
+  /** The one thing that genuinely belongs in the gesture: the local record. */
+  function openEveryOrg() {
+    rememberDonation({ id: ref, causeId: charity.id, amount, monthly });
+    // The browser follows the href as rendered; no preventDefault needed.
+  }
 
   function pickLevel(next) {
     setLevel(next);
