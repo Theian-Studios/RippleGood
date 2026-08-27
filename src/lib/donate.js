@@ -27,6 +27,23 @@
  */
 const EVERY_ORG = "https://www.every.org";
 
+/**
+ * Tints Every.org's modal to our interactive blue, so the handoff doesn't look
+ * like it landed on an unrelated site. Bare hex, no "#": a literal # would end
+ * the query string, and while URLSearchParams escapes it to %23, there is no
+ * documented promise that Every.org unescapes it. The AA-safe blue, matching
+ * --blue-ink in styles.css.
+ */
+const THEME_COLOR = "1A60CF";
+
+/** Up to five, per the documented limit, in the order the cause page shows them. */
+function suggestedAmounts(charity) {
+  return (charity.givingLevels ?? [])
+    .slice(0, 5)
+    .map((l) => l.amount)
+    .join(",");
+}
+
 /** Base64 for a small ASCII JSON object, safe in a URL parameter. */
 function encodeMetadata(obj) {
   try {
@@ -43,13 +60,23 @@ function encodeMetadata(obj) {
  * it when you want this donation attributable to this site; omit it and the
  * link still works, just anonymously to us as well as to Every.org.
  */
-export function everyOrgUrl(charity, { amount, monthly, ref, returnUrl } = {}) {
+export function everyOrgUrl(
+  charity,
+  { amount, monthly, ref, returnUrl, exitUrl } = {},
+) {
   if (!charity.everyOrg) return null;
 
   const params = new URLSearchParams({
     amount: String(amount),
     frequency: monthly ? "MONTHLY" : "ONCE",
+    theme_color: THEME_COLOR,
   });
+
+  // Note the camelCase: every other parameter Every.org documents is
+  // snake_case, and this one alone is not. Renaming it "fixes" nothing and
+  // silently drops the buttons.
+  const suggested = suggestedAmounts(charity);
+  if (suggested) params.set("suggestedAmounts", suggested);
 
   if (ref) {
     params.set("partner_donation_id", ref);
@@ -71,7 +98,19 @@ export function everyOrgUrl(charity, { amount, monthly, ref, returnUrl } = {}) {
   // the cause and the amount — enough for a thank-you page, nothing private.
   if (returnUrl) params.set("success_url", returnUrl);
 
+  // Where the exit button goes. Back to the cause they were reading, not to
+  // our home page: someone who backs out is still deciding, and dropping them
+  // at the top of the site throws away everything they'd read.
+  if (exitUrl) params.set("exit_url", exitUrl);
+
   return `${EVERY_ORG}/${charity.everyOrg.slug}/donate?${params.toString()}`;
+}
+
+/** The absolute cause-page URL for this deployment, for exit_url. */
+export function causeUrl(causeId) {
+  const { origin } = window.location;
+  const base = import.meta.env.BASE_URL || "/";
+  return `${origin}${base}#/cause/${causeId}`;
 }
 
 /** The absolute /thanks URL for this deployment, wherever it is hosted. */
