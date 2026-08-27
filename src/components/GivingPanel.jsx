@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { ArrowUpRight, Check, Info } from "lucide-react";
 import { getDefaultLevel } from "../data/charities.js";
-import { causeUrl, everyOrgUrl, thanksUrl } from "../lib/donate.js";
+import { everyOrgUrl, thanksUrl } from "../lib/donate.js";
 import { newDonationRef, rememberDonation } from "../lib/donationRef.js";
 import { approxOutcome, displayHost, money, unitsFor } from "../lib/format.js";
 import GaveButton from "./GaveButton.jsx";
@@ -61,7 +61,6 @@ export default function GivingPanel({ charity }) {
     monthly,
     ref,
     returnUrl: thanksUrl({ causeId: charity.id, amount, monthly }),
-    exitUrl: causeUrl(charity.id),
   });
 
   /** The one thing that genuinely belongs in the gesture: the local record. */
@@ -212,7 +211,9 @@ export default function GivingPanel({ charity }) {
                 to {charity.name}, and issues your receipt. At checkout it also
                 suggests a contribution to itself on top of your gift —{" "}
                 <strong>that part is optional and you can set it to zero.</strong>{" "}
-                Ripple never sees or handles any of it.
+                Ripple never sees or handles any of it. It also offers to pass us
+                your contact details; we've left that unticked, and we throw the
+                name and email away even if you tick it.
               </span>
             </p>
 

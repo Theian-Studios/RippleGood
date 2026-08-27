@@ -19,11 +19,16 @@
  * them — see GivingPanel.
  *
  * ── On what we deliberately do NOT ask for ─────────────────────────────────
- * `require_share_info` is never set, and we never pass first_name / last_name /
- * email. Every.org will then send us a donation with those fields undefined,
- * which is the point: the webhook has nothing personal to drop and the database
- * has nowhere to put it. We learn that a gift happened and which cause sent it,
- * and nothing about who gave it.
+ * `require_share_info` is never set, we never pass first_name / last_name /
+ * email, and `share_info=false` unticks the box Every.org would otherwise tick
+ * for the donor.
+ *
+ * That makes sharing opt-in, not impossible: a donor who ticks it anyway sends
+ * us their name and email on the webhook. So the guarantee cannot live in this
+ * file. It lives at the other end — the function builds its row field by field
+ * and never spreads the payload, and the table has no columns for any of it.
+ * Either half alone would be fragile; together we learn that a gift happened
+ * and which cause sent it, and keep nothing about who gave it.
  */
 const EVERY_ORG = "https://www.every.org";
 
@@ -74,7 +79,7 @@ function encodeMetadata(obj) {
  */
 export function everyOrgUrl(
   charity,
-  { amount, monthly, ref, returnUrl, exitUrl } = {},
+  { amount, monthly, ref, returnUrl } = {},
 ) {
   if (!charity.everyOrg) return null;
 
@@ -82,6 +87,16 @@ export function everyOrgUrl(
     amount: String(amount),
     frequency: monthly ? "MONTHLY" : "ONCE",
     theme_color: THEME_COLOR,
+    // Every.org shows "Your contact info will be shared with Ripple Good" and
+    // ticks the box for you. We can't remove the offer, but we can stop it
+    // being the default: verified against the live modal, this flips it to
+    // unticked, so a donor opts in rather than out.
+    //
+    // It stays honest either way — the webhook drops firstName, lastName and
+    // email on arrival and the table has no columns for them — but a ticked
+    // box contradicts what the cause page just told the reader, at the exact
+    // moment they're deciding to trust it.
+    share_info: "false",
   });
 
   if (ref) {
@@ -104,21 +119,13 @@ export function everyOrgUrl(
   // the cause and the amount — enough for a thank-you page, nothing private.
   if (returnUrl) params.set("success_url", returnUrl);
 
-  // Where the exit button goes, if the modal shows one — a text and aria-label
-  // search of the live page found no close control, so this may never fire.
-  // Kept because it costs one parameter and the alternative, if an exit does
-  // exist, is dropping a reader who was still deciding at the site root.
-  if (exitUrl) params.set("exit_url", exitUrl);
+  // `exit_url` is documented but does not work: pressing exit on the modal
+  // does not come back here, tested by hand. Not sent, so nobody reads the
+  // code and assumes the back-route is covered.
 
   return `${EVERY_ORG}/${charity.everyOrg.slug}/donate?${params.toString()}`;
 }
 
-/** The absolute cause-page URL for this deployment, for exit_url. */
-export function causeUrl(causeId) {
-  const { origin } = window.location;
-  const base = import.meta.env.BASE_URL || "/";
-  return `${origin}${base}#/cause/${causeId}`;
-}
 
 /** The absolute /thanks URL for this deployment, wherever it is hosted. */
 export function thanksUrl({ causeId, amount, monthly }) {
