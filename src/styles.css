@@ -947,19 +947,6 @@ a.mark:hover {
   }
 }
 
-.level__badge {
-  position: absolute;
-  top: -11px;
-  left: 18px;
-  padding: 3px 11px;
-  border-radius: var(--r-pill);
-  background: var(--blue);
-  color: var(--white);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-}
 
 /* Bottom-right, alongside the amount: at the top it collided with the outcome
    text, which is the line that has to stay readable. */

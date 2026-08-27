@@ -147,9 +147,9 @@ export default function GivingPanel({ charity }) {
                 .filter(Boolean)
                 .join(" ")}
             >
-              {/* "Suggested", not "most chosen": this site runs no analytics,
-                  so we have no idea what anyone actually picks. */}
-              {l.emphasis && <span className="level__badge">Suggested</span>}
+              {/* No "Suggested" badge. `emphasis` still decides which tier
+                  opens selected and carries the accent styling — it just no
+                  longer announces itself over the card. */}
               <Check className="level__check" size={18} aria-hidden="true" />
               <span className="level__outcome">{annual || l.outcomeText}</span>
               <span className="level__amount">
