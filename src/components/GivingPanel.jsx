@@ -27,11 +27,25 @@ export default function GivingPanel({ charity }) {
   const host = displayHost(charity.donateUrl);
   const inputId = `custom-amount-${charity.id}`;
 
-  // Whole dollars only; anything unparseable or below $1 falls back to the
-  // selected level rather than producing a "Give $NaN" button.
+  /**
+   * Every.org ignores a prefilled amount under $10 and hands the donor an empty
+   * field instead, with no error — so on causes routed through it, $10 is the
+   * lowest amount we can actually carry across. Direct-only causes never send
+   * an amount anywhere, so a dollar is fine there.
+   */
+  const minAmount = charity.everyOrg ? 10 : 1;
+
+  // Whole dollars only; anything unparseable or below the minimum falls back to
+  // the selected level rather than producing a "Give $NaN" button.
   const parsed = Math.floor(Number(customText));
-  const customAmount = Number.isFinite(parsed) && parsed >= 1 ? parsed : null;
+  const customAmount =
+    Number.isFinite(parsed) && parsed >= minAmount ? parsed : null;
   const amount = customAmount ?? level.amount;
+
+  // Typed something real, but under what Every.org will carry. Say so, rather
+  // than silently ignoring it and sending a different number than they read.
+  const belowMin =
+    Number.isFinite(parsed) && parsed >= 1 && parsed < minAmount;
 
   // A monthly gift's honest unit is the year it adds up to.
   const outcomeFor = (perGift) =>
@@ -162,7 +176,7 @@ export default function GivingPanel({ charity }) {
               id={inputId}
               className="customAmount__input"
               type="number"
-              min="1"
+              min={minAmount}
               step="1"
               inputMode="numeric"
               placeholder="25"
@@ -173,7 +187,13 @@ export default function GivingPanel({ charity }) {
           </div>
           {/* Always rendered so the live region exists before it first speaks. */}
           <p className="customAmount__outcome" aria-live="polite">
-            {customOutcome ? (monthly ? `Each year: ${customOutcome}` : customOutcome) : " "}
+            {belowMin
+              ? `Every.org can't carry an amount under ${money(minAmount)} — it would open with the box empty.`
+              : customOutcome
+                ? monthly
+                  ? `Each year: ${customOutcome}`
+                  : customOutcome
+                : " "}
           </p>
 
           {/* The same quantity, drawn. Only for units you can actually count —

@@ -131,8 +131,12 @@ export const charities = [
       "$60 funds ten nets — a cluster of homes covered for years.",
     ],
     givingLevels: [
-      { amount: 6, outcomeText: "Funds one net, over one bed, for about three years." },
+      // No tier below $10: Every.org silently ignores a prefilled amount under
+      // that, landing the donor on an empty field. At ~$6 a net the old $6 tier
+      // was the honest entry point, but a tier that loses the amount is worse
+      // than one that starts higher. $30 replaces it at five nets.
       { amount: 12, outcomeText: "Hangs two nets over sleeping families.", emphasis: true },
+      { amount: 30, outcomeText: "Funds five nets over sleeping families." },
       { amount: 60, outcomeText: "Funds ten nets — a cluster of homes covered." },
     ],
     evidenceNotes: {
@@ -200,8 +204,12 @@ export const charities = [
       "$10 delivers ten vitamin A supplements.",
     ],
     givingLevels: [
-      { amount: 2, outcomeText: "Protects one child for a full year — both doses." },
-      { amount: 10, outcomeText: "Delivers ten vitamin A supplements.", emphasis: true },
+      // At ~$1 a supplement and two doses a child a year, these are 10, 20 and
+      // 50 supplements. The old $2 tier was a year for one child and was this
+      // cause's default — and, being under $10, the one Every.org dropped most
+      // often. Same arithmetic, starting where the amount survives.
+      { amount: 10, outcomeText: "Protects five children for a full year — both doses.", emphasis: true },
+      { amount: 20, outcomeText: "Protects ten children for a full year." },
       { amount: 50, outcomeText: "Funds a year of protection for roughly 25 children." },
     ],
     evidenceNotes: {
@@ -264,7 +272,9 @@ export const charities = [
       "$70 shields ten children.",
     ],
     givingLevels: [
-      { amount: 7, outcomeText: "Shields one child through the entire malaria season." },
+      // Two courses rather than one, at ~$7 each: the single-child tier fell
+      // under Every.org's $10 floor and arrived with no amount filled in.
+      { amount: 14, outcomeText: "Shields two children through the entire malaria season." },
       { amount: 70, outcomeText: "Shields ten children through the season.", emphasis: true },
       { amount: 210, outcomeText: "Shields thirty children — most of a village's under-fives." },
     ],
