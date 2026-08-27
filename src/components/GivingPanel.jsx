@@ -44,6 +44,8 @@ export default function GivingPanel({ charity }) {
 
   // Typed something real, but under what Every.org will carry. Say so, rather
   // than silently ignoring it and sending a different number than they read.
+  // Phrased as a minimum rather than as Every.org's behaviour: the reader is
+  // choosing an amount, not debugging our handoff.
   const belowMin =
     Number.isFinite(parsed) && parsed >= 1 && parsed < minAmount;
 
@@ -188,7 +190,7 @@ export default function GivingPanel({ charity }) {
           {/* Always rendered so the live region exists before it first speaks. */}
           <p className="customAmount__outcome" aria-live="polite">
             {belowMin
-              ? `Every.org can't carry an amount under ${money(minAmount)} — it would open with the box empty.`
+              ? `The minimum donation is ${money(minAmount)}.`
               : customOutcome
                 ? monthly
                   ? `Each year: ${customOutcome}`
