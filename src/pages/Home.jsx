@@ -115,7 +115,7 @@ export default function Home() {
       <section className="section section--tight">
         <div className="wrap wrap--narrow">
           <HomePanel
-            title="About"
+            title="About Ripple Good"
             blurb="Why this site exists."
             cta={
               <Link to="/about" className="btn btn--primary">
@@ -124,30 +124,54 @@ export default function Home() {
               </Link>
             }
           >
+            <p>Every donation is really three numbers multiplied together.</p>
+
+            <ol className="factors">
+              <li>
+                <strong>Amount</strong> — how much you give. This one is obvious,
+                and it's the only one most people think about.
+              </li>
+              <li>
+                <strong>Effectiveness</strong> — how efficiently the organization
+                runs. Program spending versus overhead, the cost to raise $100.
+                This is what Charity Navigator and CharityWatch ratings largely
+                measure. It answers a real question, namely how much of your
+                dollar actually reaches the mission, but it says nothing about
+                whether the mission's programs work.
+              </li>
+              <li>
+                <strong>Impact</strong> — what a dollar actually buys. Lives
+                saved, children protected, years of schooling gained. This is
+                what evaluators like GiveWell, Animal Charity Evaluators, and
+                Giving Green measure through randomized trials and outcome
+                research, and it's where the differences get enormous. Two
+                charities with identical 85% program ratios can differ a
+                hundredfold on this dimension.
+              </li>
+            </ol>
+
             <p>
-              Almost everyone wants to help. Far fewer know where to send the
-              money — the honest reason being that finding out is years of work
-              across dozens of causes. So most giving goes to whoever asked most
-              recently.
+              The public conversation is dominated by factor two. Nearly all the
+              real-world good comes from factor three.
             </p>
             <p>
-              The research is unambiguous about one thing: the gap between an
-              average charity and the best-evidenced one in the same cause is not
-              marginal. That gap is the whole reason this site exists.
+              That gap is why Ripple Good exists. Rigorous impact research is
+              scattered across separate evaluators, each covering its own corner
+              of the world, and almost none of it reaches the person deciding
+              where to send $50 at the end of the year. Ripple Good is among the
+              first sites built to close that gap: one place that pulls the best
+              evidence-backed picks together across every major cause, from
+              global health and poverty to education, climate, and animal
+              welfare, and tells you in plain terms what your dollars actually
+              buy.
             </p>
             <p>
-              We read the evaluators and translate their research into one clear
-              pick per cause, phrased as what actually happens rather than what it
-              costs — starting from the cause <em>you</em> already care about,
-              because effective giving shouldn't ask you to abandon what moves
-              you.
+              Pick the cause that matters to you. We'll show you the most
+              impactful organization working on it: meals delivered, treatments
+              funded, lives changed.
             </p>
-            <p>
-              Evaluators publish deep research one cause at a time. A pioneering
-              site, Ripple Good carries their strongest pick across many different
-              causes at once — global health, climate, animal welfare and more in
-              one place — so you can start from the thing you already care about
-              rather than from a spreadsheet.
+            <p className="factors__sign">
+              Don't just donate. <span className="mark">Make the biggest ripple.</span>
             </p>
           </HomePanel>
 

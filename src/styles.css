@@ -322,12 +322,12 @@ main {
   -webkit-box-decoration-break: clone;
 }
 
-/* --sky on dark for the same reason as the eyebrow: the footer tagline runs at
-   16.8px, where --blue's 3.85:1 against the navy is under the 4.5:1 that size
-   needs. */
+/* Back to --blue by choice. Note this is 3.85:1 against the navy at 16.8px,
+   under the 4.5:1 WCAG AA asks for at that size — kept deliberately for the
+   brand, not by oversight. */
 .onDark .mark,
 .mark--onDark {
-  color: var(--sky);
+  color: var(--blue);
 }
 
 /* A .mark that is also a link keeps the brand underline rather than stacking
@@ -1037,6 +1037,36 @@ a.mark:hover {
 
 .homePanel__body p:last-of-type {
   margin-bottom: 0;
+}
+
+/* The three factors in the About panel. Numbers carry meaning here — the copy
+   refers to "factor two" and "factor three" — so they are a real <ol> with its
+   markers kept, not decoration. */
+.factors {
+  margin: 0 0 12px;
+  padding-left: 1.25em;
+  color: var(--ink-soft);
+  line-height: 1.62;
+}
+
+.factors li {
+  margin-bottom: 10px;
+}
+
+.factors li::marker {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.factors strong {
+  color: var(--navy);
+}
+
+.factors__sign {
+  margin-top: 18px;
+  color: var(--navy) !important;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
 .homePanel__body .btn {
@@ -2104,11 +2134,11 @@ a.mark:hover {
 /* The eyebrow takes the headline accent's colour rather than the darker
    --blue-600 it inherits from .eyebrow, which was mixed for light pages and
    sits too close to the navy here. */
-/* --sky, not the button's --blue: at 12.5px this needs 4.5:1 against the navy
-   and --blue gives 3.85. The headline accent keeps --blue — at 62px it only
-   needs 3:1 and clears it. */
+/* White. The eyebrow is 12.5px, which needs 4.5:1 against the navy — --blue
+   gives 3.85 and fails; white gives 17.4 and is the safest option available.
+   The headline accent keeps --blue: at 62px it only needs 3:1. */
 .hero .eyebrow {
-  color: var(--sky);
+  color: var(--white);
 }
 
 .hero__sub {
