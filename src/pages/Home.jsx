@@ -5,8 +5,6 @@ import HeroCurve from "../components/HeroCurve.jsx";
 import HomePanel from "../components/HomePanel.jsx";
 import VerifiedTotal from "../components/VerifiedTotal.jsx";
 import { charities } from "../data/charities.js";
-import { money } from "../lib/format.js";
-import { useTally } from "../lib/tally.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
 import { useReveal } from "../lib/useReveal.js";
 
@@ -31,7 +29,6 @@ const STEPS = [
 ];
 
 export default function Home() {
-  const { total, entries } = useTally();
   const gridRef = useReveal();
 
   usePageMeta(
@@ -185,27 +182,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Only appears once you've logged something — an empty tally strip on a
-          first visit would be clutter advertising a feature you can't use yet. */}
-      {entries.length > 0 && (
-        <section className="section section--tight">
-          <div className="wrap">
-            <Link to="/my-impact" className="tallyStrip">
-              <span>
-                You've logged <strong>{money(total)}</strong> across {entries.length}{" "}
-                {entries.length === 1 ? "gift" : "gifts"} — privately, in this browser.
-              </span>
-              <span className="causeCard__go">
-                See your impact
-                <ArrowRight size={16} aria-hidden="true" />
-              </span>
-            </Link>
-          </div>
-        </section>
-      )}
-
-      {/* The public counterpart to the private strip above: renders itself only
-          once there is a figure worth showing. */}
+      {/* Renders itself only once there is a figure worth showing. */}
       <VerifiedTotal />
     </>
   );

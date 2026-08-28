@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { ArrowLeft, BadgeCheck, ChevronDown, CircleAlert, Scale } from "lucide-react";
+import { ArrowLeft, BadgeCheck, CircleAlert, Scale } from "lucide-react";
 import EvidenceCard from "../components/EvidenceCard.jsx";
-import FreshnessBadge from "../components/FreshnessBadge.jsx";
 import Illustration from "../components/Illustration.jsx";
 import GivingPanel from "../components/GivingPanel.jsx";
 import OtherCauses from "../components/OtherCauses.jsx";
-import ShareCause from "../components/ShareCause.jsx";
 import { getCharityById, getOtherCharities } from "../data/charities.js";
 import { iconFor } from "../lib/icons.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
@@ -38,18 +36,6 @@ export default function Cause() {
   const Icon = iconFor(charity.icon);
 
   /** The small footnote under the headline opens the evidence and goes to it. */
-  function revealEvidence() {
-    setEvidenceOpen(true);
-    requestAnimationFrame(() => {
-      evidenceRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      // Move focus with the scroll, or keyboard and screen-reader users are
-      // left on a button whose target just opened somewhere below them.
-      evidenceRef.current
-        ?.querySelector("button")
-        ?.focus({ preventScroll: true });
-    });
-  }
-
   return (
     <>
       <section className="causeHero">
@@ -93,14 +79,6 @@ export default function Cause() {
             </div>
           )}
 
-          <div className="causeHero__actions">
-            <button type="button" className="howLink" onClick={revealEvidence}>
-              How we know
-              <ChevronDown size={15} aria-hidden="true" />
-            </button>
-            <ShareCause charity={charity} />
-            <FreshnessBadge iso={charity.lastVerified} />
-          </div>
 
           <div>
             <a
@@ -132,10 +110,8 @@ export default function Cause() {
           <div className="note note--plain" style={{ marginTop: 22 }}>
             <Scale size={18} aria-hidden="true" />
             <span>
-              <strong>We say "provides," not "buys."</strong> Every figure here is an
-              average program cost, not a receipt for a specific item — the full
-              reasoning is in the panel above.{" "}
-              <Link to="/methodology">More on how we phrase things</Link>.
+              Every figure is an average program cost, not a receipt.{" "}
+              <Link to="/methodology">How we phrase things</Link>.
             </span>
           </div>
         </div>

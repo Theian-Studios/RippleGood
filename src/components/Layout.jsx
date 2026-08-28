@@ -64,11 +64,8 @@ function Footer() {
         <nav className="footerNav" aria-label="Footer">
           <h4>The site</h4>
           <Link to="/#causes">Pick your cause</Link>
-          <Link to="/quiz">Find your cause</Link>
-          <Link to="/honor">Give in someone's name</Link>
-          <Link to="/my-impact">Your impact</Link>
           <Link to="/methodology">Methodology</Link>
-          <Link to="/about">About Ripple</Link>
+          <Link to="/about">About Ripple Good</Link>
           <a href="https://www.givewell.org/" target="_blank" rel="noopener noreferrer">
             GiveWell
           </a>

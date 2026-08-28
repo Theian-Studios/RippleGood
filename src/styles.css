@@ -1022,9 +1022,9 @@ a.mark:hover {
 /* The second route. Quieter than the primary button, but not hidden — a donor
    who wants no intermediary has to be able to find it without hunting. */
 .altRoute {
-  padding: 12px 16px;
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--r);
+  /* No box around it any more: with the prose gone it is one link, and a
+     dashed border made a single link look like a form field. */
+  margin: 0;
   font-size: 13.5px;
   color: var(--ink-soft);
 }
@@ -1041,51 +1041,6 @@ a.mark:hover {
 }
 
 /* ------------------------------------------------------------ evidence -- */
-
-.causeHero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px 18px;
-  margin-top: 18px;
-}
-
-.shareCause {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 6px 14px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--r-pill);
-  background: var(--white);
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-
-.shareCause:hover {
-  border-color: var(--blue);
-  color: var(--navy);
-}
-
-.shareCause svg {
-  color: var(--blue-700);
-}
-
-.howLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0;
-  border: 0;
-  background: none;
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--blue-700);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
 
 .evidence {
   margin-top: 22px;
@@ -1765,20 +1720,6 @@ a.mark:hover {
 
 /* ---------------------------------------------------------------- quiz -- */
 
-.quizBar {
-  height: 6px;
-  border-radius: var(--r-pill);
-  background: var(--gray);
-  overflow: hidden;
-}
-
-.quizBar span {
-  display: block;
-  height: 100%;
-  background: var(--blue);
-  transition: width 0.3s ease;
-}
-
 .quizOptions {
   display: grid;
   gap: 12px;
@@ -2077,26 +2018,7 @@ a.mark:hover {
 
 /* --------------------------------------------------------------- tally -- */
 
-.tallyStrip {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 20px 24px;
-  border: 1px solid var(--mist-deep);
-  border-radius: var(--r-lg);
-  background: var(--mist);
-  color: var(--navy);
-  font-size: 15.5px;
-  text-decoration: none;
-}
-
-.tallyStrip:hover {
-  border-color: var(--blue);
-}
-
-/* Deliberately quieter than .tallyStrip and not a link: it states a fact and
+/* Deliberately quiet, and not a link: it states a fact and
    asks nothing. Centred so it reads as a standing figure rather than a row. */
 .verifiedTotal {
   padding: 22px 24px;
@@ -2772,10 +2694,6 @@ a.mark:hover {
   animation-delay: 0.26s;
 }
 
-.tallyStrip {
-  animation: rise-in 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-}
-
 /* ---- micro-interactions ---- */
 
 .tile {
@@ -2827,20 +2745,12 @@ a.mark:hover {
   .siteHeader,
   .siteFooter,
   .skip-link,
-  .tallyStrip,
   .verifiedTotal,
   .cadence,
   .customAmount,
-  .shareCause,
-  .howLink,
-  .splitFoot,
   .otherGrid,
   .section--navy,
   .bandMark,
-  .quizBar {
-    display: none !important;
-  }
-
   body {
     background: #fff;
     font-size: 11pt;

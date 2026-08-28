@@ -4,11 +4,8 @@ import ScrollToTop from "./components/ScrollToTop.jsx";
 import About from "./pages/About.jsx";
 import Cause from "./pages/Cause.jsx";
 import Home from "./pages/Home.jsx";
-import Honor from "./pages/Honor.jsx";
 import Methodology from "./pages/Methodology.jsx";
-import MyImpact from "./pages/MyImpact.jsx";
 import NotFound from "./pages/NotFound.jsx";
-import Quiz from "./pages/Quiz.jsx";
 import Split from "./pages/Split.jsx";
 import Thanks from "./pages/Thanks.jsx";
 
@@ -25,10 +22,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="cause/:causeId" element={<Cause />} />
-          <Route path="quiz" element={<Quiz />} />
           <Route path="plan" element={<Split />} />
-          <Route path="honor" element={<Honor />} />
-          <Route path="my-impact" element={<MyImpact />} />
           <Route path="thanks" element={<Thanks />} />
           <Route path="methodology" element={<Methodology />} />
           <Route path="about" element={<About />} />

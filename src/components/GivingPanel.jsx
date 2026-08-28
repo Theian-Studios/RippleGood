@@ -147,9 +147,8 @@ export default function GivingPanel({ charity }) {
                 .filter(Boolean)
                 .join(" ")}
             >
-              {/* All three tiers look alike now — no badge, no tint. `emphasis`
-                  survives in the data only to decide which one opens selected,
-                  and .is-selected is the sole thing that marks it. */}
+              {/* All three tiers look alike; .is-selected is the only thing
+                  that marks the chosen one. */}
               <Check className="level__check" size={18} aria-hidden="true" />
               <span className="level__outcome">{annual || l.outcomeText}</span>
               <span className="level__amount">
@@ -231,14 +230,10 @@ export default function GivingPanel({ charity }) {
             <p className="handoff">
               <Info size={15} aria-hidden="true" />
               <span>
-                Opens Every.org with {priceLabel(amount)} already filled in.
-                Every.org is a nonprofit that takes the donation and passes it on
-                to {charity.name}, and issues your receipt. At checkout it also
-                suggests a contribution to itself on top of your gift —{" "}
-                <strong>that part is optional and you can set it to zero.</strong>{" "}
-                Ripple never sees or handles any of it. It also offers to pass us
-                your contact details; we've left that unticked, and we throw the
-                name and email away even if you tick it.
+                Every.org passes your gift to {charity.name} and issues the
+                receipt. It suggests a tip for itself at checkout —{" "}
+                <strong>optional, and you can set it to zero.</strong> Ripple
+                never sees your money or your details.
               </span>
             </p>
 

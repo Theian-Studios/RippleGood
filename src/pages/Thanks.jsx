@@ -5,24 +5,21 @@ import Pictogram from "../components/Pictogram.jsx";
 import { getCharityById } from "../data/charities.js";
 import { approxOutcome, money, unitsFor } from "../lib/format.js";
 import { clearPending, readPending } from "../lib/donationRef.js";
-import { useTally } from "../lib/tally.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
 
 /**
  * Where Every.org returns a donor after a completed gift.
  *
- * Two jobs: say what the gift did, and log it to the private tally so nobody
- * has to remember to tap a button.
+ * One job: say what the gift did. It no longer logs anything — the private
+ * tally is gone — but it still consumes the pending record, so a stale one
+ * can't describe a later visit.
  *
  * What this page is NOT is proof. The amount arrives in a query string the
- * donor could edit, and the browser-side record is self-reported either way.
- * The verified figure lives in the database, put there by Every.org's webhook,
- * and is never mixed with this one — the tally has always said "your own notes,
- * not verified records", and that stays true.
+ * donor could edit. The verified figure lives in the database, put there by
+ * Every.org's webhook, and is never mixed with this one.
  */
 export default function Thanks() {
   const [params] = useSearchParams();
-  const { add } = useTally();
   const logged = useRef(false);
 
   const pending = readPending();
@@ -37,19 +34,15 @@ export default function Thanks() {
 
   useEffect(() => {
     // The pending record is a one-shot token: it exists because this browser
-    // clicked donate, and it is consumed here. Logging on the query string
-    // alone would add a second entry every time the donor refreshed this page
-    // — or forwarded the link to someone else.
-    //
-    // The ref guards the same thing within one mount, since StrictMode
+    // clicked donate, and it is consumed here so a stale one cannot describe a
+    // later visit. The ref guards the same within one mount, since StrictMode
     // double-invokes effects in development.
     if (logged.current || !charity || amount === null) return;
     if (!pending || pending.causeId !== charity.id) return;
 
     logged.current = true;
-    add({ causeId: charity.id, amount, monthly });
     clearPending();
-  }, [charity, amount, monthly, add, pending]);
+  }, [charity, amount, monthly, pending]);
 
   const outcome =
     charity && amount !== null
@@ -87,9 +80,6 @@ export default function Thanks() {
 
             <p className="handoff" style={{ justifyContent: "center", marginTop: 22 }}>
               <span>
-                {pending
-                  ? "Added to your private tally, in this browser only. "
-                  : ""}
                 Your receipt comes from Every.org by email.
               </span>
             </p>
@@ -100,12 +90,7 @@ export default function Thanks() {
           </p>
         )}
 
-        <div className="hero__actions" style={{ justifyContent: "center", marginTop: 30 }}>
-          <Link to="/my-impact" className="btn btn--primary btn--lg">
-            See your impact
-            <ArrowRight size={19} aria-hidden="true" />
-          </Link>
-          <Link to="/#causes" className="btn btn--outline btn--lg">
+        <div className="hero__actions" style={{ justifyContent: "center", marginTop: 30 }}>          <Link to="/#causes" className="btn btn--outline btn--lg">
             Pick another cause
           </Link>
         </div>
