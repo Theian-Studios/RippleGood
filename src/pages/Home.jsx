@@ -146,11 +146,11 @@ export default function Home() {
               you.
             </p>
             <p>
-              Evaluators publish deep research one cause at a time. What has been
-              missing is a single place that carries their strongest pick across
-              many different causes at once — so you can start from the thing you
-              already care about rather than from a spreadsheet. That is what this
-              is.
+              Evaluators publish deep research one cause at a time. A pioneering
+              site, Ripple Good carries their strongest pick across many different
+              causes at once — global health, climate, animal welfare and more in
+              one place — so you can start from the thing you already care about
+              rather than from a spreadsheet.
             </p>
           </HomePanel>
 
