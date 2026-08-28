@@ -49,7 +49,7 @@ export default function Home() {
             <h1>
               Don't just donate.
               <br />
-              Make the <span className="hero__accent">biggest ripple.</span>
+              <span className="hero__accent">Make the biggest ripple.</span>
             </h1>
             <p className="hero__sub">
               We connect your generosity to the charities proven to create the most
@@ -72,6 +72,82 @@ export default function Home() {
           </div>
         </div>
         <HeroCurve />
+      </section>
+
+      {/* Prose, not a card. Above the cause grid a bordered panel competes with
+          the eight cards below it and reads as a widget; the site's argument
+          should read as an argument. The three factors are a band rather than a
+          long list so it stays scannable ahead of the primary action. */}
+      <section className="section section--tight">
+        <div className="wrap wrap--narrow aboutIntro">
+          <div className="sectionHead sectionHead--centred">
+            <h2>About Ripple Good</h2>
+          </div>
+
+          <p className="aboutIntro__lead">
+            Not all charities are created equal. Two organizations working on the
+            same problem can differ enormously in how much good they do with the
+            same dollar — and the difference is rarely the thing people look at.
+          </p>
+
+          <p>Every donation is really three numbers multiplied together.</p>
+
+          {/* list-style is off, so role="list" keeps the semantics VoiceOver
+              would otherwise drop. The numerals come from a counter and stay
+              visible: the copy below refers to "factor two" and "factor three". */}
+          <ol className="factors" role="list">
+            <li>
+              <strong>Amount</strong>
+              How much you give. This one is obvious, and it's the only one most
+              people think about.
+            </li>
+            <li>
+              <strong>Effectiveness</strong>
+              How efficiently the organization runs — program spending versus
+              overhead, the cost to raise $100. This is what Charity Navigator
+              and CharityWatch largely measure. It answers a real question, but
+              says nothing about whether the programs work.
+            </li>
+            <li>
+              <strong>Impact</strong>
+              What a dollar actually buys: lives saved, children protected, years
+              of schooling gained. This is what GiveWell, Animal Charity
+              Evaluators and Giving Green measure through randomized trials and
+              outcome research — and it's where the differences get enormous. Two
+              charities with identical 85% program ratios can differ a
+              hundredfold here.
+            </li>
+          </ol>
+
+          <p>
+            The public conversation is dominated by factor two. Nearly all the
+            real-world good comes from factor three.
+          </p>
+          <p>
+            That gap is why Ripple Good exists. Rigorous impact research is
+            scattered across separate evaluators, each covering its own corner of
+            the world, and almost none of it reaches the person deciding where to
+            send $50 at the end of the year. Ripple Good is among the first sites
+            built to close that gap: one place that pulls the best evidence-backed
+            picks together across every major cause — global health and poverty,
+            education, climate, animal welfare — and says in plain terms what your
+            dollars actually buy.
+          </p>
+          <p>
+            Pick the cause that matters to you. We'll show you the most impactful
+            organization working on it: meals delivered, treatments funded, lives
+            changed.
+          </p>
+
+          <p className="aboutIntro__sign">
+            Don't just donate. <span className="mark">Make the biggest ripple.</span>
+          </p>
+
+          <Link to="/about" className="btn btn--primary">
+            Learn more
+            <ArrowRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
       </section>
 
       <section className="section section--tight" id="causes">
@@ -114,67 +190,6 @@ export default function Home() {
           to scroll past us explaining ourselves to reach one. */}
       <section className="section section--tight">
         <div className="wrap wrap--narrow">
-          <HomePanel
-            title="About Ripple Good"
-            blurb="Why this site exists."
-            cta={
-              <Link to="/about" className="btn btn--primary">
-                Learn more
-                <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-            }
-          >
-            <p>Every donation is really three numbers multiplied together.</p>
-
-            <ol className="factors">
-              <li>
-                <strong>Amount</strong> — how much you give. This one is obvious,
-                and it's the only one most people think about.
-              </li>
-              <li>
-                <strong>Effectiveness</strong> — how efficiently the organization
-                runs. Program spending versus overhead, the cost to raise $100.
-                This is what Charity Navigator and CharityWatch ratings largely
-                measure. It answers a real question, namely how much of your
-                dollar actually reaches the mission, but it says nothing about
-                whether the mission's programs work.
-              </li>
-              <li>
-                <strong>Impact</strong> — what a dollar actually buys. Lives
-                saved, children protected, years of schooling gained. This is
-                what evaluators like GiveWell, Animal Charity Evaluators, and
-                Giving Green measure through randomized trials and outcome
-                research, and it's where the differences get enormous. Two
-                charities with identical 85% program ratios can differ a
-                hundredfold on this dimension.
-              </li>
-            </ol>
-
-            <p>
-              The public conversation is dominated by factor two. Nearly all the
-              real-world good comes from factor three.
-            </p>
-            <p>
-              That gap is why Ripple Good exists. Rigorous impact research is
-              scattered across separate evaluators, each covering its own corner
-              of the world, and almost none of it reaches the person deciding
-              where to send $50 at the end of the year. Ripple Good is among the
-              first sites built to close that gap: one place that pulls the best
-              evidence-backed picks together across every major cause, from
-              global health and poverty to education, climate, and animal
-              welfare, and tells you in plain terms what your dollars actually
-              buy.
-            </p>
-            <p>
-              Pick the cause that matters to you. We'll show you the most
-              impactful organization working on it: meals delivered, treatments
-              funded, lives changed.
-            </p>
-            <p className="factors__sign">
-              Don't just donate. <span className="mark">Make the biggest ripple.</span>
-            </p>
-          </HomePanel>
-
           <HomePanel
             title="Methodology"
             blurb="How a pick gets made, and what our figures mean."

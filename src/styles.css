@@ -1039,34 +1039,75 @@ a.mark:hover {
   margin-bottom: 0;
 }
 
-/* The three factors in the About panel. Numbers carry meaning here — the copy
-   refers to "factor two" and "factor three" — so they are a real <ol> with its
-   markers kept, not decoration. */
-.factors {
+/* ------------------------------------------------------- about intro -- */
+
+.aboutIntro p {
   margin: 0 0 12px;
-  padding-left: 1.25em;
   color: var(--ink-soft);
-  line-height: 1.62;
+  line-height: 1.65;
+}
+
+.aboutIntro__lead {
+  font-size: clamp(1.06rem, 2.2vw, 1.2rem);
+  color: var(--navy) !important;
+  font-weight: 500;
+}
+
+/* The three factors, as a band rather than a long list: this sits above the
+   cause grid, so it has to be scannable before it is readable. */
+.factors {
+  display: grid;
+  gap: 22px;
+  margin: 26px 0 22px;
+  padding: 0;
+  list-style: none;
+  counter-reset: factor;
+}
+
+@media (min-width: 860px) {
+  .factors {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
 }
 
 .factors li {
-  margin-bottom: 10px;
+  counter-increment: factor;
+  padding-top: 14px;
+  border-top: 2px solid var(--mist-deep);
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.6;
 }
 
-.factors li::marker {
-  color: var(--navy);
-  font-weight: 600;
+/* The numeral is content, not decoration — the copy underneath refers to the
+   factors by number. */
+.factors li::before {
+  content: counter(factor);
+  display: block;
+  margin-bottom: 8px;
+  color: var(--blue);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .factors strong {
+  display: block;
+  margin-bottom: 6px;
   color: var(--navy);
+  font-size: 1.02rem;
 }
 
-.factors__sign {
-  margin-top: 18px;
+.aboutIntro__sign {
+  margin-top: 20px;
   color: var(--navy) !important;
-  font-size: 1.05rem;
+  font-size: 1.06rem;
   font-weight: 600;
+}
+
+.aboutIntro .btn {
+  margin-top: 18px;
 }
 
 .homePanel__body .btn {
