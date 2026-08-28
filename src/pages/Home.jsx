@@ -77,7 +77,7 @@ export default function Home() {
                 biggest ripple." We list eight causes, so "dozens" would be the
                 one overstatement on a site built to avoid them. Swap it back the
                 day the count earns it. */}
-            <p className="eyebrow">One goal: the most good for every dollar.</p>
+            <p className="eyebrow">The most good for every dollar.</p>
             <h1>
               Don't just donate.
               <br />
@@ -89,15 +89,14 @@ export default function Home() {
             </p>
 
             <div className="hero__actions">
-              {/* The label is the brand name, so the accessible name says where
-                  the button actually goes — "Ripple Good" alone would tell a
-                  screen reader nothing about the destination. */}
+              {/* The label is a brand phrase rather than a destination, so the
+                  accessible name says where the button actually goes. */}
               <Link
                 to="/#causes"
                 className="btn btn--primary btn--lg"
-                aria-label="Ripple Good — pick your cause"
+                aria-label="Choose your ripple — pick your cause"
               >
-                Ripple Good
+                Choose Your Ripple
                 <ArrowRight size={19} aria-hidden="true" />
               </Link>
             </div>
@@ -110,14 +109,7 @@ export default function Home() {
       <section className="section section--tight" id="causes">
         <div className="wrap">
           <div className="sectionHead">
-            <h2>
-              Start with what you <span className="mark">already</span> care about.
-            </h2>
-            <p>
-              Effective giving doesn't ask you to care about something else. It asks a
-              narrower question: inside the thing you already care about, what works
-              best? Pick a cause. We'll name one organization and show our workings.
-            </p>
+            <h2>Pick Your Cause</h2>
           </div>
 
           <div className="causeGrid" ref={gridRef}>

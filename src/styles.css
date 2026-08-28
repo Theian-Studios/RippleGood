@@ -1678,23 +1678,7 @@ a.mark:hover {
   color: var(--red-ink);
 }
 
-.chip {
-  display: inline-block;
-  margin-left: 9px;
-  padding: 2px 9px;
-  border-radius: var(--r-pill);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  vertical-align: middle;
-}
 
-.chip--warn {
-  background: var(--amber-bg);
-  border: 1px solid var(--amber-line);
-  color: var(--amber-ink);
-}
 
 .note--warn {
   background: var(--amber-bg);
