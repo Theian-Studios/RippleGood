@@ -868,9 +868,8 @@ a.mark:hover {
   color: var(--ink-faint);
 }
 
-/* Deliberately no background here: the emphasised level is selected by default,
-   and overriding it would wash the mint fill out of the one card meant to
-   stand out. Selection reads through the ring and the check instead. */
+/* Selection reads through the ring and the check, not a fill — every tier
+   carries the same white background. */
 .level.is-selected {
   border-color: var(--blue);
   box-shadow: 0 0 0 4px rgba(36, 114, 236, 0.13);

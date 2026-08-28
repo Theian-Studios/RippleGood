@@ -74,7 +74,7 @@ const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));
  *   subhead        one sentence of context under it
  *   costFigures[]  {label, value, source} — the math, shown in "How we know"
  *   outcomeFramings[]  short outcome sentences reused in cards and copy
- *   givingLevels[] {amount, outcomeText, emphasis} — middle one is emphasised
+ *   givingLevels[] {amount, outcomeText} — the middle one opens selected
  *   evidenceNotes  {whatTheyDo, method, caveats[]} — the rigorous back half
  *   custom         live outcome for a typed amount (see lib/format.js):
  *                    perDollar  units per dollar — KEEP IN SYNC with costFigures
@@ -135,7 +135,7 @@ export const charities = [
       // that, landing the donor on an empty field. At ~$6 a net the old $6 tier
       // was the honest entry point, but a tier that loses the amount is worse
       // than one that starts higher. $30 replaces it at five nets.
-      { amount: 12, outcomeText: "Hangs two nets over sleeping families.", emphasis: true },
+      { amount: 12, outcomeText: "Hangs two nets over sleeping families." },
       { amount: 30, outcomeText: "Funds five nets over sleeping families." },
       { amount: 60, outcomeText: "Funds ten nets — a cluster of homes covered." },
     ],
@@ -208,7 +208,7 @@ export const charities = [
       // 50 supplements. The old $2 tier was a year for one child and was this
       // cause's default — and, being under $10, the one Every.org dropped most
       // often. Same arithmetic, starting where the amount survives.
-      { amount: 10, outcomeText: "Protects five children for a full year — both doses.", emphasis: true },
+      { amount: 10, outcomeText: "Protects five children for a full year — both doses." },
       { amount: 20, outcomeText: "Protects ten children for a full year." },
       { amount: 50, outcomeText: "Funds a year of protection for roughly 25 children." },
     ],
@@ -275,7 +275,7 @@ export const charities = [
       // Two courses rather than one, at ~$7 each: the single-child tier fell
       // under Every.org's $10 floor and arrived with no amount filled in.
       { amount: 14, outcomeText: "Shields two children through the entire malaria season." },
-      { amount: 70, outcomeText: "Shields ten children through the season.", emphasis: true },
+      { amount: 70, outcomeText: "Shields ten children through the season." },
       { amount: 210, outcomeText: "Shields thirty children — most of a village's under-fives." },
     ],
     evidenceNotes: {
@@ -334,7 +334,7 @@ export const charities = [
     ],
     givingLevels: [
       { amount: 10, outcomeText: "Spares roughly 20 hens from battery cages." },
-      { amount: 50, outcomeText: "Reaches roughly 100 hens.", emphasis: true },
+      { amount: 50, outcomeText: "Reaches roughly 100 hens." },
       { amount: 150, outcomeText: "Reaches roughly 300 hens." },
     ],
     evidenceNotes: {
@@ -394,7 +394,7 @@ export const charities = [
     ],
     givingLevels: [
       { amount: 10, outcomeText: "Roughly ten tons of CO₂e reduced, in expectation." },
-      { amount: 50, outcomeText: "Roughly fifty tons of CO₂e, in expectation.", emphasis: true },
+      { amount: 50, outcomeText: "Roughly fifty tons of CO₂e, in expectation." },
       { amount: 250, outcomeText: "Roughly 250 tons of CO₂e, in expectation." },
     ],
     evidenceNotes: {
@@ -461,7 +461,7 @@ export const charities = [
     ],
     givingLevels: [
       { amount: 100, outcomeText: "About $90 lands directly with a family." },
-      { amount: 500, outcomeText: "About $450 — roughly half a household's full transfer.", emphasis: true },
+      { amount: 500, outcomeText: "About $450 — roughly half a household's full transfer." },
       { amount: 1000, outcomeText: "Roughly one household's full transfer: a year of transformative income." },
     ],
     evidenceNotes: {
@@ -530,7 +530,7 @@ export const charities = [
     ],
     givingLevels: [
       { amount: 10, outcomeText: "Deworms about ten children for a year." },
-      { amount: 50, outcomeText: "Deworms about fifty children for a year.", emphasis: true },
+      { amount: 50, outcomeText: "Deworms about fifty children for a year." },
       { amount: 150, outcomeText: "Deworms a small school — about 150 children." },
     ],
     custom: {
@@ -597,7 +597,7 @@ export const charities = [
     ],
     givingLevels: [
       { amount: 25, outcomeText: "Funds testing that shows a government its own paint is poisoned." },
-      { amount: 100, outcomeText: "Funds the regulatory work behind a national lead standard.", emphasis: true },
+      { amount: 100, outcomeText: "Funds the regulatory work behind a national lead standard." },
       { amount: 500, outcomeText: "Helps carry one country's programme from evidence to enforcement." },
     ],
     // No `custom` block: with no verified cost-per-child figure, a live
@@ -634,10 +634,15 @@ export function getOtherCharities(id) {
   return charities.filter((c) => c.id !== id);
 }
 
-/** The level marked `emphasis`, falling back to the middle one. */
+/**
+ * The middle level, always.
+ *
+ * This used to honour a per-cause `emphasis` flag. That flag drifted: raising
+ * the sub-$10 tiers left it sitting on the *first* level for global health and
+ * child nutrition, so those two causes opened on their cheapest option while
+ * every other cause opened on its middle one. Position is the rule now, so
+ * there is nothing to keep in sync.
+ */
 export function getDefaultLevel(charity) {
-  return (
-    charity.givingLevels.find((l) => l.emphasis) ||
-    charity.givingLevels[Math.floor(charity.givingLevels.length / 2)]
-  );
+  return charity.givingLevels[Math.floor(charity.givingLevels.length / 2)];
 }

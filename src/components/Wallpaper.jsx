@@ -78,50 +78,53 @@ const DOODLES = {
   person: "M-11 16a11 11 0 0 1 22 0 M0-1a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z",
 };
 
-/* One glyph per cell of an even 6x6 lattice, so the spacing between any two
-   neighbours is the same everywhere. Only the rotation varies, which keeps it
-   from reading as stamped without disturbing the rhythm. The pattern's own -6
-   degree tilt does the rest.
+/* A jittered lattice: one glyph per cell of a 6x6 grid, then nudged up to 17
+   units off centre in each direction. That reads as scattered while the cell
+   still guarantees the spacing — two neighbours can never end up closer than
+   about 53 units, which a hand-placed scatter kept failing to hold.
 
-   Glyphs are stepped through with a stride co-prime to their count, so no two
+   Offsets, rotations and scales come from a fixed seed and are baked in here,
+   not rolled at runtime: the wallpaper has to look the same on every load.
+
+   Glyphs step through the set with a stride co-prime to its count, so no two
    neighbouring cells draw the same thing. */
 const LAYOUT = [
-  ["pill", 43.3, 43.3, -15, 0.9],
-  ["shirt", 130.0, 43.3, -9, 0.9],
-  ["handHeart", 216.7, 43.3, -3, 0.9],
-  ["hen", 303.3, 43.3, 3, 0.9],
-  ["globe", 390.0, 43.3, 9, 0.9],
-  ["bench", 476.7, 43.3, 15, 0.9],
-  ["sprout", 43.3, 130.0, -10, 0.9],
-  ["cloche", 130.0, 130.0, -4, 0.9],
-  ["net", 216.7, 130.0, 2, 0.9],
-  ["bottle", 303.3, 130.0, 8, 0.9],
-  ["pin", 390.0, 130.0, 14, 0.9],
-  ["coin", 476.7, 130.0, -11, 0.9],
-  ["box", 43.3, 216.7, -5, 0.9],
-  ["glass", 130.0, 216.7, 1, 0.9],
-  ["bowl", 216.7, 216.7, 7, 0.9],
-  ["windmill", 303.3, 216.7, 13, 0.9],
-  ["drop", 390.0, 216.7, -12, 0.9],
-  ["bucket", 476.7, 216.7, -6, 0.9],
-  ["flower", 43.3, 303.3, 0, 0.9],
-  ["book", 130.0, 303.3, 6, 0.9],
-  ["people", 216.7, 303.3, 12, 0.9],
-  ["person", 303.3, 303.3, -13, 0.9],
-  ["ripple", 390.0, 303.3, -7, 0.9],
-  ["house", 476.7, 303.3, -1, 0.9],
-  ["heart", 43.3, 390.0, 5, 0.9],
-  ["shield", 130.0, 390.0, 11, 0.9],
-  ["carrot", 216.7, 390.0, -14, 0.9],
-  ["kit", 303.3, 390.0, -8, 0.9],
-  ["handshake", 390.0, 390.0, -2, 0.9],
-  ["pill", 476.7, 390.0, 4, 0.9],
-  ["shirt", 43.3, 476.7, 10, 0.9],
-  ["handHeart", 130.0, 476.7, -15, 0.9],
-  ["hen", 216.7, 476.7, -9, 0.9],
-  ["globe", 303.3, 476.7, -3, 0.9],
-  ["bench", 390.0, 476.7, 3, 0.9],
-  ["sprout", 476.7, 476.7, 9, 0.9],
+  ["pill", 37.3, 31.5, 17, 0.83],
+  ["shirt", 140.9, 29.5, 13, 0.83],
+  ["handHeart", 216.9, 27.6, 3, 0.89],
+  ["hen", 294.5, 45.1, -21, 0.95],
+  ["globe", 377.2, 33.9, 16, 0.91],
+  ["bench", 461.8, 46.2, -21, 0.98],
+  ["sprout", 27.9, 142.2, -6, 0.89],
+  ["cloche", 131.4, 132.4, 11, 0.95],
+  ["net", 205.8, 132.8, 16, 0.85],
+  ["bottle", 289.6, 137.2, 12, 0.83],
+  ["pin", 380.0, 136.1, 3, 0.94],
+  ["coin", 475.5, 144.4, -1, 0.87],
+  ["box", 53.3, 223.4, -9, 0.83],
+  ["glass", 123.2, 216.5, -3, 0.94],
+  ["bowl", 209.5, 233.0, -17, 0.9],
+  ["windmill", 291.9, 211.3, 7, 0.89],
+  ["drop", 405.7, 202.3, 11, 0.91],
+  ["bucket", 489.4, 210.3, 20, 0.88],
+  ["flower", 43.2, 313.4, -20, 0.95],
+  ["book", 145.1, 302.5, 18, 0.83],
+  ["people", 224.5, 296.9, 12, 0.98],
+  ["person", 314.3, 296.0, 0, 0.96],
+  ["ripple", 384.8, 318.3, -2, 0.85],
+  ["house", 463.6, 288.3, -6, 0.84],
+  ["heart", 34.8, 386.3, 7, 0.83],
+  ["shield", 128.3, 391.7, -16, 0.95],
+  ["carrot", 229.0, 382.5, 2, 0.98],
+  ["kit", 309.5, 385.9, -10, 0.84],
+  ["handshake", 379.0, 380.9, -10, 0.82],
+  ["pill", 487.9, 379.2, -6, 0.82],
+  ["shirt", 40.6, 472.2, 12, 0.87],
+  ["handHeart", 117.3, 488.9, 15, 0.92],
+  ["hen", 224.8, 475.2, 19, 0.95],
+  ["globe", 299.7, 473.2, -18, 0.9],
+  ["bench", 386.6, 466.1, -11, 0.89],
+  ["sprout", 463.4, 480.1, -18, 0.82],
 ];
 
 export default function Wallpaper() {
