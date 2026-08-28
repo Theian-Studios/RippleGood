@@ -4,7 +4,6 @@ import { getDefaultLevel } from "../data/charities.js";
 import { causeUrl, everyOrgUrl, thanksUrl } from "../lib/donate.js";
 import { newDonationRef, rememberDonation } from "../lib/donationRef.js";
 import { approxOutcome, displayHost, money, unitsFor } from "../lib/format.js";
-import GaveButton from "./GaveButton.jsx";
 import Pictogram from "./Pictogram.jsx";
 
 /**
@@ -244,12 +243,9 @@ export default function GivingPanel({ charity }) {
             </p>
 
             <p className="altRoute">
-              Rather skip the middleman?{" "}
               <a href={charity.donateUrl} rel="noreferrer">
                 Give directly on {host}
-              </a>{" "}
-              — nothing in between, though you'll type the amount in yourself.
-              Employer matching schemes often prefer this route.
+              </a>
             </p>
           </>
         ) : (
@@ -262,8 +258,6 @@ export default function GivingPanel({ charity }) {
             </span>
           </p>
         )}
-
-        <GaveButton charity={charity} amount={amount} monthly={monthly} />
       </div>
     </div>
   );

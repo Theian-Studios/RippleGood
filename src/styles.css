@@ -1761,47 +1761,6 @@ a.mark:hover {
   color: var(--ink-soft);
 }
 
-/* --------------------------------------------------------------- gave -- */
-
-.gave {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--r);
-  background: none;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink-soft);
-  text-align: left;
-  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
-}
-
-button.gave:hover {
-  border-color: var(--blue);
-  background: var(--mist);
-  color: var(--navy);
-}
-
-.gave svg {
-  flex: none;
-  color: var(--blue-700);
-}
-
-.gave--done {
-  border-style: solid;
-  border-color: var(--mist-deep);
-  background: var(--mist);
-  color: var(--navy);
-}
-
-.gave--done a {
-  color: var(--blue-700);
-  font-weight: 600;
-}
-
 /* --------------------------------------------------------------- tools -- */
 
 /* ---------------------------------------------------------------- quiz -- */
@@ -2872,7 +2831,6 @@ button.gave:hover {
   .verifiedTotal,
   .cadence,
   .customAmount,
-  .gave,
   .shareCause,
   .howLink,
   .splitFoot,
