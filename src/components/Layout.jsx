@@ -22,16 +22,19 @@ function Header() {
           >
             About
           </NavLink>
+          {/* --wide: hidden below 560px so the header never runs off the edge.
+              It is in the footer, and summarised on the home page, at every
+              width. This class used to be on the giving-plan link; when that
+              went, nothing was left to drop and the nav overflowed on a
+              phone. */}
           <NavLink
             to="/methodology"
             className={({ isActive }) =>
-              `siteNav__link${isActive ? " is-active" : ""}`
+              `siteNav__link siteNav__link--wide${isActive ? " is-active" : ""}`
             }
           >
             Methodology
           </NavLink>
-          {/* Not "see your impact" — that phrase belongs to /my-impact, which
-              is a different thing entirely. */}
           <Link to="/#causes" className="btn btn--navy siteNav__cta">
             Pick your cause
           </Link>

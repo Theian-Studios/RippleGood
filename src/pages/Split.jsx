@@ -228,7 +228,7 @@ export default function Split() {
               <p className="handoff" style={{ marginTop: 20 }}>
                 <span>
                   Whole dollars, adding up to exactly your budget. Every link goes to
-                  the charity's own donation page — Ripple never handles any of it.
+                  the charity's own donation page — Ripple Good never handles any of it.
                 </span>
               </p>
             </>

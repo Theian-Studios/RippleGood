@@ -735,19 +735,24 @@ a.mark:hover {
   padding: 34px 0 8px;
 }
 
+/* The label spans exactly the tile's height: "GLOBAL HEALTH" sits on its top
+   edge, "Our pick" on its bottom. align-items: stretch makes the text column as
+   tall as the tile, and space-between pushes the two lines to its edges — which
+   is what makes them read as one block rather than two things near each other.
+   The earlier 6px nudge on the tile is gone; it was compensating for this. */
 .causeHero__top {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 13px;
   margin-bottom: 20px;
 }
 
-/* The tile sits a touch below the label it sits beside — optically centred
-   against two lines of text rather than mathematically centred, which left it
-   reading high. */
-.causeHero__top .tile {
-  position: relative;
-  top: 6px;
+.causeHero__top > span {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: var(--tile-md);
+  padding: 1px 0;
 }
 
 
@@ -1539,7 +1544,11 @@ a.mark:hover {
 .siteFooter__main {
   display: grid;
   gap: 32px;
-  padding: 40px 0;
+  /* Extra inset on the footer specifically: the navy band runs edge to edge, so
+     the 20px the .wrap gives every other section reads tighter here against a
+     dark ground than it does on white. Note this REPLACES the wrap's padding
+     rather than adding to it — 28 is the final figure, not 20 plus 28. */
+  padding: 40px 28px;
 }
 
 @media (min-width: 820px) {
@@ -1599,13 +1608,29 @@ a.mark:hover {
 }
 
 .siteFooter__legal {
-  padding: 20px 0 34px;
+  /* One declaration, not padding-inline followed by a shorthand — the shorthand
+     resets what the longhand just set, which left this row flush to the edge. */
+  padding: 20px 28px 34px;
   border-top: 1px solid var(--navy-700);
   display: flex;
   flex-wrap: wrap;
   gap: 8px 20px;
   font-size: 13.5px;
   color: rgba(255, 255, 255, 0.55);
+}
+
+/* On a phone the three claims each wrap to their own lines, and the dot
+   separators end up stranded at the start of a line rather than between two
+   things. Stack them and drop the dots. */
+@media (max-width: 559px) {
+  .siteFooter__legal {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .siteFooter__legal .xsep {
+    display: none;
+  }
 }
 
 /* ----------------------------------------------------------- freshness -- */

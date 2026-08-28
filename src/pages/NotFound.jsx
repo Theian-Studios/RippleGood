@@ -14,7 +14,7 @@ export default function NotFound() {
           causes are one click away.
         </p>
         <Link to="/" className="btn btn--primary btn--lg">
-          Back to Ripple
+          Back to Ripple Good
         </Link>
       </div>
     </section>

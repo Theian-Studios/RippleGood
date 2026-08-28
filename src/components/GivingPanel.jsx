@@ -165,7 +165,7 @@ export default function GivingPanel({ charity }) {
       {charity.custom && (
         <div className="customAmount">
           <label className="customAmount__label" htmlFor={inputId}>
-            Or name your own amount
+            Custom
           </label>
           <div className="customAmount__row">
             <span className="customAmount__prefix" aria-hidden="true">
@@ -232,7 +232,7 @@ export default function GivingPanel({ charity }) {
               <span>
                 Every.org passes your gift to {charity.name} and issues the
                 receipt. It suggests a tip for itself at checkout —{" "}
-                <strong>optional, and you can set it to zero.</strong> Ripple
+                <strong>optional, and you can set it to zero.</strong> Ripple Good
                 never sees your money or your details.
               </span>
             </p>
@@ -248,7 +248,7 @@ export default function GivingPanel({ charity }) {
             <Info size={15} aria-hidden="true" />
             <span>
               This opens {host}, where you'll enter the amount
-              {monthly ? " and set it to repeat" : ""} yourself. Ripple never sees or
+              {monthly ? " and set it to repeat" : ""} yourself. Ripple Good never sees or
               handles your donation.
             </span>
           </p>
