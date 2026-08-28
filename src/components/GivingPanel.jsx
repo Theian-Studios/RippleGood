@@ -143,15 +143,14 @@ export default function GivingPanel({ charity }) {
               aria-pressed={isSelected}
               className={[
                 "level",
-                l.emphasis ? "level--emphasis" : "",
                 isSelected ? "is-selected" : "",
               ]
                 .filter(Boolean)
                 .join(" ")}
             >
-              {/* No "Suggested" badge. `emphasis` still decides which tier
-                  opens selected and carries the accent styling — it just no
-                  longer announces itself over the card. */}
+              {/* All three tiers look alike now — no badge, no tint. `emphasis`
+                  survives in the data only to decide which one opens selected,
+                  and .is-selected is the sole thing that marks it. */}
               <Check className="level__check" size={18} aria-hidden="true" />
               <span className="level__outcome">{annual || l.outcomeText}</span>
               <span className="level__amount">

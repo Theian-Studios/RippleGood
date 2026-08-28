@@ -880,25 +880,6 @@ a.mark:hover {
   color: var(--blue-700);
 }
 
-.level--emphasis,
-.level--emphasis:hover {
-  border-color: var(--mist-deep);
-  background: var(--mist);
-}
-
-.level--emphasis.is-selected {
-  border-color: var(--blue);
-}
-
-@media (min-width: 780px) {
-  .level--emphasis {
-    transform: scale(1.035);
-  }
-  .level--emphasis:active {
-    transform: scale(1.035) translateY(1px);
-  }
-}
-
 
 /* Bottom-right, alongside the amount: at the top it collided with the outcome
    text, which is the line that has to stay readable. */
