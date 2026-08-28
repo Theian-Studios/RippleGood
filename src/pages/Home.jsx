@@ -1,10 +1,5 @@
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Gift,
-  SlidersHorizontal,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import CauseCard from "../components/CauseCard.jsx";
 import HeroCurve from "../components/HeroCurve.jsx";
 import VerifiedTotal from "../components/VerifiedTotal.jsx";
@@ -13,31 +8,6 @@ import { money } from "../lib/format.js";
 import { useTally } from "../lib/tally.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
 import { useReveal } from "../lib/useReveal.js";
-
-/** The three tools, shown under the cause grid. */
-const TOOLS = [
-  {
-    to: "/quiz",
-    icon: Sparkles,
-    title: "Don't know where to start",
-    body: "Four questions about what you value. It ends at a cause, not a lecture.",
-    cta: "Answer four questions",
-  },
-  {
-    to: "/plan",
-    icon: SlidersHorizontal,
-    title: "You care about more than one",
-    body: "Split a budget across causes and watch the whole plan add up.",
-    cta: "Build a plan",
-  },
-  {
-    to: "/honor",
-    icon: Gift,
-    title: "A gift for someone else",
-    body: "Birthdays, memorials, thank-yous — a card that says what the gift actually did.",
-    cta: "Make a card",
-  },
-];
 
 /**
  * The brand sheet's three steps. Step two is reworded: the original reads
@@ -115,22 +85,6 @@ export default function Home() {
           <div className="causeGrid" ref={gridRef}>
             {charities.map((charity) => (
               <CauseCard charity={charity} key={charity.id} />
-            ))}
-          </div>
-
-          <div className="tools">
-            {TOOLS.map(({ to, icon: Icon, title, body, cta }) => (
-              <Link to={to} className="tool" key={to}>
-                <span className="tile tile--sm">
-                  <Icon size={21} strokeWidth={1.75} aria-hidden="true" />
-                </span>
-                <span className="tool__title">{title}</span>
-                <span className="tool__body">{body}</span>
-                <span className="causeCard__go">
-                  {cta}
-                  <ArrowRight size={16} aria-hidden="true" />
-                </span>
-              </Link>
             ))}
           </div>
         </div>

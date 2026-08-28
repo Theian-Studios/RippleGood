@@ -1,14 +1,7 @@
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { Lock } from "lucide-react";
 import Logo from "./Logo.jsx";
-
-/** The brand's four values. Rendered on every page, in the footer band. */
-const PILLARS = [
-  { title: "Compassion", body: "We care deeply." },
-  { title: "Impact", body: "Small actions create lasting change." },
-  { title: "Community", body: "We're stronger together." },
-  { title: "Integrity", body: "We give with transparency and trust." },
-];
+import Wallpaper from "./Wallpaper.jsx";
 
 function Header() {
   return (
@@ -59,17 +52,6 @@ function Header() {
 function Footer() {
   return (
     <footer className="siteFooter onDark">
-      <div className="wrap siteFooter__pillars">
-        <div className="pillars pillars--divided">
-          {PILLARS.map(({ title, body }) => (
-            <div className="pillar" key={title}>
-              <h3>{title}</h3>
-              <p>{body}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
       <div className="wrap siteFooter__main">
         <div>
           <Logo onDark />
@@ -135,6 +117,7 @@ export default function Layout() {
 
   return (
     <div className="app">
+      <Wallpaper />
       <a className="skip-link" href="#main">
         Skip to content
       </a>

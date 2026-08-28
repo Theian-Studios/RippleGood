@@ -504,6 +504,28 @@ a.mark:hover {
 
 /* --------------------------------------------------------------- hero -- */
 
+/* ---------------------------------------------------------- wallpaper -- */
+
+/* Fixed rather than scrolling, so the doodles behave like paper the site is
+   printed on. z-index -1 sits it above the body colour and below everything
+   else; pointer-events none keeps it out of every interaction. */
+.wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  color: var(--navy);
+  opacity: 0.085;
+}
+
+/* On a phone the doodles compete with dense copy in a small column, and the
+   texture is largely hidden behind cards anyway. */
+@media (max-width: 700px) {
+  .wallpaper {
+    opacity: 0.055;
+  }
+}
+
 .hero {
   padding: 56px 0 40px;
 }
@@ -565,8 +587,10 @@ a.mark:hover {
   padding: 36px 0;
 }
 
+/* Semi-transparent so the wallpaper reads through the light bands; the navy
+   and mist sections stay solid and cover it deliberately. */
 .section--gray {
-  background: rgb(242, 245, 249);
+  background: rgba(242, 245, 249, 0.82);
 }
 
 .section--mist {
@@ -688,52 +712,6 @@ a.mark:hover {
 
 .causeCard__go svg {
   transition: transform 0.18s ease;
-}
-
-/* ------------------------------------------------------------ pillars -- */
-
-.pillars {
-  display: grid;
-  gap: 26px;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 560px) {
-  .pillars {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 940px) {
-  .pillars {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-
-.pillar h3 {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.pillar p {
-  margin-top: 8px;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-.pillars--divided .pillar {
-  padding-left: 22px;
-  border-left: 1px solid var(--navy-700);
-}
-
-@media (max-width: 559px) {
-  .pillars--divided .pillar {
-    padding-left: 0;
-    border-left: 0;
-  }
 }
 
 /* --------------------------------------------------------- cause page -- */
@@ -1562,11 +1540,6 @@ a.mark:hover {
   color: rgba(255, 255, 255, 0.72);
 }
 
-.siteFooter__pillars {
-  padding: 40px 0;
-  border-bottom: 1px solid var(--navy-700);
-}
-
 .siteFooter__main {
   display: grid;
   gap: 32px;
@@ -1803,53 +1776,6 @@ button.gave:hover {
 }
 
 /* --------------------------------------------------------------- tools -- */
-
-.tools {
-  display: grid;
-  gap: 16px;
-  margin-top: 34px;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 760px) {
-  .tools {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.tool {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 24px 22px;
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--r-lg);
-  background: none;
-  text-decoration: none;
-  transition: border-color 0.18s ease, background-color 0.18s ease,
-    transform 0.18s ease;
-}
-
-.tool:hover {
-  border-color: var(--blue);
-  border-style: solid;
-  background: var(--white);
-  transform: translateY(-3px);
-}
-
-
-.tool__title {
-  font-size: 1.08rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--navy);
-}
-
-.tool__body {
-  flex: 1;
-  font-size: 14.5px;
-  color: var(--ink-soft);
-}
 
 /* ---------------------------------------------------------------- quiz -- */
 
@@ -2870,7 +2796,6 @@ button.gave:hover {
 }
 
 .causeCard:hover .tile,
-.tool:hover .tile,
 .otherCard:hover .tile {
   transform: scale(1.09) rotate(-4deg);
 }
@@ -2914,7 +2839,6 @@ button.gave:hover {
   .siteHeader,
   .siteFooter,
   .skip-link,
-  .tools,
   .tallyStrip,
   .verifiedTotal,
   .cadence,
