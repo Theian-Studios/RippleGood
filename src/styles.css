@@ -565,10 +565,8 @@ a.mark:hover {
   padding: 36px 0;
 }
 
-/* Semi-transparent so the wallpaper reads through the light bands; the navy
-   and mist sections stay solid and cover it deliberately. */
 .section--gray {
-  background: rgba(242, 245, 249, 0.82);
+  background: rgb(242, 245, 249);
 }
 
 .section--mist {
@@ -588,6 +586,13 @@ a.mark:hover {
 .sectionHead {
   max-width: 640px;
   margin-bottom: 30px;
+}
+
+/* Centres the block as well as the text — max-width alone would leave it
+   sitting against the left edge of the wrap. */
+.sectionHead--centred {
+  margin-inline: auto;
+  text-align: center;
 }
 
 .sectionHead h2 {
@@ -666,19 +671,7 @@ a.mark:hover {
   flex: 1;
 }
 
-.causeCard__pick {
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-  font-size: 14px;
-  color: var(--ink-faint);
-}
 
-.causeCard__pick strong {
-  display: block;
-  color: var(--navy);
-  font-weight: 600;
-  font-size: 15px;
-}
 
 .causeCard__go {
   display: inline-flex;
@@ -2518,27 +2511,13 @@ button.gave:hover {
   }
 }
 
-/* ---------------------------------------------------------- wallpaper -- */
 
 /* Fixed rather than scrolling, so the doodles behave like paper the site is
    printed on. z-index -1 sits it above the body colour and below everything
    else; pointer-events none keeps it out of every interaction. */
-.wallpaper {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  color: var(--navy);
-  opacity: 0.085;
-}
 
 /* On a phone the doodles compete with dense copy in a small column, and the
    texture is largely hidden behind cards anyway. */
-@media (max-width: 700px) {
-  .wallpaper {
-    opacity: 0.055;
-  }
-}
 
 /* --------------------------------------------------------- hero waves -- */
 

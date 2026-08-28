@@ -108,7 +108,7 @@ export default function Home() {
 
       <section className="section section--tight" id="causes">
         <div className="wrap">
-          <div className="sectionHead">
+          <div className="sectionHead sectionHead--centred">
             <h2>Pick Your Cause</h2>
           </div>
 

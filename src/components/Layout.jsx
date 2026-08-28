@@ -1,7 +1,6 @@
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { Lock } from "lucide-react";
 import Logo from "./Logo.jsx";
-import Wallpaper from "./Wallpaper.jsx";
 
 /** The brand's four values. Rendered on every page, in the footer band. */
 const PILLARS = [
@@ -136,7 +135,6 @@ export default function Layout() {
 
   return (
     <div className="app">
-      <Wallpaper />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
