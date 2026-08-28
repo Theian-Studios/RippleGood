@@ -742,6 +742,14 @@ a.mark:hover {
   margin-bottom: 20px;
 }
 
+/* The tile sits a touch below the label it sits beside — optically centred
+   against two lines of text rather than mathematically centred, which left it
+   reading high. */
+.causeHero__top .tile {
+  position: relative;
+  top: 6px;
+}
+
 
 .causeHero__category {
   font-size: 12.5px;
@@ -957,15 +965,21 @@ a.mark:hover {
 
 /* min-height keeps the panel from jumping as the sentence appears. */
 .customAmount__outcome {
-  margin-top: 10px;
-  min-height: 1.5em;
+  /* Reserves a line so the layout doesn't jump when it speaks, but only just:
+     at 1.5em plus a 10px margin it was holding open most of the gap between
+     the amount field and the donate button. */
+  margin-top: 6px;
+  min-height: 1.2em;
   font-size: 15.5px;
   font-weight: 600;
   color: var(--blue-700);
 }
 
 .give__foot {
-  margin-top: 24px;
+  /* Tight to the amount field above it. The live-region paragraph in
+     .customAmount already reserves a blank line even when it has nothing to
+     say, so a large margin here read as a gap twice over. */
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 14px;

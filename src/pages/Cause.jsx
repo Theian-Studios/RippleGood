@@ -79,26 +79,27 @@ export default function Cause() {
             </div>
           )}
 
-
-          <div>
-            <a
-              className="evaluatorChip"
-              href={charity.evaluatorUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <BadgeCheck size={18} aria-hidden="true" />
-              <span>
-                <strong>{charity.evaluator}</strong> — {charity.evaluatorNote}
-              </span>
-            </a>
-          </div>
         </div>
       </section>
 
       <section className="section section--tight">
         <div className="wrap wrap--narrow">
           <GivingPanel charity={charity} key={charity.id} />
+
+          {/* Under the panel, not above it: the evaluator is what backs the ask
+              up, so it reads better as the answer to "says who?" than as a
+              credential presented before anyone has been asked for anything. */}
+          <a
+            className="evaluatorChip"
+            href={charity.evaluatorUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <BadgeCheck size={18} aria-hidden="true" />
+            <span>
+              <strong>{charity.evaluator}</strong> — {charity.evaluatorNote}
+            </span>
+          </a>
 
           <EvidenceCard
             ref={evidenceRef}
