@@ -119,7 +119,13 @@ export default function Home() {
         <div className="wrap wrap--narrow">
           <HomePanel
             title="About"
-            blurb="Why this site exists, and what it isn't."
+            blurb="Why this site exists."
+            cta={
+              <Link to="/about" className="btn btn--primary">
+                Learn more
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            }
           >
             <p>
               Almost everyone wants to help. Far fewer know where to send the
@@ -140,8 +146,11 @@ export default function Home() {
               you.
             </p>
             <p>
-              We are not a charity evaluator and not a payment processor. We don't
-              originate research, and we never touch your money.
+              Evaluators publish deep research one cause at a time. What has been
+              missing is a single place that carries their strongest pick across
+              many different causes at once — so you can start from the thing you
+              already care about rather than from a spreadsheet. That is what this
+              is.
             </p>
           </HomePanel>
 
@@ -198,28 +207,6 @@ export default function Home() {
       {/* The public counterpart to the private strip above: renders itself only
           once there is a figure worth showing. */}
       <VerifiedTotal />
-
-      <section className="section section--mist">
-        <div className="wrap wrap--narrow" style={{ textAlign: "center" }}>
-          <h2 style={{ fontSize: "clamp(1.5rem, 4vw, 2.1rem)" }}>
-            Feeling on the surface. Math underneath.
-          </h2>
-          <p style={{ marginTop: 16, color: "var(--ink-soft)" }}>
-            We don't run the research. We translate it. GiveWell, Animal Charity
-            Evaluators, Giving Green and Founders Pledge spend years on questions we
-            could never answer alone — so every pick here names the evaluator behind
-            it, shows the real cost figures, and says what could be wrong with them.
-          </p>
-          <Link
-            to="/methodology"
-            className="btn btn--primary"
-            style={{ marginTop: 26 }}
-          >
-            Read our methodology
-            <ArrowRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-      </section>
     </>
   );
 }

@@ -15,20 +15,20 @@ function Header() {
 
         <nav className="siteNav" aria-label="Main">
           <NavLink
-            to="/methodology"
-            className={({ isActive }) =>
-              `siteNav__link${isActive ? " is-active" : ""}`
-            }
-          >
-            Methodology
-          </NavLink>
-          <NavLink
             to="/about"
             className={({ isActive }) =>
               `siteNav__link${isActive ? " is-active" : ""}`
             }
           >
             About
+          </NavLink>
+          <NavLink
+            to="/methodology"
+            className={({ isActive }) =>
+              `siteNav__link${isActive ? " is-active" : ""}`
+            }
+          >
+            Methodology
           </NavLink>
           {/* Not "see your impact" — that phrase belongs to /my-impact, which
               is a different thing entirely. */}

@@ -1117,68 +1117,35 @@ a.mark:hover {
 
 /* ------------------------------------------------------- home panels -- */
 
-/* The About and Methodology disclosures on the home page. Deliberately quieter
-   than .evidence: that one is the payoff of a cause page, these are asides the
-   reader can ignore on the way to picking a cause. */
+/* About and Methodology on the home page. Plain sections, not disclosures:
+   nothing to expand, so nothing to miss. */
 .homePanel {
+  padding: 24px 24px 26px;
   border: 1px solid var(--mist-deep);
   border-radius: var(--r-lg);
   background: var(--white);
-  overflow: hidden;
 }
 
 .homePanel + .homePanel {
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
-.homePanel__toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  width: 100%;
-  padding: 20px 22px;
-  border: 0;
-  background: none;
-  text-align: left;
-  cursor: pointer;
-}
-
-.homePanel__toggle:hover {
-  background: var(--gray-50);
-}
-
-.homePanel__heading {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+.homePanel__head {
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--mist-deep);
 }
 
 .homePanel__title {
+  margin: 0;
   color: var(--navy);
-  font-size: 1.12rem;
-  font-weight: 700;
+  font-size: clamp(1.35rem, 3vw, 1.7rem);
 }
 
 .homePanel__blurb {
+  margin: 4px 0 0;
   color: var(--ink-soft);
-  font-size: 14.5px;
-}
-
-.homePanel__chevron {
-  flex: none;
-  color: var(--blue-600);
-  transition: transform 0.2s ease;
-}
-
-.homePanel__toggle[aria-expanded="true"] .homePanel__chevron {
-  transform: rotate(180deg);
-}
-
-.homePanel__body {
-  padding: 0 22px 22px;
-  border-top: 1px solid var(--mist-deep);
-  padding-top: 18px;
+  font-size: 15px;
 }
 
 .homePanel__body p {
@@ -1192,7 +1159,7 @@ a.mark:hover {
 }
 
 .homePanel__body .btn {
-  margin-top: 18px;
+  margin-top: 20px;
 }
 
 .evidence__toggle {
@@ -2563,15 +2530,17 @@ button.gave:hover {
 
 /* Plain colour, not the underlined .mark: across two lines that rule drew a
    separate bar under each fragment and read as a mistake. */
+/* The same blue as the primary button, so the accent in the headline and the
+   button under it read as one colour rather than two nearly-alike ones. */
 .hero__accent {
-  color: var(--sky);
+  color: var(--blue);
 }
 
 /* The eyebrow takes the headline accent's colour rather than the darker
    --blue-600 it inherits from .eyebrow, which was mixed for light pages and
    sits too close to the navy here. */
 .hero .eyebrow {
-  color: var(--sky);
+  color: var(--blue);
 }
 
 .hero__sub {
