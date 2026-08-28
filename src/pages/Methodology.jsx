@@ -4,9 +4,18 @@ import { AVERAGE_COST_DISCLAIMER, charities, evaluators } from "../data/charitie
 import { longDate } from "../lib/format.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
 
-/** The most recent verification date across all causes, shown as the freshness mark. */
+/**
+ * The most recent verification date across all causes, shown as the freshness
+ * mark. Unchecked causes carry a null lastVerified and are filtered out first —
+ * a default sort stringifies, so "null" would sort above every real date and
+ * become the answer.
+ */
 function lastReview() {
-  return charities.map((c) => c.lastVerified).sort().at(-1);
+  return charities
+    .map((c) => c.lastVerified)
+    .filter(Boolean)
+    .sort()
+    .at(-1);
 }
 
 export default function Methodology() {

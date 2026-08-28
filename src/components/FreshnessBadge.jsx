@@ -8,6 +8,10 @@ import { freshnessOf, monthYear } from "../lib/freshness.js";
  * whoever maintains it.
  */
 export default function FreshnessBadge({ iso, className = "" }) {
+  // No date, no badge. An unchecked cause has none, and inventing one here is
+  // exactly the claim its provisional banner exists to deny.
+  if (!iso) return null;
+
   const { tone, label, monthsOld } = freshnessOf(iso);
   const Icon = tone === "fresh" ? Clock : CircleAlert;
 

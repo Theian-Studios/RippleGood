@@ -5,15 +5,14 @@ import { money } from "../lib/format.js";
 /**
  * What readers have actually given through this site, as reported by Every.org.
  *
- * The counterpart to the tally strip directly above it: that one is what *you*
- * typed into this browser, this one is what Every.org confirmed. Neither is an
- * accounting record and both say so.
+ * What Every.org confirmed, as opposed to anything self-reported. It is not an
+ * accounting record and the note under it says so.
  *
  * ── Why there is a floor ───────────────────────────────────────────────────
  * A brand-new site announcing "$0 moved · 0 gifts" reads as "nobody uses this",
  * which is worse than saying nothing at all. So this renders nothing until the
- * figure is worth showing — same reasoning as the tally strip hiding itself on
- * a first visit, and the same reason we never write "be the first to give".
+ * figure is worth showing — the same reason we never write "be the first to
+ * give".
  */
 const MIN_GIFTS = 10;
 

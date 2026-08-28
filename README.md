@@ -47,7 +47,7 @@ Each cause object:
 | `costFigures[]` | `{label, value, source}` — the math shown in "How we know" |
 | `outcomeFramings[]` | Short outcome sentences reused in copy |
 | `givingLevels[]` | `{amount, outcomeText, emphasis}` — mark one `emphasis: true` and it renders larger, in mist blue, with a "Suggested" badge |
-| `custom` | `{perDollar, one, many, tooSmall, style}` — powers the "name your own amount" field, the giving plan, and the impact tally. **`perDollar` must stay in sync with the cost figure it derives from** (both carry paired `VERIFY:` comments). **Omit it entirely** when there's no verified per-dollar figure: every live-outcome UI hides itself rather than inventing precision (see Lead Exposure) |
+| `custom` | `{perDollar, one, many, tooSmall, style}` — powers the custom-amount field and the giving plan. **`perDollar` must stay in sync with the cost figure it derives from** (both carry paired `VERIFY:` comments). **Omit it entirely** when there's no verified per-dollar figure: every live-outcome UI hides itself rather than inventing precision (see Lead Exposure) |
 | `evidenceNotes` | `{whatTheyDo, method, caveats[]}` |
 | `provisional` | Optional `true`. Renders an amber "provisional entry" banner on the cause page and a chip on its home card, saying the figures aren't yet checked. **Delete it only when you've actually verified the numbers** — never to make the banner go away |
 | `donateUrl` | The charity's own donation page — always shown, as the no-intermediary route |
@@ -166,24 +166,28 @@ src/
     icons.js            string → lucide icon registry
     format.js           money, dates, link hosts
     usePageMeta.js      per-route <title> and meta description
+    impact.js           reads the donation_totals() aggregate from Supabase
+    donate.js           builds the outbound Every.org link
+    donationRef.js      mints the per-gift attribution id
+    freshness.js        how stale a cause's figures are
   components/
-    Layout.jsx          header, footer, brand pillars, skip link
+    Layout.jsx          header, footer, skip link
     Logo.jsx            the Ripple heart mark + wordmark
     CauseCard.jsx       home-grid card
+    HomePanel.jsx       the About and Methodology sections on the home page
     GivingPanel.jsx     three outcome-phrased levels + outbound donate button
     EvidenceCard.jsx    the "How we know" disclosure
+    VerifiedTotal.jsx   webhook-confirmed totals, hidden below ten gifts
     OtherCauses.jsx     cross-links at the foot of a cause page
     ScrollToTop.jsx     scroll restoration + in-page hash targets
     FreshnessBadge.jsx  amber/red staleness chip driven by lastVerified
-    GaveButton.jsx      logs a gift to the private browser-only tally
-    ShareCause.jsx      copies the crawler-friendly /share/<id> link
-    HonorCard.jsx       canvas-rendered dedication card
+    Wallpaper.jsx       the tiled doodle background
+    HeroCurve.jsx       the swell where the hero meets the page
+    Illustration.jsx    per-cause hero artwork
+    Pictogram.jsx       draws a quantity as counted icons
   pages/
-    Home.jsx  Cause.jsx  Methodology.jsx  About.jsx  NotFound.jsx
-    Quiz.jsx            /quiz  — four values questions → a cause
+    Home.jsx  Cause.jsx  Methodology.jsx  About.jsx  NotFound.jsx  Thanks.jsx
     Split.jsx           /plan  — weight sliders → an exact-sum giving plan
-    Honor.jsx           /honor — downloadable "in honor of" card
-    MyImpact.jsx        /my-impact — private localStorage tally
   styles.css            design tokens + all styling
 scripts/
   build-og-images.mjs   share cards + /share/<id> pages (runs on prebuild)
@@ -198,8 +202,11 @@ real static page per cause:
 
 - **Share `ripple-good.org/share/global-health`** — a crawler reads that cause's own
   title, description, and 1200×630 card; a person is forwarded straight to
-  `#/cause/global-health`. The "Share this cause" button on each cause page
-  copies this URL.
+  `#/cause/global-health`.
+- **Nothing in the app links to these.** The "Share this cause" button was
+  removed, so `/share/<id>` is an author-facing URL now: paste it when you want
+  a per-cause preview, rather than the hash route, which previews identically
+  for all eight causes.
 - Set the domain at build time if it isn't ripple-good.org:
 
 ```bash
@@ -236,7 +243,7 @@ Three things to keep in mind if you change this:
 
 Two independent halves. **The site works with neither of them configured** —
 leave the env vars unset and it behaves exactly as it did before, with plain
-outbound links and a self-reported tally.
+outbound links and no totals shown.
 
 ### 1. The outbound half (no infrastructure)
 
@@ -247,7 +254,7 @@ on click:
 | --- | --- |
 | `partner_donation_id` | A UUID minted per click, so the webhook can be tied to this site |
 | `partner_metadata` | Base64 `{cause}` — how a donation is attributed to a cause page |
-| `success_url` | Returns the donor to `/#/thanks`, which logs the gift to their private tally |
+| `success_url` | Returns the donor to `/thanks` — hashless, so the redirect cannot be truncated at the `#`; 404.html restores the route |
 | `webhook_token` | Public correlator, only sent when `VITE_EVERYORG_LINK_TOKEN` is set |
 
 **We never set `require_share_info` and never send donor name or email.** Every.org
@@ -325,8 +332,9 @@ Send it twice: the second is a silent no-op, which is the idempotency working.
   page and gives on the charity's own site is invisible. The number undercounts,
   which is the safe direction.
 - `/thanks` reads a query string the donor could edit, so it is **not proof**.
-  It only ever writes to the browser-local tally, which has always been labelled
-  self-reported. The verified figures live in Postgres and are never mixed with it.
+  It says what the gift did and stores nothing. The verified figures live in
+  Postgres, put there by the webhook, and are the only ones ever displayed as
+  totals.
 
 ## Privacy
 
@@ -339,8 +347,10 @@ timestamp — and **no donor identity of any kind**: no name, no email, no addre
 no IP. The site never asks Every.org for those fields and the schema has no
 column to put them in. Nothing links a donation row to a person.
 
-The tally at `/my-impact` remains `localStorage` only (`ripple.tally.v1`), never
-leaves the browser, and is never joined to the database.
+The only thing the browser stores is a short-lived pending-donation record
+(`ripple.pending.v1`) — a random id, a cause slug and an amount — written when
+you click donate and consumed by `/thanks`. It never leaves the browser and is
+never joined to the database.
 
 ## Brand
 

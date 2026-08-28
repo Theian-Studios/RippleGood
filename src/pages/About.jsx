@@ -79,7 +79,7 @@ export default function About() {
 
           <p style={{ marginTop: 30 }}>
             <Link to="/#causes" className="btn btn--primary">
-              Find your cause
+              Pick your cause
             </Link>
           </p>
         </div>

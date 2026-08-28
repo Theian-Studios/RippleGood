@@ -97,16 +97,9 @@
 .level__amount,
 .slider__amount,
 .planRow__amount,
-.tallyTotal__value,
-.tallyCard__meta,
 .figure__value,
 .pictogram__multiplier,
 .customAmount__input,
-.field__control {
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1;
-}
-
 /* --------------------------------------------------------------- reset -- */
 
 *,
@@ -173,18 +166,6 @@ button {
 }
 
 /* Visually hidden, still announced — for text only screen readers need. */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -341,13 +322,16 @@ main {
   -webkit-box-decoration-break: clone;
 }
 
+/* --sky on dark for the same reason as the eyebrow: the footer tagline runs at
+   16.8px, where --blue's 3.85:1 against the navy is under the 4.5:1 that size
+   needs. */
 .onDark .mark,
 .mark--onDark {
-  color: var(--blue);
+  color: var(--sky);
 }
 
-/* A .mark that is also a link (the hero's ~100x) keeps the brand underline
-   rather than stacking the browser's on top of it. */
+/* A .mark that is also a link keeps the brand underline rather than stacking
+   the browser's on top of it. */
 a.mark {
   text-decoration: none;
 }
@@ -426,10 +410,6 @@ a.mark:hover {
 .btn--lg {
   padding: 17px 32px;
   font-size: 17px;
-}
-
-.btn--block {
-  width: 100%;
 }
 
 /* --------------------------------------------------------------- head -- */
@@ -568,9 +548,6 @@ a.mark:hover {
   margin-top: 32px;
 }
 
-
-
-
 @media (min-width: 720px) {
   .hero {
     padding: 88px 0 64px;
@@ -593,20 +570,6 @@ a.mark:hover {
   background: rgba(242, 245, 249, 0.82);
 }
 
-.section--mist {
-  background: var(--mist);
-}
-
-.section--navy {
-  background: var(--navy);
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.section--navy h2,
-.section--navy h3 {
-  color: var(--white);
-}
-
 .sectionHead {
   max-width: 640px;
   margin-bottom: 30px;
@@ -626,10 +589,6 @@ a.mark:hover {
 .sectionHead p {
   margin-top: 12px;
   color: var(--ink-soft);
-}
-
-.section--navy .sectionHead p {
-  color: rgba(255, 255, 255, 0.78);
 }
 
 @media (min-width: 720px) {
@@ -682,7 +641,6 @@ a.mark:hover {
   box-shadow: var(--shadow);
 }
 
-
 .causeCard__name {
   font-size: 1.28rem;
   font-weight: 700;
@@ -693,25 +651,6 @@ a.mark:hover {
   font-size: 15px;
   color: var(--ink-soft);
   flex: 1;
-}
-
-
-
-.causeCard__go {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--blue-600);
-}
-
-.causeCard:hover .causeCard__go svg {
-  transform: translateX(3px);
-}
-
-.causeCard__go svg {
-  transition: transform 0.18s ease;
 }
 
 /* --------------------------------------------------------- cause page -- */
@@ -754,7 +693,6 @@ a.mark:hover {
   min-height: var(--tile-md);
   padding: 1px 0;
 }
-
 
 .causeHero__category {
   font-size: 12.5px;
@@ -892,7 +830,6 @@ a.mark:hover {
   color: var(--blue-700);
 }
 
-
 /* Bottom-right, alongside the amount: at the top it collided with the outcome
    text, which is the line that has to stay readable. */
 .level__check {
@@ -990,11 +927,6 @@ a.mark:hover {
   gap: 14px;
 }
 
-.give__hint {
-  font-size: 14px;
-  color: var(--ink-faint);
-}
-
 .donate {
   display: inline-flex;
   align-items: center;
@@ -1018,11 +950,6 @@ a.mark:hover {
 
 .donate:active {
   transform: translateY(1px);
-}
-
-.donate__host {
-  font-weight: 400;
-  opacity: 0.9;
 }
 
 .handoff {
@@ -1353,7 +1280,6 @@ a.mark:hover {
   transform: translateY(-2px);
 }
 
-
 .otherCard__label {
   font-weight: 600;
   font-size: 15.5px;
@@ -1665,8 +1591,6 @@ a.mark:hover {
   color: var(--red-ink);
 }
 
-
-
 .note--warn {
   background: var(--amber-bg);
   border-color: var(--amber-line);
@@ -1755,66 +1679,6 @@ a.mark:hover {
   color: var(--ink-soft);
 }
 
-/* --------------------------------------------------------------- tools -- */
-
-/* ---------------------------------------------------------------- quiz -- */
-
-.quizOptions {
-  display: grid;
-  gap: 12px;
-  margin-top: 30px;
-}
-
-.quizOption {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px 22px;
-  border: 2px solid var(--border);
-  border-radius: var(--r);
-  background: var(--white);
-  font-size: 16.5px;
-  font-weight: 500;
-  color: var(--navy);
-  text-align: left;
-  transition: border-color 0.15s ease, transform 0.15s ease,
-    background-color 0.15s ease;
-}
-
-.quizOption:hover {
-  border-color: var(--blue);
-  background: var(--mist);
-  transform: translateX(3px);
-}
-
-.quizOption svg {
-  flex: none;
-  color: var(--blue-700);
-}
-
-.quizResult {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 6px;
-}
-
-.quizResult__pick {
-  margin-top: 4px;
-  font-size: 15px;
-  color: var(--ink-soft);
-}
-
-.quizResult__headline {
-  margin-top: 20px;
-  font-size: clamp(1.3rem, 3.4vw, 1.9rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
-  color: var(--navy);
-}
-
 /* --------------------------------------------------------------- split -- */
 
 .splitBudget {
@@ -1842,7 +1706,6 @@ a.mark:hover {
   margin-bottom: 9px;
   cursor: pointer;
 }
-
 
 .slider__name {
   flex: 1;
@@ -2005,56 +1868,6 @@ a.mark:hover {
   font-size: 15px;
 }
 
-/* --------------------------------------------------------------- honor -- */
-
-.honorForm {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 640px) {
-  .honorForm {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .field--wide {
-    grid-column: 1 / -1;
-  }
-}
-
-.field__control {
-  width: 100%;
-  margin-top: 9px;
-  padding: 12px 14px;
-  border: 2px solid var(--border);
-  border-radius: var(--r-sm);
-  background: var(--white);
-  font: inherit;
-  font-size: 15.5px;
-  font-weight: 500;
-  color: var(--navy);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.field__control:focus {
-  outline: none;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 4px rgba(36, 114, 236, 0.13);
-}
-
-.honorPreview {
-  margin-top: 26px;
-  border-radius: var(--r);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-
-.honorCanvas {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 /* --------------------------------------------------------------- tally -- */
 
 /* Deliberately quiet, and not a link: it states a fact and
@@ -2079,118 +1892,6 @@ a.mark:hover {
   color: var(--ink-soft);
   font-size: 13.5px;
   line-height: 1.5;
-}
-
-.tallyTotal {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 12px;
-  padding: 26px 24px;
-  border-radius: var(--r-lg);
-  background: var(--navy);
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.tallyTotal__value {
-  font-size: clamp(2rem, 6vw, 2.9rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--white);
-  line-height: 1;
-}
-
-.tallyGrid {
-  display: grid;
-  gap: 14px;
-  margin-top: 18px;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 620px) {
-  .tallyGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.tallyCard {
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  padding: 22px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-}
-
-.tallyCard__cause {
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--blue-700);
-}
-
-.tallyCard__outcome {
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  color: var(--navy);
-}
-
-.tallyCard__meta {
-  font-size: 13.5px;
-  color: var(--ink-faint);
-}
-
-.tallyList {
-  margin: 18px 0 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 8px;
-}
-
-.tallyRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 14px 18px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  font-size: 15px;
-  color: var(--ink-soft);
-}
-
-.tallyRow strong {
-  color: var(--navy);
-}
-
-.tallyRow__date {
-  display: block;
-  margin-top: 2px;
-  font-size: 13px;
-  color: var(--ink-faint);
-}
-
-.tallyRow__remove {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  background: none;
-  color: var(--ink-faint);
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-
-.tallyRow__remove:hover {
-  border-color: var(--red-line);
-  color: var(--red-ink);
 }
 
 /* ----------------------------------------------------------- pictogram -- */
@@ -2328,41 +2029,6 @@ a.mark:hover {
   box-shadow: 0 0 0 4px rgba(36, 114, 236, 0.22);
 }
 
-/* An oversized watermark behind the navy purpose band. */
-.section--navy {
-  position: relative;
-  overflow: hidden;
-}
-
-.section--navy .wrap {
-  position: relative;
-  z-index: 1;
-}
-
-.bandMark {
-  position: absolute;
-  top: 50%;
-  right: -70px;
-  width: 400px;
-  height: 400px;
-  transform: translateY(-50%);
-  opacity: 0.05;
-  pointer-events: none;
-}
-
-.bandMark circle {
-  fill: none;
-  stroke: var(--sky);
-  stroke-width: 3;
-}
-
-@media (max-width: 860px) {
-  .bandMark {
-    right: -160px;
-    opacity: 0.035;
-  }
-}
-
 /* -------------------------------------------------------------- reveal -- */
 
 .reveal {
@@ -2383,7 +2049,6 @@ a.mark:hover {
     transition: none;
   }
 }
-
 
 /* Fixed rather than scrolling, so the doodles behave like paper the site is
    printed on. z-index -1 sits it above the body colour and below everything
@@ -2439,8 +2104,11 @@ a.mark:hover {
 /* The eyebrow takes the headline accent's colour rather than the darker
    --blue-600 it inherits from .eyebrow, which was mixed for light pages and
    sits too close to the navy here. */
+/* --sky, not the button's --blue: at 12.5px this needs 4.5:1 against the navy
+   and --blue gives 3.85. The headline accent keeps --blue — at 62px it only
+   needs 3:1 and clears it. */
 .hero .eyebrow {
-  color: var(--blue);
+  color: var(--sky);
 }
 
 .hero__sub {
@@ -2450,8 +2118,6 @@ a.mark:hover {
   color: rgba(255, 255, 255, 0.76);
 }
 
-
-
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -2460,19 +2126,14 @@ a.mark:hover {
   margin-top: 34px;
 }
 
-
-
-
 /* ------------------------------------------------------- hero ripple -- */
 
 /* Sits low and centred, just above the curve, at a size that reads as one
    disturbance on the water rather than as the background of the section. */
 
-
 /* The drop lands once on arrival: the rings expand out of the centre and
    settle. Deliberately not a loop — background motion that never stops
    competes with the reading, and the whole site is built to be read. */
-
 
 /* The arc where the water meets the page. */
 .heroCurve {
@@ -2714,23 +2375,8 @@ a.mark:hover {
   animation: slide-down 0.38s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
-/* Quiz options deal themselves out; the container is keyed by step, so this
-   replays on every question. */
-.quizOptions > * {
+/* Quiz options deal themselves out; the container is keyed by step {
   animation: rise-in 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-}
-
-.quizOptions > *:nth-child(1) {
-  animation-delay: 0.05s;
-}
-.quizOptions > *:nth-child(2) {
-  animation-delay: 0.12s;
-}
-.quizOptions > *:nth-child(3) {
-  animation-delay: 0.19s;
-}
-.quizOptions > *:nth-child(4) {
-  animation-delay: 0.26s;
 }
 
 /* ---- micro-interactions ---- */
@@ -2788,13 +2434,6 @@ a.mark:hover {
   .cadence,
   .customAmount,
   .otherGrid,
-  .section--navy,
-  .bandMark,
-  body {
-    background: #fff;
-    font-size: 11pt;
-  }
-
   .wrap,
   .wrap--narrow {
     max-width: none;

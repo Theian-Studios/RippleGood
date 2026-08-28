@@ -1,6 +1,7 @@
 /**
- * Renders one 1200×630 share card per cause into public/og/, plus a matching
- * crawler-readable page under public/share/<id>/.
+ * Renders the site's 1200×630 Open Graph card into public/og/default.png, plus
+ * one card per cause and a matching crawler-readable page under
+ * public/share/<id>/.
  *
  * A pasted cause link should preview as "≈$6 → one net over a sleeping family",
  * not a generic logo — the outcome is the whole product, and it should survive
@@ -15,6 +16,12 @@
  *
  *   Share this:  ripple-good.org/share/global-health
  *   Reader gets: ripple-good.org/#/cause/global-health
+ *
+ * NOTE: nothing in the app links to these any more. The "Share this cause"
+ * button was removed, so /share/<id> is now an author-facing URL — paste it
+ * when you want a per-cause preview somewhere, rather than the hash route,
+ * which previews identically for all eight causes. Delete this whole block and
+ * public/share/ if that stops being worth the build step.
  *
  * Runs as part of `npm run build`. Output is committed: regenerate whenever a
  * headline, category, or cost figure changes.

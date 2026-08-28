@@ -33,7 +33,7 @@ export default function Home() {
 
   usePageMeta(
     null,
-    "The most effective charities are roughly 100x more impactful than typical ones. Find the best-evidenced one in the cause you already care about.",
+    "One evidence-backed charity per cause, with the cost figures and the evaluator behind every claim. Start from the cause you already care about.",
   );
 
   return (

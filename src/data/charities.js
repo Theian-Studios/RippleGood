@@ -87,7 +87,9 @@ const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));
  *                               for "$90 lands with a family" would invent a
  *                               quantity nobody promised.
  *   donateUrl      the charity's OWN donation page. We never touch money.
- *   lastVerified   ISO date the figures above were last checked against source
+ *   lastVerified   ISO date the figures were last checked against source, or
+ *                  null when they have not been — a provisional entry shows no
+ *                  freshness date at all rather than a placeholder one
  *   provisional    optional. Set while an entry's figures have NOT yet been
  *                  checked against the evaluator's published research: the page
  *                  renders a visible "provisional" banner and the card is
@@ -559,7 +561,10 @@ export const charities = [
     // VERIFY: re-check the slug still resolves to this exact entity before launch.
     everyOrg: { slug: "evidence-action", ein: "90-0874591" },
     donateUrl: "https://www.evidenceaction.org/donate/",
-    lastVerified: "2026-08-14", // VERIFY — PLACEHOLDER: not yet checked. Also confirm this donate URL resolves.
+    lastVerified: null, // VERIFY — not yet checked. Stays null until it is:
+    // a placeholder date renders as "Checked <month>", which is the exact
+    // claim `provisional` exists to deny. Set a real date and drop
+    // `provisional` in the same edit.
   },
 
   {
@@ -620,7 +625,10 @@ export const charities = [
     // VERIFY: re-check the slug still resolves to this exact entity before launch.
     everyOrg: { slug: "leep", ein: "87-3016729" },
     donateUrl: "https://leadelimination.org/donate/",
-    lastVerified: "2026-08-14", // VERIFY — PLACEHOLDER: not yet checked. Also confirm this donate URL resolves.
+    lastVerified: null, // VERIFY — not yet checked. Stays null until it is:
+    // a placeholder date renders as "Checked <month>", which is the exact
+    // claim `provisional` exists to deny. Set a real date and drop
+    // `provisional` in the same edit.
   },
 ];
 

@@ -77,7 +77,11 @@ const EvidenceCard = forwardRef(function EvidenceCard({ charity, open, onToggle 
             Read {charity.evaluator}'s full review
             <ExternalLink size={14} aria-hidden="true" style={{ marginLeft: 5 }} />
           </a>
-          <FreshnessBadge iso={charity.lastVerified} />
+          {/* No freshness date on a provisional entry. Its banner says the
+              figures have not been checked against the evaluator's research, and
+              lastVerified there is a placeholder — rendering it as "Checked
+              Aug 2026" contradicted the warning directly above it. */}
+          {!charity.provisional && <FreshnessBadge iso={charity.lastVerified} />}
         </div>
       </div>
     </section>
