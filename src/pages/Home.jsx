@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import CauseCard from "../components/CauseCard.jsx";
 import HeroCurve from "../components/HeroCurve.jsx";
+import HomePanel from "../components/HomePanel.jsx";
 import VerifiedTotal from "../components/VerifiedTotal.jsx";
 import { charities } from "../data/charities.js";
 import { money } from "../lib/format.js";
@@ -109,6 +110,69 @@ export default function Home() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      {/* Both closed by default: someone who came to pick a cause shouldn't have
+          to scroll past us explaining ourselves to reach one. */}
+      <section className="section section--tight">
+        <div className="wrap wrap--narrow">
+          <HomePanel
+            title="About"
+            blurb="Why this site exists, and what it isn't."
+          >
+            <p>
+              Almost everyone wants to help. Far fewer know where to send the
+              money — the honest reason being that finding out is years of work
+              across dozens of causes. So most giving goes to whoever asked most
+              recently.
+            </p>
+            <p>
+              The research is unambiguous about one thing: the gap between an
+              average charity and the best-evidenced one in the same cause is not
+              marginal. That gap is the whole reason this site exists.
+            </p>
+            <p>
+              We read the evaluators and translate their research into one clear
+              pick per cause, phrased as what actually happens rather than what it
+              costs — starting from the cause <em>you</em> already care about,
+              because effective giving shouldn't ask you to abandon what moves
+              you.
+            </p>
+            <p>
+              We are not a charity evaluator and not a payment processor. We don't
+              originate research, and we never touch your money.
+            </p>
+          </HomePanel>
+
+          <HomePanel
+            title="Methodology"
+            blurb="How a pick gets made, and what our figures mean."
+            cta={
+              <Link to="/methodology" className="btn btn--primary">
+                Read the full methodology
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            }
+          >
+            <p>
+              We don't run the research — we translate it. GiveWell, Animal
+              Charity Evaluators, Giving Green and Founders Pledge spend years on
+              questions we could never answer alone, so every pick here names the
+              evaluator behind it, shows the real cost figures, and says what
+              could be wrong with them.
+            </p>
+            <p>
+              Every dollar figure is an <strong>average program cost</strong>, not
+              a promise about your particular gift. Charities pool donations; the
+              figure is what it has cost, on average, to produce that outcome.
+            </p>
+            <p>
+              Where we haven't yet checked a cause's numbers against the
+              evaluator's published research, the cause page says so in a banner
+              at the top, and keeps saying so until the check is done.
+            </p>
+          </HomePanel>
         </div>
       </section>
 

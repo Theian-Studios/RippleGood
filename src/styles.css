@@ -1115,6 +1115,86 @@ a.mark:hover {
   overflow: hidden;
 }
 
+/* ------------------------------------------------------- home panels -- */
+
+/* The About and Methodology disclosures on the home page. Deliberately quieter
+   than .evidence: that one is the payoff of a cause page, these are asides the
+   reader can ignore on the way to picking a cause. */
+.homePanel {
+  border: 1px solid var(--mist-deep);
+  border-radius: var(--r-lg);
+  background: var(--white);
+  overflow: hidden;
+}
+
+.homePanel + .homePanel {
+  margin-top: 14px;
+}
+
+.homePanel__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 20px 22px;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.homePanel__toggle:hover {
+  background: var(--gray-50);
+}
+
+.homePanel__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.homePanel__title {
+  color: var(--navy);
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+
+.homePanel__blurb {
+  color: var(--ink-soft);
+  font-size: 14.5px;
+}
+
+.homePanel__chevron {
+  flex: none;
+  color: var(--blue-600);
+  transition: transform 0.2s ease;
+}
+
+.homePanel__toggle[aria-expanded="true"] .homePanel__chevron {
+  transform: rotate(180deg);
+}
+
+.homePanel__body {
+  padding: 0 22px 22px;
+  border-top: 1px solid var(--mist-deep);
+  padding-top: 18px;
+}
+
+.homePanel__body p {
+  margin: 0 0 12px;
+  color: var(--ink-soft);
+  line-height: 1.62;
+}
+
+.homePanel__body p:last-of-type {
+  margin-bottom: 0;
+}
+
+.homePanel__body .btn {
+  margin-top: 18px;
+}
+
 .evidence__toggle {
   display: flex;
   align-items: center;

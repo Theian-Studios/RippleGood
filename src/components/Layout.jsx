@@ -15,14 +15,6 @@ function Header() {
 
         <nav className="siteNav" aria-label="Main">
           <NavLink
-            to="/plan"
-            className={({ isActive }) =>
-              `siteNav__link siteNav__link--wide${isActive ? " is-active" : ""}`
-            }
-          >
-            Giving plan
-          </NavLink>
-          <NavLink
             to="/methodology"
             className={({ isActive }) =>
               `siteNav__link${isActive ? " is-active" : ""}`
@@ -73,7 +65,6 @@ function Footer() {
           <h4>The site</h4>
           <Link to="/#causes">Pick your cause</Link>
           <Link to="/quiz">Find your cause</Link>
-          <Link to="/plan">Build a giving plan</Link>
           <Link to="/honor">Give in someone's name</Link>
           <Link to="/my-impact">Your impact</Link>
           <Link to="/methodology">Methodology</Link>
