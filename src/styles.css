@@ -1,7 +1,7 @@
 /* ==========================================================================
    Ripple Good — brand foundation
    Navy #0A1B33 · Blue #2472EC · Sky #86C5F0 · Mist #E3EFFB
-   Poppins + Dancing Script · One goal: the most good for every dollar.
+   Poppins + Caveat · One goal: the most good for every dollar.
    ========================================================================== */
 
 :root {
@@ -50,7 +50,10 @@
   --sans: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   /* The script half of the wordmark. Only ever used for "Good". */
-  --script: "Dancing Script", "Brush Script MT", cursive;
+  /* Caveat rather than Dancing Script: the same warmth without the loops and
+     joined capitals, so "Good" reads as handwriting rather than calligraphy.
+     It also runs smaller at a given size, hence the bump in .logo__script. */
+  --script: "Caveat", "Segoe Script", "Bradley Hand", cursive;
 
   /* One mist-blue icon tile, four sizes. Every surface that shows a cause icon
      draws from these, so the set reads as one family rather than five
@@ -296,7 +299,7 @@ main {
    weight. The descender needs room the flex baseline won't give it. */
 .logo__script {
   font-family: var(--script);
-  font-size: 31px;
+  font-size: 36px;
   font-weight: 700;
   color: var(--blue);
   line-height: 1;
@@ -309,9 +312,9 @@ main {
   color: var(--white);
 }
 
-.logo--onDark .logo__script {
-  color: var(--sky);
-}
+/* No dark-background variant for the script either. This was --sky while the
+   header's was --blue, so "Good" was one blue up the page and another down it —
+   the same split the heart gradient had. */
 
 .logo--sm .logo__name {
   font-size: 20px;
