@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import CauseCard from "../components/CauseCard.jsx";
 import HeroCurve from "../components/HeroCurve.jsx";
 import HomePanel from "../components/HomePanel.jsx";
+import Wallpaper from "../components/Wallpaper.jsx";
 import VerifiedTotal from "../components/VerifiedTotal.jsx";
 import { charities } from "../data/charities.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
@@ -20,7 +21,7 @@ const STEPS = [
   },
   {
     title: "See what your gift does",
-    body: "Clean water, meals, medicine, school — with the cost figure and the evaluator behind every claim.",
+    body: "Clean water, meals, medicine, school, each with its cost figure and the evaluator behind it.",
   },
   {
     title: "Create a ripple",
@@ -103,7 +104,7 @@ export default function Home() {
             </li>
             <li>
               <strong>Effectiveness</strong>
-              How efficiently the organization runs — program spending versus
+              How efficiently the organization runs: program spending versus
               overhead, the cost to raise $100. This is what Charity Navigator
               and CharityWatch largely measure. It answers a real question, but
               says nothing about whether the programs work.
@@ -113,7 +114,7 @@ export default function Home() {
               What a dollar actually buys: lives saved, children protected, years
               of schooling gained. This is what GiveWell, Animal Charity
               Evaluators and Giving Green measure through randomized trials and
-              outcome research — and it's where the differences get enormous. Two
+              outcome research. It is also where the differences get enormous. Two
               charities with identical 85% program ratios can differ a
               hundredfold here.
             </li>
@@ -129,14 +130,13 @@ export default function Home() {
             the world, and almost none of it reaches the person deciding where to
             send $50 at the end of the year. Ripple Good is among the first sites
             built to close that gap: one place that pulls the best evidence-backed
-            picks together across every major cause — global health and poverty,
-            education, climate, animal welfare — and says in plain terms what your
+            picks together across every major cause (global health and poverty,
+            education, climate, animal welfare) and says in plain terms what your
             dollars actually buy.
           </p>
           <p>
             Pick the cause that matters to you. We'll show you the most impactful
-            organization working on it: meals delivered, treatments funded, lives
-            changed.
+            organization working on it, and what your money actually buys there.
           </p>
 
           <p className="aboutIntro__sign">
@@ -150,7 +150,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section--tight" id="causes">
+      <section className="section section--tight section--textured" id="causes">
+        <Wallpaper />
         <div className="wrap">
           <div className="sectionHead sectionHead--centred">
             <h2>Pick Your Cause</h2>
@@ -166,7 +167,7 @@ export default function Home() {
 
       <section className="section section--steps">
         <div className="wrap wrap--narrow">
-          <div className="sectionHead" style={{ textAlign: "center", margin: "0 auto 34px" }}>
+          <div className="sectionHead sectionHead--centred">
             <h2>How it works</h2>
           </div>
 
@@ -201,7 +202,7 @@ export default function Home() {
             }
           >
             <p>
-              We don't run the research — we translate it. GiveWell, Animal
+              We don't run the research. We translate it. GiveWell, Animal
               Charity Evaluators, Giving Green and Founders Pledge spend years on
               questions we could never answer alone, so every pick here names the
               evaluator behind it, shows the real cost figures, and says what

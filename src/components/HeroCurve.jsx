@@ -1,25 +1,11 @@
 /**
- * Where the dark water meets the page.
+ * Where the dark water meets the page. Three passes back to front: two faint
+ * travelling lines, the blue swell, then the page-coloured swell a few units
+ * lower, so the blue showing between them is the rim along the crest.
  *
- * A shallow, slightly uneven swell rather than the tall symmetrical dome this
- * used to be. Water at rest doesn't arc; the old curve rose almost the full
- * height of its box and read as a graphic device, and its rim was thick enough
- * to be a band in its own right.
- *
- * Three passes, back to front:
- *   1. two faint lines above the shoreline — the ripple still travelling
- *   2. the blue swell
- *   3. the page-coloured swell, a few units lower, so the blue left showing
- *      between them is the bright rim along the crest
- *
- * The rim is a gap between two fills, not a stroke, so it keeps its weight when
- * the SVG stretches — preserveAspectRatio is none, and a stroked path would
- * thin out as the window widened. The two faint lines are strokes, so they take
- * vector-effect="non-scaling-stroke" to stay hairlines at any width.
- *
- * Control points are deliberately not mirrored: the crest sits a little left of
- * centre and the two shoulders differ, which is what keeps it from reading as a
- * perfect arc.
+ * The rim is a gap between two fills rather than a stroke: preserveAspectRatio
+ * is none, and a stroked path would thin out as the window widened. The two
+ * faint lines are strokes, so they need non-scaling-stroke.
  */
 export default function HeroCurve() {
   return (

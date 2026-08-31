@@ -18,7 +18,7 @@ export default function CauseCard({ charity }) {
 
   return (
     <Link to={`/cause/${charity.id}`} className="causeCard">
-      <span className="tile">
+      <span className="tile" data-cause={charity.id}>
         <Icon size={24} strokeWidth={1.75} aria-hidden="true" />
       </span>
 

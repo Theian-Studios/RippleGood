@@ -9,12 +9,12 @@ export default function OtherCauses({ charities }) {
         const Icon = iconFor(c.icon);
         return (
           <Link to={`/cause/${c.id}`} className="otherCard" key={c.id}>
-            <span className="tile tile--sm">
+            <span className="tile tile--sm" data-cause={c.id}>
               <Icon size={19} strokeWidth={1.75} aria-hidden="true" />
             </span>
             <span>
               <span className="otherCard__label">{c.category}</span>
-              <span className="otherCard__name" style={{ display: "block" }}>
+              <span className="otherCard__name">
                 {c.name}
               </span>
             </span>

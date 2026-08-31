@@ -1,18 +1,23 @@
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { Lock } from "lucide-react";
 import Logo from "./Logo.jsx";
-import Wallpaper from "./Wallpaper.jsx";
 
 function Header() {
   return (
     <header className="siteHeader">
       <div className="wrap siteHeader__inner">
-        <Link to="/" aria-label="Ripple Good — home">
+        <Link to="/" className="siteHeader__brand" aria-label="Ripple Good — home">
           {/* The header mounts once per page load, so the heart eases in on
               arrival and then stays put — not on every route change. */}
           <Logo size="sm" animate />
         </Link>
 
+        {/* Beside the logo at every width — never hidden to save room. */}
+        <Link to="/#causes" className="btn btn--navy siteNav__cta">
+          Pick your cause
+        </Link>
+
+        {/* Drops to its own row under the logo on a phone. */}
         <nav className="siteNav" aria-label="Main">
           <NavLink
             to="/about"
@@ -22,22 +27,14 @@ function Header() {
           >
             About
           </NavLink>
-          {/* --wide: hidden below 560px so the header never runs off the edge.
-              It is in the footer, and summarised on the home page, at every
-              width. This class used to be on the giving-plan link; when that
-              went, nothing was left to drop and the nav overflowed on a
-              phone. */}
           <NavLink
             to="/methodology"
             className={({ isActive }) =>
-              `siteNav__link siteNav__link--wide${isActive ? " is-active" : ""}`
+              `siteNav__link${isActive ? " is-active" : ""}`
             }
           >
             Methodology
           </NavLink>
-          <Link to="/#causes" className="btn btn--navy siteNav__cta">
-            Pick your cause
-          </Link>
         </nav>
       </div>
     </header>
@@ -58,7 +55,7 @@ function Footer() {
             <Lock size={17} aria-hidden="true" />
             <span>
               We never handle your money. You give on the charity's own site, or
-              through Every.org — a nonprofit that passes donations on. We take no
+              through Every.org, a nonprofit that passes donations on. We take no
               cut and never see the transaction.
             </span>
           </p>
@@ -92,7 +89,7 @@ function Footer() {
       <div className="wrap siteFooter__legal">
         <span>© {new Date().getFullYear()} Ripple Good</span>
         <span className="xsep" aria-hidden="true" />
-        <span>We aggregate published research — we don't originate it.</span>
+        <span>We aggregate published research; we don't originate it.</span>
         <span className="xsep" aria-hidden="true" />
         <span>All figures are average program costs.</span>
       </div>
@@ -108,7 +105,6 @@ export default function Layout() {
 
   return (
     <div className="app">
-      <Wallpaper />
       <a className="skip-link" href="#main">
         Skip to content
       </a>

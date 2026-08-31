@@ -33,7 +33,7 @@ export function useReveal(deps = []) {
 
     items.forEach((el, i) => {
       el.classList.add("reveal");
-      el.style.transitionDelay = `${Math.min(i * 45, 400)}ms`;
+      el.style.transitionDelay = `${Math.min(i * 35, 210)}ms`;
     });
 
     let pending = false;
@@ -41,8 +41,10 @@ export function useReveal(deps = []) {
 
     const check = () => {
       pending = false;
-      // A little past the fold, so a card is already settled when it arrives.
-      const line = window.innerHeight * 0.94;
+      // Well past the fold, not at it. Revealing on arrival means a flick on a
+      // phone outruns the fade and lands on blank cards; starting 240px early
+      // gives the transition time to finish before anything is looked at.
+      const line = window.innerHeight + 240;
       for (const el of items) {
         if (el.classList.contains("is-in")) continue;
         if (el.getBoundingClientRect().top < line) {

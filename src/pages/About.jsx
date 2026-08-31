@@ -77,7 +77,7 @@ export default function About() {
             <a href="mailto:hello@ripple-good.org">hello@ripple-good.org</a>.
           </p>
 
-          <p style={{ marginTop: 30 }}>
+          <p className="u-mt-7">
             <Link to="/#causes" className="btn btn--primary">
               Pick your cause
             </Link>

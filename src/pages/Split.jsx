@@ -114,7 +114,7 @@ export default function Split() {
               <label className="customAmount__label" htmlFor="split-budget">
                 Your total budget
               </label>
-              <div className="customAmount__row" style={{ marginTop: 12 }}>
+              <div className="customAmount__row">
                 <span className="customAmount__prefix" aria-hidden="true">
                   $
                 </span>
@@ -144,7 +144,7 @@ export default function Split() {
                     key={c.id}
                   >
                     <label className="slider__head" htmlFor={`w-${c.id}`}>
-                      <span className="tile tile--xs">
+                      <span className="tile tile--xs" data-cause={c.id}>
                         <Icon size={17} strokeWidth={1.75} aria-hidden="true" />
                       </span>
                       <span className="slider__name">{c.category}</span>
@@ -193,11 +193,11 @@ export default function Split() {
 
           {plan.length > 0 && (
             <>
-              <h2 style={{ marginTop: 46, fontSize: "1.5rem" }}>
+              <h2 className="splitPlan__h">
                 Your plan: {money(planned)} across {plan.length}{" "}
                 {plan.length === 1 ? "cause" : "causes"}
               </h2>
-              <p style={{ marginTop: 10, color: "var(--ink-soft)" }}>
+              <p className="splitPlan__sub">
                 Give to each one on its own site. There's no order to follow and no
                 step you can miss — these are just {plan.length} ordinary donations.
               </p>
@@ -225,7 +225,7 @@ export default function Split() {
                 ))}
               </ol>
 
-              <p className="handoff" style={{ marginTop: 20 }}>
+              <p className="handoff u-mt-5">
                 <span>
                   Whole dollars, adding up to exactly your budget. Every link goes to
                   the charity's own donation page — Ripple Good never handles any of it.

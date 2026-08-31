@@ -122,7 +122,7 @@ export default function GivingPanel({ charity }) {
 
       {monthly && (
         <p className="cadence__note">
-          Steady funding is worth more than the same total in one-off spikes — it's
+          Steady funding is worth more than the same total in one-off spikes: it's
           what lets these organizations commit to next year's work. Outcomes below
           show what a year of giving adds up to.
         </p>
@@ -231,7 +231,7 @@ export default function GivingPanel({ charity }) {
               <Info size={15} aria-hidden="true" />
               <span>
                 Every.org passes your gift to {charity.name} and issues the
-                receipt. It suggests a tip for itself at checkout —{" "}
+                receipt. It suggests a tip for itself at checkout:{" "}
                 <strong>optional, and you can set it to zero.</strong> Ripple Good
                 never sees your money or your details.
               </span>

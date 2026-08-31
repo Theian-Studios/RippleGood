@@ -75,7 +75,7 @@ const EvidenceCard = forwardRef(function EvidenceCard({ charity, open, onToggle 
         <div className="evidence__foot">
           <a href={charity.evaluatorUrl} target="_blank" rel="noopener noreferrer">
             Read {charity.evaluator}'s full review
-            <ExternalLink size={14} aria-hidden="true" style={{ marginLeft: 5 }} />
+            <ExternalLink size={14} aria-hidden="true" />
           </a>
           {/* No freshness date on a provisional entry. Its banner says the
               figures have not been checked against the evaluator's research, and

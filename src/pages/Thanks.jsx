@@ -10,9 +10,8 @@ import { usePageMeta } from "../lib/usePageMeta.js";
 /**
  * Where Every.org returns a donor after a completed gift.
  *
- * One job: say what the gift did. It no longer logs anything — the private
- * tally is gone — but it still consumes the pending record, so a stale one
- * can't describe a later visit.
+ * One job: say what the gift did. Nothing is logged, but the pending record is
+ * still consumed so a stale one can't describe a later visit.
  *
  * What this page is NOT is proof. The amount arrives in a query string the
  * donor could edit. The verified figure lives in the database, put there by
@@ -51,8 +50,8 @@ export default function Thanks() {
 
   return (
     <section className="pageHead">
-      <div className="wrap wrap--narrow" style={{ textAlign: "center" }}>
-        <span className="tile tile--lg" style={{ margin: "0 auto 20px" }}>
+      <div className="wrap wrap--narrow u-centred">
+        <span className="tile tile--lg thanks__tile">
           <Heart size={24} strokeWidth={1.75} aria-hidden="true" />
         </span>
 
@@ -63,14 +62,14 @@ export default function Thanks() {
 
         {charity && amount !== null ? (
           <>
-            <p style={{ marginTop: 20, fontSize: "1.12rem", color: "var(--ink-soft)" }}>
+            <p className="u-mt-5 u-lead">
               {money(amount)}
               {monthly ? " a month" : ""} to <strong>{charity.name}</strong>.
               {outcome ? ` ${monthly ? "Each year: " : ""}${outcome}` : ""}
             </p>
 
             {charity.custom?.pictogram && (
-              <div style={{ display: "flex", justifyContent: "center" }}>
+              <div className="u-centre-row">
                 <Pictogram
                   units={unitsFor(monthly ? amount * 12 : amount, charity.custom)}
                   pictogram={charity.custom.pictogram}
@@ -78,19 +77,20 @@ export default function Thanks() {
               </div>
             )}
 
-            <p className="handoff" style={{ justifyContent: "center", marginTop: 22 }}>
+            <p className="handoff handoff--centred u-mt-6">
               <span>
                 Your receipt comes from Every.org by email.
               </span>
             </p>
           </>
         ) : (
-          <p style={{ marginTop: 20, fontSize: "1.12rem", color: "var(--ink-soft)" }}>
+          <p className="u-mt-5 u-lead">
             Your gift is on its way. Your receipt comes from Every.org by email.
           </p>
         )}
 
-        <div className="hero__actions" style={{ justifyContent: "center", marginTop: 30 }}>          <Link to="/#causes" className="btn btn--outline btn--lg">
+        <div className="hero__actions hero__actions--centred u-mt-7">
+          <Link to="/#causes" className="btn btn--outline btn--lg">
             Pick another cause
           </Link>
         </div>

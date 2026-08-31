@@ -17,7 +17,7 @@
 
 /** Rendered site-wide wherever a dollar figure implies a specific purchase. */
 export const AVERAGE_COST_DISCLAIMER =
-  "These are average program costs, not price tags. Your gift joins a pool that funds an entire operation — supplies, delivery, staff, monitoring — and the figures we quote are what that whole operation costs per unit of good, divided out. No single donation is tracked to a single item, and honest charities don't claim otherwise.";
+  "These are average program costs, not price tags. Your gift joins a pool that funds an entire operation (supplies, delivery, staff, monitoring), and the figures we quote are what that whole operation costs per unit of good, divided out. No single donation is tracked to a single item, and honest charities don't claim otherwise.";
 
 /** Every evaluator we lean on, credited on the methodology page. */
 export const evaluators = [
@@ -130,7 +130,7 @@ export const charities = [
     ],
     outcomeFramings: [
       "$12 hangs two nets over sleeping families.",
-      "$60 funds ten nets — a cluster of homes covered for years.",
+      "$60 funds ten nets, covering a cluster of homes for years.",
     ],
     givingLevels: [
       // No tier below $10: Every.org silently ignores a prefilled amount under
@@ -139,7 +139,7 @@ export const charities = [
       // than one that starts higher. $30 replaces it at five nets.
       { amount: 12, outcomeText: "Hangs two nets over sleeping families." },
       { amount: 30, outcomeText: "Funds five nets over sleeping families." },
-      { amount: 60, outcomeText: "Funds ten nets — a cluster of homes covered." },
+      { amount: 60, outcomeText: "Funds ten nets. A cluster of homes, covered." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -155,7 +155,7 @@ export const charities = [
     custom: {
       // VERIFY: derived from the ~$6-per-net figure above — update together.
       perDollar: 1 / 6,
-      one: "Funds one net — one sleeping space covered for years.",
+      one: "Funds one net, covering one sleeping space for years.",
       many: "Funds ~{n} nets over sleeping families.",
       tooSmall: "Joins the pooled fund that hangs the next net.",
       pictogram: { glyph: "net", label: "nets" },
@@ -186,7 +186,7 @@ export const charities = [
         // vitamin A page. This is the capsule PLUS the whole delivery operation.
         label: "Cost per supplement delivered",
         value: "~$1",
-        source: "GiveWell, all-in cost — capsule plus the campaign that gets it to the child",
+        source: "GiveWell, all-in cost: capsule plus the campaign that gets it to the child",
       },
       {
         label: "Full year of protection for one child",
@@ -210,7 +210,7 @@ export const charities = [
       // 50 supplements. The old $2 tier was a year for one child and was this
       // cause's default — and, being under $10, the one Every.org dropped most
       // often. Same arithmetic, starting where the amount survives.
-      { amount: 10, outcomeText: "Protects five children for a full year — both doses." },
+      { amount: 10, outcomeText: "Protects five children for a full year, both doses." },
       { amount: 20, outcomeText: "Protects ten children for a full year." },
       { amount: 50, outcomeText: "Funds a year of protection for roughly 25 children." },
     ],
@@ -278,7 +278,7 @@ export const charities = [
       // under Every.org's $10 floor and arrived with no amount filled in.
       { amount: 14, outcomeText: "Shields two children through the entire malaria season." },
       { amount: 70, outcomeText: "Shields ten children through the season." },
-      { amount: 210, outcomeText: "Shields thirty children — most of a village's under-fives." },
+      { amount: 210, outcomeText: "Shields thirty children, most of a village's under-fives." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -318,7 +318,7 @@ export const charities = [
     evaluatorNote: "An Animal Charity Evaluators Recommended Charity for 2025.",
     headline: "Take a hen out of a cage she can't turn around in.",
     subhead:
-      "Corporate campaigns don't rescue one animal at a time — they change the purchasing policy above millions of them at once.",
+      "Corporate campaigns don't rescue one animal at a time. They change the purchasing policy above millions of them at once.",
     costFigures: [
       {
         // VERIFY: this is THE HUMANE LEAGUE'S OWN estimate, not an independent
@@ -378,7 +378,7 @@ export const charities = [
     evaluatorNote: "Built from Giving Green's 2025–2026 Top Climate Nonprofits research.",
     headline: "Ten tons of CO₂-equivalent, in expectation.",
     subhead:
-      "Giving Green backs policy, advocacy, and neglected-technology work — the leverage points, not the retail offset market.",
+      "Giving Green backs policy, advocacy, and neglected-technology work: the leverage points, not the retail offset market.",
     costFigures: [
       {
         // VERIFY: Giving Green's cost-effectiveness bar and how they currently
@@ -447,7 +447,7 @@ export const charities = [
       "A longtime GiveWell standout, and the benchmark other charities are measured against.",
     headline: "About 90 cents of your dollar lands in a family's hands.",
     subhead:
-      "No program, no intermediary purchase — a direct mobile-money transfer to a household in extreme poverty, to spend as they judge best.",
+      "No program and no intermediary purchase: a direct mobile-money transfer to a household in extreme poverty, to spend as they judge best.",
     costFigures: [
       {
         // VERIFY: GiveDirectly's current efficiency ratio. It has held around
@@ -463,7 +463,7 @@ export const charities = [
     ],
     givingLevels: [
       { amount: 100, outcomeText: "About $90 lands directly with a family." },
-      { amount: 500, outcomeText: "About $450 — roughly half a household's full transfer." },
+      { amount: 500, outcomeText: "About $450, roughly half a household's full transfer." },
       { amount: 1000, outcomeText: "Roughly one household's full transfer: a year of transformative income." },
     ],
     evidenceNotes: {
@@ -501,7 +501,7 @@ export const charities = [
     category: "Deworming",
     icon: "Worm",
     tagline:
-      "Pennies per child — and the most openly argued-over result in effective giving.",
+      "Pennies per child, and the most openly argued-over result in effective giving.",
     name: "Evidence Action — Deworm the World",
     evaluator: evaluatorById.givewell.name,
     // VERIFY 2026-08-17: the old /charities/deworm-the-world URL was a hard 404,
@@ -523,7 +523,7 @@ export const charities = [
         label: "Cost to deworm one child for a year",
         value: "~$1 or less",
         source:
-          "Drafted from the conservative end of published per-treatment ranges — not yet checked against GiveWell's current review",
+          "Drafted from the conservative end of published per-treatment ranges, not yet checked against GiveWell's current review",
       },
     ],
     outcomeFramings: [
@@ -533,7 +533,7 @@ export const charities = [
     givingLevels: [
       { amount: 10, outcomeText: "Deworms about ten children for a year." },
       { amount: 50, outcomeText: "Deworms about fifty children for a year." },
-      { amount: 150, outcomeText: "Deworms a small school — about 150 children." },
+      { amount: 150, outcomeText: "Deworms a small school of about 150 children." },
     ],
     custom: {
       // VERIFY — PLACEHOLDER: keep in sync with the cost figure above.
@@ -584,7 +584,7 @@ export const charities = [
       "Identified through Founders Pledge research and backed by other effective-giving funders.",
     headline: "Get the lead out before the paint is ever sold.",
     subhead:
-      "LEEP works with governments to test paint, write lead regulations, and enforce them — protecting children who will never know they were at risk.",
+      "LEEP works with governments to test paint, write lead regulations, and enforce them, protecting children who will never know they were at risk.",
     costFigures: [
       {
         // VERIFY — PLACEHOLDER: replace with a figure quoted directly from
@@ -643,13 +643,8 @@ export function getOtherCharities(id) {
 }
 
 /**
- * The middle level, always.
- *
- * This used to honour a per-cause `emphasis` flag. That flag drifted: raising
- * the sub-$10 tiers left it sitting on the *first* level for global health and
- * child nutrition, so those two causes opened on their cheapest option while
- * every other cause opened on its middle one. Position is the rule now, so
- * there is nothing to keep in sync.
+ * The middle level, always. Position is the rule, so there is no per-cause flag
+ * to drift out of sync with the tiers.
  */
 export function getDefaultLevel(charity) {
   return charity.givingLevels[Math.floor(charity.givingLevels.length / 2)];

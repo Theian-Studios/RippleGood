@@ -1,10 +1,7 @@
 /**
  * A section on the home page: a heading, a one-line summary, and its body.
- *
- * This was a disclosure. It isn't any more — no toggle, no chevron, no hidden
- * state, so there is nothing to click and nothing to miss. Anything worth
- * putting behind a click on this page belongs on its own page instead, which is
- * what the links at the foot of each panel are for.
+ * Nothing is hidden behind a toggle; anything that would be belongs on its own
+ * page, which is what the link at the foot is for.
  */
 export default function HomePanel({ title, blurb, children, cta }) {
   return (

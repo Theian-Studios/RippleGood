@@ -149,7 +149,7 @@ export default function Methodology() {
               )}
             </span>
           </div>
-          <p style={{ marginTop: 18 }}>
+          <p className="u-mt-5">
             That's why the language on this site is careful in a specific way. We write{" "}
             <strong>"provides"</strong>, <strong>"funds"</strong>, and{" "}
             <strong>"delivers"</strong>. We never write "buys this exact pill" or "your
@@ -183,7 +183,7 @@ export default function Methodology() {
               it and note that we did — rather than quietly editing the page.
             </li>
           </ul>
-          <p className="handoff" style={{ marginTop: 18 }}>
+          <p className="handoff u-mt-5">
             <CalendarClock size={16} aria-hidden="true" />
             <span>Figures across the site last reviewed {longDate(lastReview())}.</span>
           </p>
@@ -286,7 +286,7 @@ export default function Methodology() {
             {/* VERIFY: set up this mailbox, or swap in a real contact address, before launch. */}
             with the cause and what you think we've missed.
           </p>
-          <p style={{ marginTop: 26 }}>
+          <p className="u-mt-6">
             <Link to="/#causes" className="btn btn--primary">
               Pick your cause
             </Link>

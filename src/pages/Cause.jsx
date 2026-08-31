@@ -5,6 +5,7 @@ import EvidenceCard from "../components/EvidenceCard.jsx";
 import Illustration from "../components/Illustration.jsx";
 import GivingPanel from "../components/GivingPanel.jsx";
 import OtherCauses from "../components/OtherCauses.jsx";
+import Wallpaper from "../components/Wallpaper.jsx";
 import { getCharityById, getOtherCharities } from "../data/charities.js";
 import { iconFor } from "../lib/icons.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
@@ -48,11 +49,11 @@ export default function Cause() {
           <div className="causeHero__layout">
             <div>
               <div className="causeHero__top">
-                <span className="tile">
+                <span className="tile" data-cause={charity.id}>
                   <Icon size={23} strokeWidth={1.75} aria-hidden="true" />
                 </span>
                 <span>
-                  <span className="causeHero__category" style={{ display: "block" }}>
+                  <span className="causeHero__category">
                     {charity.category}
                   </span>
                   <span className="causeHero__charity">Our pick: {charity.name}</span>
@@ -67,7 +68,7 @@ export default function Cause() {
           </div>
 
           {charity.provisional && (
-            <div className="note note--warn" style={{ marginTop: 22 }}>
+            <div className="note note--warn u-mt-6">
               <CircleAlert size={19} aria-hidden="true" />
               <span>
                 <strong>Provisional entry.</strong> We've drafted this cause but have
@@ -108,7 +109,7 @@ export default function Cause() {
             onToggle={() => setEvidenceOpen((v) => !v)}
           />
 
-          <div className="note note--plain" style={{ marginTop: 22 }}>
+          <div className="note note--plain u-mt-6">
             <Scale size={18} aria-hidden="true" />
             <span>
               Every figure is an average program cost, not a receipt.{" "}
@@ -118,7 +119,8 @@ export default function Cause() {
         </div>
       </section>
 
-      <section className="section section--gray">
+      <section className="section section--gray section--textured">
+        <Wallpaper />
         <div className="wrap">
           <div className="sectionHead">
             <h2>Care about something else too?</h2>
