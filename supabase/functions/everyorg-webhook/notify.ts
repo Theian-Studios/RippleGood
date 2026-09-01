@@ -22,9 +22,9 @@
 
 /** Cause ids we know how to name. Unknown ids still alert, just unprettified. */
 const CAUSE_LABELS: Record<string, string> = {
-  "global-health": "Global Health",
+  "global-health": "Malaria Nets",
   "child-nutrition": "Child Nutrition",
-  "disease-prevention": "Disease Prevention",
+  "disease-prevention": "Malaria Medicine",
   "animal-welfare": "Animal Welfare",
   climate: "Climate",
   "direct-cash": "Direct Cash",

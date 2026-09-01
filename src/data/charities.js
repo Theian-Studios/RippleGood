@@ -99,7 +99,7 @@ const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));
 export const charities = [
   {
     id: "global-health",
-    category: "Global Health",
+    category: "Malaria Nets",
     icon: "MoonStar",
     tagline: "Malaria still kills a child about every minute. A net is the cheapest wall to build.",
     name: "Against Malaria Foundation",
@@ -166,6 +166,72 @@ export const charities = [
     everyOrg: { slug: "againstmalaria", ein: "20-3069841" },
     donateUrl: "https://www.againstmalaria.com/Donation.aspx",
     lastVerified: "2026-08-14", // VERIFY: set to the date YOU last checked the sources — this renders publicly.
+  },
+
+  {
+    id: "disease-prevention",
+    category: "Malaria Medicine",
+    icon: "Pill",
+    tagline: "Malaria has a season. Medicine given ahead of it keeps children out of the hospital.",
+    name: "Malaria Consortium",
+    evaluator: evaluatorById.givewell.name,
+    evaluatorUrl: "https://www.givewell.org/charities/malaria-consortium",
+    evaluatorNote:
+      "A GiveWell Top Charity, and historically the recipient of the largest share of GiveWell-directed funding.",
+    headline: "Shield a child through the entire malaria season.",
+    subhead:
+      "Seasonal malaria chemoprevention: a course of preventive medicine given monthly through the months when transmission peaks.",
+    costFigures: [
+      {
+        // VERIFY: per-child, per-season cost from GiveWell's Malaria Consortium
+        // review. Has sat around $6–7; confirm the current figure.
+        label: "Full seasonal course for one child",
+        value: "~$6–7",
+        source: "GiveWell, covering the medicine and the community distribution that delivers it",
+      },
+      {
+        // VERIFY: GiveWell Top Charities Fund per-life-saved estimate.
+        label: "Cost per life saved (estimate)",
+        value: "~$3,600",
+        source: "GiveWell Top Charities Fund estimate",
+      },
+    ],
+    outcomeFramings: [
+      "$7 shields a child through the entire malaria season.",
+      "$70 shields ten children.",
+    ],
+    givingLevels: [
+      // Two courses rather than one, at ~$7 each: the single-child tier fell
+      // under Every.org's $10 floor and arrived with no amount filled in.
+      { amount: 14, outcomeText: "Shields two children through the entire malaria season." },
+      { amount: 70, outcomeText: "Shields ten children through the season." },
+      { amount: 210, outcomeText: "Shields thirty children, most of a village's under-fives." },
+    ],
+    evidenceNotes: {
+      whatTheyDo:
+        "Malaria Consortium runs seasonal malaria chemoprevention across the Sahel: community distributors go door to door each month of the high-transmission season, giving young children a preventive antimalarial course.",
+      method:
+        "Chemoprevention has strong trial evidence for reducing malaria cases in children during the transmission season. GiveWell models delivered courses, local malaria burden, adherence to the full monthly regimen, and what the funding displaces or unlocks — then discounts for the share that other funders would likely have covered.",
+      caveats: [
+        "The intervention is seasonal by design. It protects during the transmission months, not year-round.",
+        "Effectiveness depends on children completing the monthly courses, which is measured through household surveys rather than observed directly for every child.",
+        "Drug resistance is monitored and is a genuine long-run risk to this intervention's cost-effectiveness.",
+      ],
+    },
+    custom: {
+      // VERIFY: derived from the ~$7-per-course figure above — update together.
+      perDollar: 1 / 7,
+      one: "Shields one child through the malaria season.",
+      many: "Shields ~{n} children through the malaria season.",
+      tooSmall: "Joins the pool covering the next child's seasonal course.",
+      pictogram: { glyph: "shield", label: "children shielded" },
+    },
+    // Verified 2026-08-17 by loading every.org/malaria-consortium and reading back
+    // the organisation name. EIN 98-0627052 — Malaria Consortium.
+    // VERIFY: re-check the slug still resolves to this exact entity before launch.
+    everyOrg: { slug: "malaria-consortium", ein: "98-0627052" },
+    donateUrl: "https://www.malariaconsortium.org/pages/donate.htm",
+    lastVerified: "2026-08-14", // VERIFY: set to the date YOU last checked the sources.
   },
 
   {
@@ -238,72 +304,6 @@ export const charities = [
     // VERIFY: re-check the slug still resolves to this exact entity before launch.
     everyOrg: { slug: "hki", ein: "13-5562162" },
     donateUrl: "https://helenkellerintl.org/donate/",
-    lastVerified: "2026-08-14", // VERIFY: set to the date YOU last checked the sources.
-  },
-
-  {
-    id: "disease-prevention",
-    category: "Disease Prevention",
-    icon: "Pill",
-    tagline: "Malaria has a season. Medicine given ahead of it keeps children out of the hospital.",
-    name: "Malaria Consortium",
-    evaluator: evaluatorById.givewell.name,
-    evaluatorUrl: "https://www.givewell.org/charities/malaria-consortium",
-    evaluatorNote:
-      "A GiveWell Top Charity, and historically the recipient of the largest share of GiveWell-directed funding.",
-    headline: "Shield a child through the entire malaria season.",
-    subhead:
-      "Seasonal malaria chemoprevention: a course of preventive medicine given monthly through the months when transmission peaks.",
-    costFigures: [
-      {
-        // VERIFY: per-child, per-season cost from GiveWell's Malaria Consortium
-        // review. Has sat around $6–7; confirm the current figure.
-        label: "Full seasonal course for one child",
-        value: "~$6–7",
-        source: "GiveWell, covering the medicine and the community distribution that delivers it",
-      },
-      {
-        // VERIFY: GiveWell Top Charities Fund per-life-saved estimate.
-        label: "Cost per life saved (estimate)",
-        value: "~$3,600",
-        source: "GiveWell Top Charities Fund estimate",
-      },
-    ],
-    outcomeFramings: [
-      "$7 shields a child through the entire malaria season.",
-      "$70 shields ten children.",
-    ],
-    givingLevels: [
-      // Two courses rather than one, at ~$7 each: the single-child tier fell
-      // under Every.org's $10 floor and arrived with no amount filled in.
-      { amount: 14, outcomeText: "Shields two children through the entire malaria season." },
-      { amount: 70, outcomeText: "Shields ten children through the season." },
-      { amount: 210, outcomeText: "Shields thirty children, most of a village's under-fives." },
-    ],
-    evidenceNotes: {
-      whatTheyDo:
-        "Malaria Consortium runs seasonal malaria chemoprevention across the Sahel: community distributors go door to door each month of the high-transmission season, giving young children a preventive antimalarial course.",
-      method:
-        "Chemoprevention has strong trial evidence for reducing malaria cases in children during the transmission season. GiveWell models delivered courses, local malaria burden, adherence to the full monthly regimen, and what the funding displaces or unlocks — then discounts for the share that other funders would likely have covered.",
-      caveats: [
-        "The intervention is seasonal by design. It protects during the transmission months, not year-round.",
-        "Effectiveness depends on children completing the monthly courses, which is measured through household surveys rather than observed directly for every child.",
-        "Drug resistance is monitored and is a genuine long-run risk to this intervention's cost-effectiveness.",
-      ],
-    },
-    custom: {
-      // VERIFY: derived from the ~$7-per-course figure above — update together.
-      perDollar: 1 / 7,
-      one: "Shields one child through the malaria season.",
-      many: "Shields ~{n} children through the malaria season.",
-      tooSmall: "Joins the pool covering the next child's seasonal course.",
-      pictogram: { glyph: "shield", label: "children shielded" },
-    },
-    // Verified 2026-08-17 by loading every.org/malaria-consortium and reading back
-    // the organisation name. EIN 98-0627052 — Malaria Consortium.
-    // VERIFY: re-check the slug still resolves to this exact entity before launch.
-    everyOrg: { slug: "malaria-consortium", ein: "98-0627052" },
-    donateUrl: "https://www.malariaconsortium.org/pages/donate.htm",
     lastVerified: "2026-08-14", // VERIFY: set to the date YOU last checked the sources.
   },
 

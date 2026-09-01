@@ -21,7 +21,7 @@ const STEPS = [
   },
   {
     title: "See what your gift does",
-    body: "Clean water, meals, medicine, school, each with its cost figure and the evaluator behind it.",
+    body: "Nets, medicine, vitamin A, cash — each with the cost figure and the evaluator behind it.",
   },
   {
     title: "Create a ripple",
@@ -130,8 +130,8 @@ export default function Home() {
             the world, and almost none of it reaches the person deciding where to
             send $50 at the end of the year. Ripple Good is among the first sites
             built to close that gap: one place that pulls the best evidence-backed
-            picks together across every major cause: global health and poverty,
-            education, climate, animal welfare.
+            picks together across every major cause: global health, extreme
+            poverty, climate, animal welfare.
           </p>
           <p>
             Pick the cause that matters to you. We'll show you the most impactful
