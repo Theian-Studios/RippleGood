@@ -6,7 +6,7 @@ import Illustration from "../components/Illustration.jsx";
 import GivingPanel from "../components/GivingPanel.jsx";
 import OtherCauses from "../components/OtherCauses.jsx";
 import Wallpaper from "../components/Wallpaper.jsx";
-import { getCharityById, getOtherCharities } from "../data/charities.js";
+import { getCharityById, getOtherCharities, resolveCauseId } from "../data/charities.js";
 import { iconFor } from "../lib/icons.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
 
@@ -33,6 +33,13 @@ export default function Cause() {
   // An unknown slug is a bad link, not a page. Send it home rather than
   // rendering a dead end.
   if (!charity) return <Navigate to="/" replace />;
+
+  // A retired slug still resolves, but it shouldn't stay in the address bar:
+  // forward to the current URL so what gets copied, shared and indexed from
+  // here is the canonical one, and the old id fades out on its own.
+  if (charity.id !== causeId) {
+    return <Navigate to={`/cause/${resolveCauseId(causeId)}`} replace />;
+  }
 
   const Icon = iconFor(charity.icon);
 

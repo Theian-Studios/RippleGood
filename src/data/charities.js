@@ -98,7 +98,7 @@ const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));
  */
 export const charities = [
   {
-    id: "global-health",
+    id: "malaria-nets",
     category: "Malaria Nets",
     icon: "MoonStar",
     tagline: "Malaria still kills a child about every minute. A net is the cheapest wall to build.",
@@ -169,7 +169,7 @@ export const charities = [
   },
 
   {
-    id: "disease-prevention",
+    id: "malaria-medicine",
     category: "Malaria Medicine",
     icon: "Pill",
     tagline: "Malaria has a season. Medicine given ahead of it keeps children out of the hospital.",
@@ -632,9 +632,37 @@ export const charities = [
   },
 ];
 
-/** Look up a single cause by its URL slug. Returns undefined for unknown ids. */
+/**
+ * Cause ids that have been renamed, old -> current.
+ *
+ * A cause id is not just an internal key. It is the URL someone bookmarked,
+ * the /share/ path in a link already posted, the og/<id>.png a social card is
+ * still hotlinking, and the cause_id written against every donation ever
+ * recorded for it. Renaming one without leaving a forwarding address breaks
+ * all four silently — the old link doesn't 404, it quietly lands you on the
+ * home page, which is worse.
+ *
+ * So renames go in here and stay here. Entries are never removed: the cost of
+ * keeping one is two lines, and the cost of dropping one is a dead link
+ * somebody else is still holding.
+ */
+export const CAUSE_ALIASES = {
+  "global-health": "malaria-nets",
+  "disease-prevention": "malaria-medicine",
+};
+
+/** The current id for a slug, following one rename hop. */
+export function resolveCauseId(id) {
+  return CAUSE_ALIASES[id] ?? id;
+}
+
+/**
+ * Look up a single cause by its URL slug, current or retired.
+ * Returns undefined for ids that were never ours.
+ */
 export function getCharityById(id) {
-  return charities.find((c) => c.id === id);
+  const current = resolveCauseId(id);
+  return charities.find((c) => c.id === current);
 }
 
 /** The other five causes, for the "keep looking" strip at the foot of a page. */

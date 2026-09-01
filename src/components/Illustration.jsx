@@ -8,6 +8,8 @@
  *
  * All share a 240×190 box so every cause page's hero balances identically.
  */
+import { resolveCauseId } from "../data/charities.js";
+
 const VIEW = "0 0 240 190";
 
 /* Shared paint, keyed to the brand tokens so the set can never drift out of
@@ -201,9 +203,9 @@ function LeadExposure() {
 }
 
 const SET = {
-  "global-health": GlobalHealth,
+  "malaria-nets": GlobalHealth,
   "child-nutrition": ChildNutrition,
-  "disease-prevention": DiseasePrevention,
+  "malaria-medicine": DiseasePrevention,
   "animal-welfare": AnimalWelfare,
   climate: Climate,
   "direct-cash": DirectCash,
@@ -212,7 +214,11 @@ const SET = {
 };
 
 export default function Illustration({ causeId, className = "" }) {
-  const Art = SET[causeId];
+  // Through resolveCauseId, so a retired slug still draws its picture rather
+  // than rendering nothing at all. Returning null here is silent by design —
+  // a cause with no art shows none — which is exactly why a stale key in this
+  // map would not have announced itself.
+  const Art = SET[resolveCauseId(causeId)];
   if (!Art) return null;
 
   return (

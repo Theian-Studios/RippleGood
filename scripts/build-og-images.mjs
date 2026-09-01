@@ -34,7 +34,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { createCanvas, GlobalFonts } from "@napi-rs/canvas";
-import { charities } from "../src/data/charities.js";
+import { charities, CAUSE_ALIASES } from "../src/data/charities.js";
 
 const W = 1200;
 const H = 630;
@@ -233,6 +233,17 @@ for (const charity of charities) {
   await writeFile(`${ogDir}/${charity.id}.png`, render(charity));
   await mkdir(`${shareDir}/${charity.id}`, { recursive: true });
   await writeFile(`${shareDir}/${charity.id}/index.html`, sharePage(charity));
+
+  // Retired ids get the same card and the same redirect. A link posted before
+  // a rename keeps its preview image and still lands on the right cause; the
+  // app then forwards the old slug to the current one. Regenerated every
+  // build, so these can't rot into stale copies of an old design.
+  for (const [oldId, currentId] of Object.entries(CAUSE_ALIASES)) {
+    if (currentId !== charity.id) continue;
+    await writeFile(`${ogDir}/${oldId}.png`, render(charity));
+    await mkdir(`${shareDir}/${oldId}`, { recursive: true });
+    await writeFile(`${shareDir}/${oldId}/index.html`, sharePage(charity));
+  }
   console.log(`og+share: ${charity.id}`);
 }
 

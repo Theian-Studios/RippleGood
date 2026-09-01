@@ -14,6 +14,8 @@
  * and runs perfectly well with no Supabase project attached — which is how it
  * runs today, and how a fork of it should run.
  */
+import { resolveCauseId } from "../data/charities.js";
+
 const URL_BASE = import.meta.env.VITE_SUPABASE_URL;
 const ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
@@ -51,7 +53,16 @@ export async function fetchDonationTotals({ signal } = {}) {
       const cents = Number(row.amount_cents) || 0;
       allGifts += gifts;
       allCents += cents;
-      if (row.cause_id) totals[row.cause_id] = { gifts, amountCents: cents };
+      if (!row.cause_id) continue;
+      // Rows written before a cause was renamed still carry the old id, so
+      // fold them onto the current one — and add rather than assign, or the
+      // second of the two silently replaces the first.
+      const key = resolveCauseId(row.cause_id);
+      const prev = totals[key] ?? { gifts: 0, amountCents: 0 };
+      totals[key] = {
+        gifts: prev.gifts + gifts,
+        amountCents: prev.amountCents + cents,
+      };
     }
 
     return { totals, allGifts, allCents };

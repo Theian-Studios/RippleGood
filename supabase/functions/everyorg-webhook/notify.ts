@@ -20,11 +20,19 @@
  * Set with: supabase secrets set NAME=value
  */
 
-/** Cause ids we know how to name. Unknown ids still alert, just unprettified. */
+/**
+ * Cause ids we know how to name. Unknown ids still alert, just unprettified.
+ *
+ * The retired ids are kept deliberately: a donor who opened a donate link
+ * before a rename carries the old id in their partner_metadata, and completes
+ * the gift afterwards. Keep them in step with CAUSE_ALIASES in charities.js.
+ */
 const CAUSE_LABELS: Record<string, string> = {
-  "global-health": "Malaria Nets",
+  "malaria-nets": "Malaria Nets",
+  "global-health": "Malaria Nets", // retired
+  "malaria-medicine": "Malaria Medicine",
+  "disease-prevention": "Malaria Medicine", // retired
   "child-nutrition": "Child Nutrition",
-  "disease-prevention": "Malaria Medicine",
   "animal-welfare": "Animal Welfare",
   climate: "Climate",
   "direct-cash": "Direct Cash",
