@@ -88,9 +88,7 @@ function Footer() {
 
       <div className="wrap siteFooter__legal">
         <span>© {new Date().getFullYear()} Ripple Good</span>
-        <span className="xsep" aria-hidden="true" />
         <span>We aggregate published research; we don't originate it.</span>
-        <span className="xsep" aria-hidden="true" />
         <span>All figures are average program costs.</span>
       </div>
     </footer>

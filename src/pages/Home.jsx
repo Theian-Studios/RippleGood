@@ -85,13 +85,13 @@ export default function Home() {
             <h2>About Ripple Good</h2>
           </div>
 
-          <p className="aboutIntro__lead">
+          <p>
             Not all charities are created equal. Two organizations working on the
             same problem can differ enormously in how much good they do with the
             same dollar — and the difference is rarely the thing people look at.
           </p>
 
-          <p>Every donation is really three numbers multiplied together.</p>
+          <p>Every donation is really three numbers multiplied together:</p>
 
           {/* list-style is off, so role="list" keeps the semantics VoiceOver
               would otherwise drop. The numerals come from a counter and stay
@@ -130,9 +130,8 @@ export default function Home() {
             the world, and almost none of it reaches the person deciding where to
             send $50 at the end of the year. Ripple Good is among the first sites
             built to close that gap: one place that pulls the best evidence-backed
-            picks together across every major cause (global health and poverty,
-            education, climate, animal welfare) and says in plain terms what your
-            dollars actually buy.
+            picks together across every major cause: global health and poverty,
+            education, climate, animal welfare.
           </p>
           <p>
             Pick the cause that matters to you. We'll show you the most impactful

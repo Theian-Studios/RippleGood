@@ -52,7 +52,7 @@ export default function Cause() {
                 <span className="tile" data-cause={charity.id}>
                   <Icon size={23} strokeWidth={1.75} aria-hidden="true" />
                 </span>
-                <span>
+                <span className="causeHero__label">
                   <span className="causeHero__category">
                     {charity.category}
                   </span>

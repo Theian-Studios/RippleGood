@@ -760,7 +760,10 @@ a.mark:hover {
   margin-bottom: var(--s-5);
 }
 
-.causeHero__top > span {
+/* Was `.causeHero__top > span`, which also matched the tile — that selector
+   outranks `.tile`, so the tile lost its `display: grid; place-items: center`
+   to `flex` + `space-between` and sat its glyph against its own top edge. */
+.causeHero__label {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1122,11 +1125,6 @@ a.mark:hover {
   line-height: 1.65;
 }
 
-.aboutIntro p.aboutIntro__lead {
-  font-size: var(--t-lead);
-  color: var(--navy);
-  font-weight: 500;
-}
 
 /* The three factors, as a band rather than a long list: this sits above the
    cause grid, so it has to be scannable before it is readable. */
@@ -1148,8 +1146,6 @@ a.mark:hover {
 
 .factors li {
   counter-increment: factor;
-  padding-top: var(--s-4);
-  border-top: 2px solid var(--mist-deep);
   color: var(--ink-soft);
   font-size: var(--t-sm);
   line-height: 1.6;
@@ -1681,17 +1677,11 @@ a.mark:hover {
   color: rgba(255, 255, 255, 0.55);
 }
 
-/* On a phone the three claims each wrap to their own lines, and the dot
-   separators end up stranded at the start of a line rather than between two
-   things. Stack them and drop the dots. */
+/* On a phone the three claims each wrap to their own lines. */
 @media (max-width: 639px) {
   .siteFooter__legal {
     flex-direction: column;
     gap: var(--s-nudge);
-  }
-
-  .siteFooter__legal .xsep {
-    display: none;
   }
 }
 
@@ -2129,18 +2119,6 @@ a.mark:hover {
 
 /* ------------------------------------------------------------ ripple -- */
 
-/* The ripple as page furniture: a small concentric mark standing in for the
-   brand's spreading-circles idea. Used sparingly, as a separator or marker. */
-.xsep {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--blue);
-  box-shadow: 0 0 0 3px rgba(36, 114, 236, 0.28);
-  vertical-align: middle;
-  user-select: none;
-}
 
 .xlist {
   list-style: none;
