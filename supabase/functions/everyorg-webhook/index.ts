@@ -32,6 +32,7 @@
  * time and are labelled narrowly wherever they are shown.
  */
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { sendDonationAlert } from "./notify.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -148,16 +149,46 @@ Deno.serve(async (req) => {
   };
 
   // Layer 3: idempotency. A repeat delivery of the same charge is a no-op.
-  const { error } = await db
-    .from("donation_events")
-    .upsert(row, { onConflict: "charge_id", ignoreDuplicates: true });
+  //
+  // A plain insert, not an upsert, so that "was this the first delivery?" is
+  // answered by Postgres itself: 23505 is unique_violation on the charge_id
+  // primary key, and it is the one signal here that cannot drift. The obvious
+  // alternative — upsert(ignoreDuplicates).select() and count the rows — hangs
+  // the alert on how PostgREST chooses to represent ON CONFLICT DO NOTHING,
+  // and getting that wrong fails silently in both directions: no alerts ever,
+  // or one alert per Every.org retry.
+  const { error } = await db.from("donation_events").insert(row);
 
-  if (error) {
+  const isDuplicate = error?.code === "23505";
+
+  if (error && !isDuplicate) {
     // 5xx so Every.org retries — a dropped donation is worse than a duplicate,
     // and duplicates cannot hurt us.
-    console.error("upsert failed", error);
+    console.error("insert failed", error);
     return json(500, { error: "storage_failed" });
   }
 
-  return json(200, { ok: true });
+  const isNew = !isDuplicate;
+
+  if (isNew) {
+    // Built from the row we just stored, not from the payload, so the alert
+    // cannot carry a field the database refused to hold.
+    const alert = sendDonationAlert({
+      amountCents: row.amount_cents,
+      causeId: row.cause_id,
+      nonprofitSlug: row.nonprofit_slug,
+      frequency: row.frequency,
+      donatedAt: row.donated_at,
+    });
+
+    // Acknowledge Every.org now and deliver the alert after the response.
+    // waitUntil keeps the isolate alive for it; awaiting instead would put a
+    // third-party API on the critical path of recording a donation.
+    const runtime = (globalThis as { EdgeRuntime?: { waitUntil(p: Promise<unknown>): void } })
+      .EdgeRuntime;
+    if (runtime?.waitUntil) runtime.waitUntil(alert);
+    else await alert;
+  }
+
+  return json(200, { ok: true, recorded: isNew });
 });
