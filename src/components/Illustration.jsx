@@ -204,13 +204,13 @@ function LeadExposure() {
 
 const SET = {
   "malaria-nets": GlobalHealth,
-  "child-nutrition": ChildNutrition,
   "malaria-medicine": DiseasePrevention,
+  "child-survival": ChildNutrition,
   "animal-welfare": AnimalWelfare,
   climate: Climate,
-  "direct-cash": DirectCash,
-  deworming: Deworming,
-  "lead-exposure": LeadExposure,
+  "extreme-poverty": DirectCash,
+  "intestinal-worms": Deworming,
+  "lead-poisoning": LeadExposure,
 };
 
 export default function Illustration({ causeId, className = "" }) {

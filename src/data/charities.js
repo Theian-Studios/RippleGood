@@ -99,14 +99,16 @@ const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));
 export const charities = [
   {
     id: "malaria-nets",
+    defaultAmount: 30,
     category: "Malaria Nets",
     icon: "MoonStar",
-    tagline: "Malaria still kills a child about every minute. A net is the cheapest wall to build.",
+    tagline:
+      "Malaria still kills a child about every minute. Almost every one of those deaths is preventable.",
     name: "Against Malaria Foundation",
     evaluator: evaluatorById.givewell.name,
     evaluatorUrl: "https://www.givewell.org/charities/against-malaria-foundation",
     evaluatorNote: "A GiveWell Top Charity, and one of the longest-standing picks on their list.",
-    headline: "Hang a net over a sleeping family tonight.",
+    headline: "Put a net over a sleeping family.",
     subhead:
       "Insecticide-treated bed nets are the single best-evidenced way to keep malaria away from a child while they sleep.",
     costFigures: [
@@ -129,7 +131,7 @@ export const charities = [
       },
     ],
     outcomeFramings: [
-      "$12 hangs two nets over sleeping families.",
+      "$12 funds two nets over sleeping families.",
       "$60 funds ten nets, covering a cluster of homes for years.",
     ],
     givingLevels: [
@@ -137,9 +139,9 @@ export const charities = [
       // that, landing the donor on an empty field. At ~$6 a net the old $6 tier
       // was the honest entry point, but a tier that loses the amount is worse
       // than one that starts higher. $30 replaces it at five nets.
-      { amount: 12, outcomeText: "Hangs two nets over sleeping families." },
+      { amount: 12, outcomeText: "Funds two nets over sleeping families." },
       { amount: 30, outcomeText: "Funds five nets over sleeping families." },
-      { amount: 60, outcomeText: "Funds ten nets. A cluster of homes, covered." },
+      { amount: 60, outcomeText: "Funds ten nets — a cluster of homes." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -147,7 +149,7 @@ export const charities = [
       method:
         "GiveWell models the number of nets funded, how many people sleep under them, local malaria burden and mortality rates, and how much of the effect would have happened anyway without AMF's money. The follow-up monitoring is a large part of why AMF survives that scrutiny: the effect is measured, not assumed.",
       caveats: [
-        "Cost per life saved is a modelled average across many distributions, not a promise attached to your gift. Nets in a high-burden region avert far more harm than the same nets elsewhere.",
+        "Cost per life saved is a modeled average across many distributions, not a promise attached to your gift. Nets in a high-burden region avert far more harm than the same nets elsewhere.",
         "Insecticide resistance in mosquito populations is real and is factored into GiveWell's newer models, but it is a live source of uncertainty about the future.",
         "AMF sometimes holds funds while it negotiates a distribution. Money arriving today may be deployed in a later campaign.",
       ],
@@ -157,11 +159,11 @@ export const charities = [
       perDollar: 1 / 6,
       one: "Funds one net, covering one sleeping space for years.",
       many: "Funds ~{n} nets over sleeping families.",
-      tooSmall: "Joins the pooled fund that hangs the next net.",
+      tooSmall: "Joins the pooled fund behind the next net.",
       pictogram: { glyph: "net", label: "nets" },
     },
     // Verified 2026-08-17 by loading every.org/againstmalaria and reading back
-    // the organisation name. EIN 20-3069841 — The Against Malaria Foundation.
+    // the organization name. EIN 20-3069841 — The Against Malaria Foundation.
     // VERIFY: re-check the slug still resolves to this exact entity before launch.
     everyOrg: { slug: "againstmalaria", ein: "20-3069841" },
     donateUrl: "https://www.againstmalaria.com/Donation.aspx",
@@ -170,9 +172,11 @@ export const charities = [
 
   {
     id: "malaria-medicine",
+    defaultAmount: 70,
     category: "Malaria Medicine",
     icon: "Pill",
-    tagline: "Malaria has a season. Medicine given ahead of it keeps children out of the hospital.",
+    tagline:
+      "Malaria has a season. Most child deaths from it fall in a few predictable months.",
     name: "Malaria Consortium",
     evaluator: evaluatorById.givewell.name,
     evaluatorUrl: "https://www.givewell.org/charities/malaria-consortium",
@@ -227,7 +231,7 @@ export const charities = [
       pictogram: { glyph: "shield", label: "children shielded" },
     },
     // Verified 2026-08-17 by loading every.org/malaria-consortium and reading back
-    // the organisation name. EIN 98-0627052 — Malaria Consortium.
+    // the organization name. EIN 98-0627052 — Malaria Consortium.
     // VERIFY: re-check the slug still resolves to this exact entity before launch.
     everyOrg: { slug: "malaria-consortium", ein: "98-0627052" },
     donateUrl: "https://www.malariaconsortium.org/pages/donate.htm",
@@ -235,10 +239,12 @@ export const charities = [
   },
 
   {
-    id: "child-nutrition",
-    category: "Child Nutrition",
+    id: "child-survival",
+    defaultAmount: 20,
+    category: "Child Survival",
     icon: "Baby",
-    tagline: "Two vitamin A doses a year measurably lowers a child's chance of dying.",
+    tagline:
+      "Most child deaths come from causes we already know how to stop, cheaply.",
     name: "Helen Keller Intl",
     evaluator: evaluatorById.givewell.name,
     evaluatorUrl: "https://www.givewell.org/charities/helen-keller-international",
@@ -300,7 +306,7 @@ export const charities = [
       pictogram: { glyph: "capsule", label: "supplements" },
     },
     // Verified 2026-08-17 by loading every.org/hki and reading back
-    // the organisation name. EIN 13-5562162 — Helen Keller International.
+    // the organization name. EIN 13-5562162 — Helen Keller International.
     // VERIFY: re-check the slug still resolves to this exact entity before launch.
     everyOrg: { slug: "hki", ein: "13-5562162" },
     donateUrl: "https://helenkellerintl.org/donate/",
@@ -309,6 +315,9 @@ export const charities = [
 
   {
     id: "animal-welfare",
+    estimateNote:
+      "Hens-per-dollar is The Humane League's own estimate, not an independent one. It was on every outcome line; it belongs here, once.",
+    defaultAmount: 50,
     category: "Animal Welfare",
     icon: "Bird",
     tagline: "Most hens in the world live in a cage the size of a sheet of paper. That is changing, company by company.",
@@ -336,8 +345,8 @@ export const charities = [
     ],
     givingLevels: [
       { amount: 10, outcomeText: "Spares roughly 20 hens from battery cages." },
-      { amount: 50, outcomeText: "Reaches roughly 100 hens." },
-      { amount: 150, outcomeText: "Reaches roughly 300 hens." },
+      { amount: 50, outcomeText: "Spares roughly 100 hens from battery cages." },
+      { amount: 150, outcomeText: "Spares roughly 300 hens from battery cages." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -345,7 +354,7 @@ export const charities = [
       method:
         "ACE reviews THL on programmatic effectiveness, cost-effectiveness, and organizational health, and has recommended it repeatedly. The hens-per-dollar figure comes from THL's own modelling: commitments won, hens covered by those commitments, expected implementation rates, and the share of the win attributable to THL rather than the wider movement.",
       caveats: [
-        "The 2-hens-per-dollar figure is The Humane League's own estimate, not an independently reproduced one. We flag it as such because attribution in a coalition campaign is genuinely hard: many groups push the same company, and each may reasonably claim the win.",
+        "The 2-hens-per-dollar figure is The Humane League's own estimate, not an independently reproduced one. We flag it as such because attribution in a coalition campaign is hard: many groups push the same company, and each may reasonably claim the win.",
         "A corporate commitment is a promise about the future. Some are implemented late, and some are quietly walked back — which is why the follow-up enforcement work matters as much as the campaign.",
         "Cage-free is a large improvement in one dimension of a hen's life, not a good life. This is harm reduction at scale, and worth saying plainly.",
         "Comparing animal welfare to human health means putting a value on animal suffering. There is no objective exchange rate, and we won't pretend there is one.",
@@ -354,13 +363,13 @@ export const charities = [
     custom: {
       // VERIFY: derived from THL's own ~2-hens-per-dollar estimate above — update together.
       perDollar: 2,
-      one: "Spares one hen from a battery cage, by THL's own estimate.",
-      many: "Spares ~{n} hens from battery cages, by THL's own estimate.",
+      one: "Spares one hen from a battery cage.",
+      many: "Spares ~{n} hens from battery cages.",
       tooSmall: "Joins the pooled fund behind the next corporate campaign.",
       pictogram: { glyph: "hen", label: "hens" },
     },
     // Verified 2026-08-17 by loading every.org/thehumaneleague and reading back
-    // the organisation name. EIN 04-3817491 — The Humane League.
+    // the organization name. EIN 04-3817491 — The Humane League.
     // VERIFY: re-check the slug still resolves to this exact entity before launch.
     everyOrg: { slug: "thehumaneleague", ein: "04-3817491" },
     donateUrl: "https://thehumaneleague.org/donate",
@@ -369,14 +378,20 @@ export const charities = [
 
   {
     id: "climate",
+    directOnlyReason:
+      "Direct only: the entity listed on Every.org is Giving Green's research organization, not the regranting fund we recommend. Your amount isn't carried across for this one.",
+    estimateNote:
+      "These tonnages are expected values across a portfolio of policy bets, not measured reductions. Most bets fail; the few that land carry the average.",
+    defaultAmount: 50,
     category: "Climate",
     icon: "Wind",
-    tagline: "Not offsets. The policy and technology work that bends the whole curve.",
+    tagline:
+      "Emissions are still rising. The cheapest ton is the one never emitted.",
     name: "Giving Green Fund",
     evaluator: evaluatorById["giving-green"].name,
     evaluatorUrl: "https://www.givinggreen.earth/",
     evaluatorNote: "Built from Giving Green's 2025–2026 Top Climate Nonprofits research.",
-    headline: "Ten tons of CO₂-equivalent, in expectation.",
+    headline: "Ten tons of carbon that never reach the air.",
     subhead:
       "Giving Green backs policy, advocacy, and neglected-technology work: the leverage points, not the retail offset market.",
     costFigures: [
@@ -395,9 +410,9 @@ export const charities = [
       "$50 is roughly fifty tons, in expectation.",
     ],
     givingLevels: [
-      { amount: 10, outcomeText: "Roughly ten tons of CO₂e reduced, in expectation." },
-      { amount: 50, outcomeText: "Roughly fifty tons of CO₂e, in expectation." },
-      { amount: 250, outcomeText: "Roughly 250 tons of CO₂e, in expectation." },
+      { amount: 10, outcomeText: "Roughly ten tons of CO₂e kept out of the air." },
+      { amount: 50, outcomeText: "Roughly fifty tons of CO₂e kept out of the air." },
+      { amount: 250, outcomeText: "Roughly 250 tons of CO₂e kept out of the air." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -406,17 +421,17 @@ export const charities = [
         "Giving Green estimates expected tons of CO₂-equivalent averted per dollar, explicitly modelling the probability that an advocacy effort succeeds at all. A policy campaign that fails averts nothing; one that succeeds can shift emissions far beyond what the donation could ever buy directly. The estimate is that gamble, multiplied out.",
       caveats: [
         "\"In expectation\" is doing real work in that sentence. This is a probability-weighted average across outcomes, not tons you can point at. A given campaign may avert nothing at all.",
-        "Systems change is genuinely harder to measure than offsets. An offset gives you a tidy receipt for a small, verifiable quantity; policy work gives you a large, uncertain one. Giving Green argues — and we agree — that the second is the better bet, but the honest cost of that is a much wider error bar.",
+        "Systems change is harder to measure than offsets. An offset gives you a tidy receipt for a small, verifiable quantity; policy work gives you a large, uncertain one. Giving Green argues — and we agree — that the second is the better bet, but the honest cost of that is a much wider error bar.",
         "Attribution is contested. When a policy passes, many organizations pushed for it, and any share assigned to one of them is a judgment call.",
-        "This is the only cause on the site where the outcome is a modelled expectation rather than a delivered unit. We kept it because the expected value is high, but it does not carry the same kind of certainty as a bed net.",
+        "This is the only cause on the site where the outcome is a modeled expectation rather than a delivered unit. We kept it because the expected value is high, but it does not carry the same kind of certainty as a bed net.",
       ],
     },
     custom: {
       // VERIFY: derived from the ≲$1-per-ton threshold above — update together.
       perDollar: 1,
-      one: "Roughly one ton of CO₂-equivalent reduced, in expectation.",
-      many: "Roughly {n} tons of CO₂-equivalent reduced, in expectation.",
-      tooSmall: "Joins the pooled fund, in expectation of the next ton.",
+      one: "Roughly one ton of CO₂-equivalent kept out of the air.",
+      many: "Roughly {n} tons of CO₂-equivalent kept out of the air.",
+      tooSmall: "Joins the pooled fund behind the next ton.",
       pictogram: { glyph: "cloud", label: "tons of CO₂e, in expectation" },
     },
     // Deliberately no everyOrg entry. every.org/giving-green is "Giving Green
@@ -436,16 +451,17 @@ export const charities = [
   },
 
   {
-    id: "direct-cash",
-    category: "Direct Cash",
+    id: "extreme-poverty",
+    defaultAmount: 25,
+    category: "Extreme Poverty",
     icon: "HandCoins",
-    tagline: "The humbling option: skip the program, and let people in extreme poverty decide.",
+    tagline: "Hundreds of millions of people live on under $2 a day. They know what they need.",
     name: "GiveDirectly",
     evaluator: evaluatorById.givewell.name,
     evaluatorUrl: "https://www.givewell.org/charities/give-directly",
     evaluatorNote:
       "A longtime GiveWell standout, and the benchmark other charities are measured against.",
-    headline: "About 90 cents of your dollar lands in a family's hands.",
+    headline: "Send money straight to a family in extreme poverty.",
     subhead:
       "No program and no intermediary purchase: a direct mobile-money transfer to a household in extreme poverty, to spend as they judge best.",
     costFigures: [
@@ -462,9 +478,9 @@ export const charities = [
       "$1,000 is roughly a household's full transfer.",
     ],
     givingLevels: [
+      { amount: 25, outcomeText: "About $22 lands directly with a family." },
       { amount: 100, outcomeText: "About $90 lands directly with a family." },
-      { amount: 500, outcomeText: "About $450, roughly half a household's full transfer." },
-      { amount: 1000, outcomeText: "Roughly one household's full transfer: a year of transformative income." },
+      { amount: 500, outcomeText: "About $450 — roughly half a household's full transfer." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -472,7 +488,7 @@ export const charities = [
       method:
         "Direct cash is the most-studied intervention on this site. Multiple randomised controlled trials have tracked what recipients do with unconditional transfers and what happens afterwards to consumption, assets, earnings, and psychological wellbeing. GiveWell uses cash as the benchmark unit: every other charity's cost-effectiveness is expressed as a multiple of what the same money would do as a direct transfer.",
       caveats: [
-        "Cash is the benchmark, not the maximum. GiveWell's top health charities are estimated to do considerably more good per dollar than cash — which is exactly why cash is the honest yardstick rather than the headline pick.",
+        "Cash is the benchmark, not the maximum. GiveWell's top health charities are estimated to do considerably more good per dollar than cash — which is exactly why cash is the yardstick rather than the headline pick.",
         "The ~90% figure is a program-level efficiency ratio, not a guarantee about your specific gift, and it varies by program and country.",
         "The strongest long-run evidence covers a subset of programs and geographies. Effects measured years out are smaller and noisier than the effects measured immediately.",
       ],
@@ -485,7 +501,7 @@ export const charities = [
       tooSmall: "Every cent joins the same transfer pool.",
     },
     // Verified 2026-08-17 by loading every.org/givedirectly and reading back
-    // the organisation name. EIN 27-1661997 — GiveDirectly.
+    // the organization name. EIN 27-1661997 — GiveDirectly.
     // VERIFY: re-check the slug still resolves to this exact entity before launch.
     everyOrg: { slug: "givedirectly", ein: "27-1661997" },
     donateUrl: "https://www.givedirectly.org/donate/",
@@ -496,12 +512,13 @@ export const charities = [
     // VERIFY — PLACEHOLDER ENTRY. Every figure below was drafted without being
     // checked against Evidence Action's or GiveWell's current published pages.
     // `provisional: true` keeps that visible to readers until you do.
-    id: "deworming",
+    id: "intestinal-worms",
+    defaultAmount: 50,
     provisional: true,
-    category: "Deworming",
+    category: "Intestinal Worms",
     icon: "Worm",
     tagline:
-      "Pennies per child, and the most openly argued-over result in effective giving.",
+      "Hundreds of millions of children carry worms that cost pennies a year to clear.",
     name: "Evidence Action — Deworm the World",
     evaluator: evaluatorById.givewell.name,
     // VERIFY 2026-08-17: the old /charities/deworm-the-world URL was a hard 404,
@@ -512,7 +529,7 @@ export const charities = [
     evaluatorUrl: "https://www.givewell.org/charities/deworm-world-initiative",
     evaluatorNote:
       "Reviewed by GiveWell and still eligible for their All Grants Fund — but no longer a Top Charity. GiveWell dropped deworming from that list in 2022.",
-    headline: "Deworm a whole classroom this term.",
+    headline: "Deworm a whole classroom for a year.",
     subhead:
       "School-based mass treatment: one tablet, once or twice a year, delivered by teachers who are already standing in front of the children.",
     costFigures: [
@@ -528,11 +545,11 @@ export const charities = [
     ],
     outcomeFramings: [
       "$50 deworms roughly 50 children for a year.",
-      "$10 deworms a classroom's worth of children.",
+      "$50 deworms a classroom's worth of children for a year.",
     ],
     givingLevels: [
       { amount: 10, outcomeText: "Deworms about ten children for a year." },
-      { amount: 50, outcomeText: "Deworms about fifty children for a year." },
+      { amount: 50, outcomeText: "Deworms a classroom — about fifty children — for a year." },
       { amount: 150, outcomeText: "Deworms a small school of about 150 children." },
     ],
     custom: {
@@ -549,15 +566,15 @@ export const charities = [
       method:
         "GiveWell's case for deworming rests less on immediate health than on long-run economic effects: follow-up studies of dewormed children found higher earnings years later. GiveWell models that effect, then applies a large explicit discount for the chance it doesn't replicate — and still finds the intervention competitive, because the cost per child is so low.",
       caveats: [
-        "GiveWell removed deworming from its Top Charity list in August 2022, when it raised the bar for that list. The programme is still funded through GiveWell's All Grants Fund, but it no longer carries their strongest endorsement — and you should weigh that before giving here rather than after.",
-        "This is the most contested pick on the site, and we'd rather say so than bury it. The long-run income evidence rests on a small number of studies, one of which has been re-analysed and disputed in public. GiveWell's own model applies a heavy discount for exactly this reason.",
+        "GiveWell removed deworming from its Top Charity list in August 2022, when it raised the bar for that list. The program is still funded through GiveWell's All Grants Fund, but it no longer carries their strongest endorsement — and you should weigh that before giving here rather than after.",
+        "This is the most contested pick on the site, and we'd rather say so than bury it. The long-run income evidence rests on a small number of studies, one of which has been re-analyzed and disputed in public. GiveWell's own model applies a heavy discount for exactly this reason.",
         "The immediate health benefit for a typical treated child is modest. Most children treated do not have a heavy worm infection; the case rests on cheaply treating many to reach the few who do.",
         "If the long-run income effect turns out to be much smaller than estimated, this intervention's cost-effectiveness falls sharply — more than any other cause listed here.",
-        "We include it because a low cost multiplied by a genuinely uncertain benefit can still be a good bet. That's a judgment about risk, not a settled fact, and you may reasonably decline it.",
+        "We include it because a low cost multiplied by a very uncertain benefit can still be a good bet. That's a judgment about risk, not a settled fact, and you may reasonably decline it.",
       ],
     },
     // Verified 2026-08-17 by loading every.org/evidence-action and reading back
-    // the organisation name. EIN 90-0874591 — Evidence Action.
+    // the organization name. EIN 90-0874591 — Evidence Action.
     // VERIFY: re-check the slug still resolves to this exact entity before launch.
     everyOrg: { slug: "evidence-action", ein: "90-0874591" },
     donateUrl: "https://www.evidenceaction.org/donate/",
@@ -571,9 +588,12 @@ export const charities = [
     // VERIFY — PLACEHOLDER ENTRY. Figures below are illustrative and were NOT
     // checked against Founders Pledge's or LEEP's published research.
     // `provisional: true` keeps that visible to readers until you do.
-    id: "lead-exposure",
+    id: "lead-poisoning",
+    estimateNote:
+      "These tiers are illustrative of the kind of work your gift funds, not costed line items. LEEP does not price regulatory work per donation.",
+    defaultAmount: 25,
     provisional: true,
-    category: "Lead Exposure",
+    category: "Lead Poisoning",
     icon: "Brain",
     tagline:
       "Lead paint is still sold legally across much of the world. A child's brain does not recover.",
@@ -603,7 +623,7 @@ export const charities = [
     givingLevels: [
       { amount: 25, outcomeText: "Funds testing that shows a government its own paint is poisoned." },
       { amount: 100, outcomeText: "Funds the regulatory work behind a national lead standard." },
-      { amount: 500, outcomeText: "Helps carry one country's programme from evidence to enforcement." },
+      { amount: 500, outcomeText: "Helps carry one country's program from evidence to enforcement." },
     ],
     // No `custom` block: with no verified cost-per-child figure, a live
     // "your $25 protects ~N children" sentence would be fabricated precision.
@@ -616,12 +636,12 @@ export const charities = [
       caveats: [
         "We have not yet verified a cost-per-child figure, and we would rather show you that gap than fill it with a number we like the look of.",
         "Like climate policy, this is expected value, not delivered units. A campaign that fails protects no one; the estimate is an average across outcomes that includes those failures.",
-        "Attribution is genuinely hard. When a country adopts a lead standard, many actors contributed, and any share assigned to one organization is a judgment call.",
+        "Attribution is hard. When a country adopts a lead standard, many actors contributed, and any share assigned to one organization is a judgment call.",
         "The benefit is counterfactual and invisible: nobody can point to the child whose lead exposure never happened. That's what makes the cause neglected — and it's also why it resists the kind of photograph a bed net gets.",
       ],
     },
     // Verified 2026-08-17 by loading every.org/leep and reading back
-    // the organisation name. EIN 87-3016729 — Lead Exposure Elimination Project (LEEP).
+    // the organization name. EIN 87-3016729 — Lead Exposure Elimination Project (LEEP).
     // VERIFY: re-check the slug still resolves to this exact entity before launch.
     everyOrg: { slug: "leep", ein: "87-3016729" },
     donateUrl: "https://leadelimination.org/donate/",
@@ -646,9 +666,21 @@ export const charities = [
  * keeping one is two lines, and the cost of dropping one is a dead link
  * somebody else is still holding.
  */
+/**
+ * `estimateNote` — the one place a cause's figures get their caveat.
+ *
+ * Three causes need the reader to know something before they choose an amount:
+ * the number is the charity's own, or it is an expected value, or the tiers are
+ * illustrative. That used to be repeated on every outcome line, which made it
+ * wallpaper. It renders once, above the button, and nowhere else.
+ */
 export const CAUSE_ALIASES = {
   "global-health": "malaria-nets",
   "disease-prevention": "malaria-medicine",
+  "child-nutrition": "child-survival",
+  "direct-cash": "extreme-poverty",
+  deworming: "intestinal-worms",
+  "lead-exposure": "lead-poisoning",
 };
 
 /** The current id for a slug, following one rename hop. */
@@ -671,9 +703,16 @@ export function getOtherCharities(id) {
 }
 
 /**
- * The middle level, always. Position is the rule, so there is no per-cause flag
- * to drift out of sync with the tiers.
+ * The tier a cause opens on.
+ *
+ * Explicit per cause, because position isn't a rule — it's a coincidence that
+ * held until GiveDirectly's tiers went 100/500/1000 and "the middle one" put a
+ * $500 button in front of someone who hadn't touched anything yet.
+ *
+ * Falls back to the middle tier if defaultAmount is missing or no longer
+ * matches a tier, so a mistyped figure degrades instead of crashing.
  */
 export function getDefaultLevel(charity) {
-  return charity.givingLevels[Math.floor(charity.givingLevels.length / 2)];
+  const named = charity.givingLevels.find((l) => l.amount === charity.defaultAmount);
+  return named ?? charity.givingLevels[Math.floor(charity.givingLevels.length / 2)];
 }

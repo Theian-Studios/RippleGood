@@ -1,6 +1,5 @@
 import { forwardRef } from "react";
 import { ChevronDown, ExternalLink, FlaskConical } from "lucide-react";
-import { AVERAGE_COST_DISCLAIMER } from "../data/charities.js";
 import FreshnessBadge from "./FreshnessBadge.jsx";
 
 /**
@@ -54,22 +53,17 @@ const EvidenceCard = forwardRef(function EvidenceCard({ charity, open, onToggle 
         </div>
 
         <div className="evidence__block">
-          <h3 className="evidence__h">How {charity.evaluator} works it out</h3>
+          <h3 className="evidence__h">How {charity.evaluator} gets there</h3>
           <p>{charity.evidenceNotes.method}</p>
         </div>
 
         <div className="evidence__block">
-          <h3 className="evidence__h">What could be wrong with this</h3>
+          <h3 className="evidence__h">What could be wrong</h3>
           <ul className="caveats">
             {charity.evidenceNotes.caveats.map((c) => (
               <li key={c}>{c}</li>
             ))}
           </ul>
-        </div>
-
-        <div className="evidence__block">
-          <h3 className="evidence__h">On the dollar figures</h3>
-          <p>{AVERAGE_COST_DISCLAIMER}</p>
         </div>
 
         <div className="evidence__foot">

@@ -50,7 +50,7 @@ export default function Thanks() {
 
   return (
     <section className="pageHead">
-      <div className="wrap wrap--narrow u-centred">
+      <div className="wrap wrap--narrow u-centered">
         <span className="tile tile--lg thanks__tile">
           <Heart size={24} strokeWidth={1.75} aria-hidden="true" />
         </span>
@@ -77,7 +77,7 @@ export default function Thanks() {
               </div>
             )}
 
-            <p className="handoff handoff--centred u-mt-6">
+            <p className="handoff handoff--centered u-mt-6">
               <span>
                 Your receipt comes from Every.org by email.
               </span>
@@ -85,11 +85,13 @@ export default function Thanks() {
           </>
         ) : (
           <p className="u-mt-5 u-lead">
-            Your gift is on its way. Your receipt comes from Every.org by email.
+            If you just gave, thank you — your receipt comes by email from
+            wherever you gave. If you landed here by accident, the causes are
+            still below.
           </p>
         )}
 
-        <div className="hero__actions hero__actions--centred u-mt-7">
+        <div className="hero__actions hero__actions--centered u-mt-7">
           <Link to="/#causes" className="btn btn--outline btn--lg">
             Pick another cause
           </Link>

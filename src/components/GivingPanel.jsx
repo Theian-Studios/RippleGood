@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ArrowUpRight, Check, Info } from "lucide-react";
+import { ArrowUpRight, Check, CircleAlert, Info } from "lucide-react";
 import { getDefaultLevel } from "../data/charities.js";
 import { causeUrl, everyOrgUrl, thanksUrl } from "../lib/donate.js";
 import { newDonationRef, rememberDonation } from "../lib/donationRef.js";
@@ -43,7 +43,7 @@ export default function GivingPanel({ charity }) {
 
   // Typed something real, but under what Every.org will carry. Say so, rather
   // than silently ignoring it and sending a different number than they read.
-  // Phrased as a minimum rather than as Every.org's behaviour: the reader is
+  // Phrased as a minimum rather than as Every.org's behavior: the reader is
   // choosing an amount, not debugging our handoff.
   const belowMin =
     Number.isFinite(parsed) && parsed >= 1 && parsed < minAmount;
@@ -91,7 +91,22 @@ export default function GivingPanel({ charity }) {
   }
 
   return (
-    <div className="give">
+    <div className={`give${charity.provisional ? " give--provisional" : ""}`}>
+      {/* First thing inside the widget, not a banner floating above it. An
+          unchecked figure has to be read before an amount is chosen, and a
+          caveat further up the page is one the eye skips on the way down. */}
+      {charity.provisional && (
+        <p className="give__provisional">
+          <CircleAlert size={17} aria-hidden="true" />
+          <span>
+            <strong>Figures not yet checked.</strong> We've drafted this cause
+            but haven't verified its numbers against {charity.evaluator}'s
+            published research. Treat the amounts below as illustrative, and
+            read {charity.evaluator}'s own page before giving.
+          </span>
+        </p>
+      )}
+
       <div className="give__head">
         <p className="give__label">Choose a result</p>
 
@@ -195,61 +210,102 @@ export default function GivingPanel({ charity }) {
                 : " "}
           </p>
 
-          {/* The same quantity, drawn. Only for units you can actually count —
-              charity.custom.pictogram is absent where that isn't true. */}
-          {charity.custom.pictogram && customAmount !== null && (
-            <Pictogram
-              units={unitsFor(monthly ? customAmount * 12 : customAmount, charity.custom)}
-              pictogram={charity.custom.pictogram}
-            />
-          )}
         </div>
       )}
 
+      {/* The chosen quantity, drawn — for the selected tier as well as a typed
+          amount. This used to render only for custom amounts, so the one part
+          of the widget that makes a number feel like something was invisible
+          to anyone who just pressed a tier. Only for units you can count;
+          charity.custom.pictogram is absent where that isn't true. */}
+      {charity.custom?.pictogram && (
+        <Pictogram
+          units={unitsFor(monthly ? amount * 12 : amount, charity.custom)}
+          pictogram={charity.custom.pictogram}
+        />
+      )}
+
+      {/* One caveat, above the button, for the causes whose figures need it. */}
+      {charity.estimateNote && (
+        <p className="estimateNote">
+          <Info size={15} aria-hidden="true" />
+          <span>{charity.estimateNote}</span>
+        </p>
+      )}
+
       <div className="give__foot">
-        {/* Same tab, not a new one. Giving is the thing the reader came to do,
-            so it gets the tab they're in; success_url brings them back to
-            /thanks, and that URL is hashless precisely so it can't be lost on
-            the way. Evaluator and source links elsewhere still open beside the
-            page, because those are asides you read and come back from. */}
-        <a
-          className="donate"
-          href={everyUrl || charity.donateUrl}
-          rel="noreferrer"
-          onClick={everyUrl ? openEveryOrg : undefined}
-        >
-          Give {priceLabel(amount)} to {charity.name}
-          <ArrowUpRight size={20} aria-hidden="true" />
-        </a>
-
+        {/* Above the button, because these are the facts that change the
+            decision: where the money actually goes, and that the total on the
+            next screen will be higher than the figure just chosen unless the
+            donor changes it. The privacy line doesn't change any decision, so
+            it stays underneath. */}
         {everyUrl ? (
-          <>
-            {/* Everything the reader should know before the tab opens: who
-                receives the money, and that the total shown there will be
-                higher than the figure they just chose unless they change it. */}
-            <p className="handoff">
-              <Info size={15} aria-hidden="true" />
-              <span>
-                Every.org passes your gift to {charity.name} and issues the
-                receipt. It suggests a tip for itself at checkout:{" "}
-                <strong>optional, and you can set it to zero.</strong> Ripple Good
-                never sees your money or your details.
-              </span>
-            </p>
-
-            <p className="altRoute">
-              <a href={charity.donateUrl} rel="noreferrer">
-                Give directly on {host}
-              </a>
-            </p>
-          </>
-        ) : (
-          <p className="handoff">
-            <Info size={15} aria-hidden="true" />
+          <p className="routeNote">
+            <Info size={16} aria-hidden="true" />
             <span>
-              This opens {host}, where you'll enter the amount
-              {monthly ? " and set it to repeat" : ""} yourself. Ripple Good never sees or
-              handles your donation.
+              Goes via <strong>Every.org</strong>, a nonprofit that passes your
+              gift to {charity.name} and issues the receipt. It suggests a tip
+              for itself at checkout —{" "}
+              <strong>optional, and you can set it to zero.</strong>
+            </span>
+          </p>
+        ) : (
+          <p className="routeNote">
+            <Info size={16} aria-hidden="true" />
+            <span>
+              {charity.directOnlyReason ? (
+                <>{charity.directOnlyReason} </>
+              ) : (
+                <>
+                  Goes straight to <strong>{host}</strong>.{" "}
+                </>
+              )}
+              You enter the amount
+              {monthly ? " and set it to repeat" : ""} on their form.
+            </span>
+          </p>
+        )}
+
+        {/* Two routes, two buttons. The charity's own page was a text link
+            under a large button while the FAQ called it an "equally visible
+            second option", which it plainly wasn't. Both now say where they
+            go, so the label never hides the destination.
+
+            Same tab for Every.org: giving is what the reader came to do, and
+            success_url brings them back to /thanks. The direct route opens
+            beside the page instead, because it drops the amount and cadence
+            they just picked and they'll want this panel still on screen to
+            copy from. */}
+        <div className="routes">
+          <a
+            className="donate"
+            href={everyUrl || charity.donateUrl}
+            rel="noreferrer"
+            onClick={everyUrl ? openEveryOrg : undefined}
+          >
+            Give {priceLabel(amount)} {everyUrl ? "via Every.org" : `on ${host}`}
+            <ArrowUpRight size={20} aria-hidden="true" />
+          </a>
+
+          {everyUrl && (
+            <a
+              className="donate donate--alt"
+              href={charity.donateUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Give on {host}
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </a>
+          )}
+        </div>
+
+        {everyUrl && (
+          <p className="handoff">
+            <span>
+              {priceLabel(amount)} is carried across for you. Giving on{" "}
+              {host} opens in a new tab and starts from an empty form.
+              Ripple Good never sees your money or your details either way.
             </span>
           </p>
         )}

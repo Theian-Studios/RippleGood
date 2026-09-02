@@ -114,15 +114,15 @@
   --tile-lg: 54px;
 }
 
-[data-cause="global-health"] {
+[data-cause="malaria-nets"] {
   --tile-bg: #e4eefc;
   --tile-fg: #14509f;
 }
-[data-cause="child-nutrition"] {
+[data-cause="child-survival"] {
   --tile-bg: #dcf1ec;
   --tile-fg: #0d6153;
 }
-[data-cause="disease-prevention"] {
+[data-cause="malaria-medicine"] {
   --tile-bg: #dbeff7;
   --tile-fg: #0b5872;
 }
@@ -134,15 +134,15 @@
   --tile-bg: #e1f0e0;
   --tile-fg: #216236;
 }
-[data-cause="direct-cash"] {
+[data-cause="extreme-poverty"] {
   --tile-bg: #e4e8f9;
   --tile-fg: #2d3c94;
 }
-[data-cause="deworming"] {
+[data-cause="intestinal-worms"] {
   --tile-bg: #e4eaf1;
   --tile-fg: #394f68;
 }
-[data-cause="lead-exposure"] {
+[data-cause="lead-poisoning"] {
   --tile-bg: #f1e4f2;
   --tile-fg: #662b71;
 }
@@ -646,7 +646,7 @@ a.mark:hover {
 
 /* Centres the block as well as the text — max-width alone would leave it
    sitting against the left edge of the wrap. */
-.sectionHead--centred {
+.sectionHead--centered {
   margin-inline: auto;
   text-align: center;
 }
@@ -1038,6 +1038,97 @@ a.mark:hover {
   transform: translateY(1px);
 }
 
+/* The two facts that change the decision, directly above the button. */
+.routeNote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-sm);
+  background: var(--mist);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--navy);
+}
+
+.routeNote svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--blue-700);
+}
+
+/* One caveat per cause, above the button, for figures that need one. */
+.estimateNote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--border);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.estimateNote svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--ink-faint);
+}
+
+/* Two routes, side by side from 640px. The charity's own page used to be a
+   text link under a large button while the FAQ called it an equally visible
+   second option. */
+.routes {
+  display: grid;
+  gap: var(--s-3);
+}
+
+@media (min-width: 640px) {
+  .routes {
+    grid-template-columns: 1.35fr 1fr;
+    align-items: stretch;
+  }
+}
+
+.donate--alt {
+  background: var(--white);
+  border: 2px solid var(--border-strong);
+  color: var(--navy);
+  box-shadow: none;
+  font-size: var(--t-md);
+  padding: var(--s-4) var(--s-5);
+}
+
+.donate--alt:hover {
+  background: var(--gray-50);
+  border-color: var(--navy);
+}
+
+/* An unchecked cause says so before you can choose an amount. */
+.give__provisional {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  margin-bottom: var(--s-5);
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--amber-line);
+  border-radius: var(--r-sm);
+  background: var(--amber-bg);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--amber-ink);
+}
+
+.give__provisional svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+.give__provisional strong {
+  font-weight: 600;
+}
+
 .handoff {
   display: flex;
   align-items: flex-start;
@@ -1170,11 +1261,8 @@ a.mark:hover {
   font-size: var(--t-base);
 }
 
-.aboutIntro p.aboutIntro__sign {
-  margin-top: var(--s-5);
-  color: var(--navy);
-  font-size: var(--t-lg);
-  font-weight: 600;
+.aboutIntro__cta {
+  margin-top: var(--s-6);
 }
 
 .aboutIntro .btn {
@@ -1997,7 +2085,7 @@ a.mark:hover {
 /* --------------------------------------------------------------- tally -- */
 
 /* Deliberately quiet, and not a link: it states a fact and
-   asks nothing. Centred so it reads as a standing figure rather than a row. */
+   asks nothing. Centered so it reads as a standing figure rather than a row. */
 .verifiedTotal {
   padding: var(--s-6) var(--s-6);
   border: 1px solid var(--mist-deep);
@@ -2186,7 +2274,7 @@ a.mark:hover {
   z-index: 2;
 }
 
-/* Centred column, as on the brand sheet. */
+/* Centered column, as on the brand sheet. */
 .hero__inner {
   max-width: 760px;
   margin: 0 auto;
@@ -2198,15 +2286,15 @@ a.mark:hover {
   color: var(--white);
 }
 
-/* Plain colour, not the underlined .mark: across two lines that rule drew a
+/* Plain color, not the underlined .mark: across two lines that rule drew a
    separate bar under each fragment and read as a mistake. */
 /* The same blue as the primary button, so the accent in the headline and the
-   button under it read as one colour rather than two nearly-alike ones. */
+   button under it read as one color rather than two nearly-alike ones. */
 .hero__accent {
   color: var(--blue);
 }
 
-/* The eyebrow takes the headline accent's colour rather than the darker
+/* The eyebrow takes the headline accent's color rather than the darker
    --blue-600 it inherits from .eyebrow, which was mixed for light pages and
    sits too close to the navy here. */
 /* White. The eyebrow is 12.5px, which needs 4.5:1 against the navy — --blue
@@ -2513,12 +2601,12 @@ a.mark:hover {
   transform: rotate(-12deg) scale(1.08);
 }
 
-/* Centred variants, for the thank-you page. */
-.hero__actions--centred {
+/* Centered variants, for the thank-you page. */
+.hero__actions--centered {
   justify-content: center;
 }
 
-.handoff--centred {
+.handoff--centered {
   justify-content: center;
 }
 
@@ -2538,7 +2626,7 @@ a.mark:hover {
 
 /* ---------------------------------------------------------- utilities -- */
 
-.u-centred {
+.u-centered {
   text-align: center;
 }
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { ArrowLeft, BadgeCheck, CircleAlert, Scale } from "lucide-react";
+import { ArrowLeft, BadgeCheck, Scale } from "lucide-react";
 import EvidenceCard from "../components/EvidenceCard.jsx";
 import Illustration from "../components/Illustration.jsx";
 import GivingPanel from "../components/GivingPanel.jsx";
@@ -73,19 +73,6 @@ export default function Cause() {
 
             <Illustration causeId={charity.id} className="causeHero__art" />
           </div>
-
-          {charity.provisional && (
-            <div className="note note--warn u-mt-6">
-              <CircleAlert size={19} aria-hidden="true" />
-              <span>
-                <strong>Provisional entry.</strong> We've drafted this cause but have
-                not yet checked its figures against {charity.evaluator}'s published
-                research. Treat the numbers below as illustrative, and read{" "}
-                {charity.evaluator}'s own page before giving. This banner stays until
-                the check is done.
-              </span>
-            </div>
-          )}
 
         </div>
       </section>

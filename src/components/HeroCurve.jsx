@@ -1,6 +1,6 @@
 /**
  * Where the dark water meets the page. Three passes back to front: two faint
- * travelling lines, the blue swell, then the page-coloured swell a few units
+ * travelling lines, the blue swell, then the page-colored swell a few units
  * lower, so the blue showing between them is the rim along the crest.
  *
  * The rim is a gap between two fills rather than a stroke: preserveAspectRatio

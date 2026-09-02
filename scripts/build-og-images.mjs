@@ -44,7 +44,7 @@ const WHITE = "#ffffff";
 const MUTED = "rgba(255,255,255,0.62)";
 
 /** The Ripple heart, drawn at (x, y) with the given height. Two ripple bands
- *  are cut out by painting them in the background colour, which is fine here
+ *  are cut out by painting them in the background color, which is fine here
  *  because both cards have a known solid navy ground. */
 function drawMark(ctx, x, y, h, bg) {
   const s = h / 100;

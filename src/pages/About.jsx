@@ -13,12 +13,12 @@ export default function About() {
         <div className="wrap wrap--narrow">
           <p className="eyebrow">About</p>
           <h1>
-            Don't just donate. <span className="mark">Make the biggest ripple.</span>
+            Where you give matters <span className="mark">more than how much.</span>
           </h1>
           <p>
-            We connect your generosity to the charities proven to create the most
-            impact — backed by evidence, focused on outcomes, and driven by the
-            simple idea that where you give matters as much as whether you do.
+            The gap between an average charity and the best-evidenced one in the
+            same cause is not marginal. This site exists to close the distance
+            between wanting to help and knowing where to send it.
           </p>
         </div>
       </section>
@@ -27,15 +27,16 @@ export default function About() {
         <div className="wrap wrap--narrow prose">
           <h2>The gap we're trying to close</h2>
           <p>
-            Almost everyone wants to help. Far fewer know where to send the money — and
-            the honest reason is that finding out is years of work, across dozens of
-            causes. So most giving goes to whoever asked most recently.
+            Almost everyone wants to help. Far fewer know where to send the money,
+            because finding out is years of work across dozens of causes. So most
+            giving goes to whoever asked most recently.
           </p>
           <p>
             Meanwhile, the research is unambiguous about one thing: the difference
             between an average charity and the best-evidenced one in the same cause is
-            not marginal. It can be a factor of a hundred. That gap is the whole reason
-            this site exists.
+            not marginal. The best options can be on the order of{" "}
+            <Link to="/methodology#the-100x-claim">100x the median</Link>. That gap is
+            the whole reason this site exists.
           </p>
 
           <h2>What we do about it</h2>
@@ -57,8 +58,10 @@ export default function About() {
           </h2>
           <p>
             We are not a charity evaluator, and we're not a payment processor. We don't
-            originate research, and we never touch your money — every donate button on
-            this site is a plain outbound link to the charity's own donation page. If
+            originate research, and we never touch your money. Every donate button is
+            an outbound link, either to the charity's own donation page or to
+            Every.org, a nonprofit that receives the gift and grants it on; every
+            cause page offers both and says which is which. If
             Ripple Good disappeared tomorrow, every organization we recommend would still be
             there, and the research behind them would still be public. That's by design.
           </p>

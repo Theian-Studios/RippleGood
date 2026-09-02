@@ -32,12 +32,16 @@ const CAUSE_LABELS: Record<string, string> = {
   "global-health": "Malaria Nets", // retired
   "malaria-medicine": "Malaria Medicine",
   "disease-prevention": "Malaria Medicine", // retired
-  "child-nutrition": "Child Nutrition",
+  "child-survival": "Child Survival",
+  "child-nutrition": "Child Survival", // retired
   "animal-welfare": "Animal Welfare",
   climate: "Climate",
-  "direct-cash": "Direct Cash",
-  deworming: "Deworming",
-  "lead-exposure": "Lead Exposure",
+  "extreme-poverty": "Extreme Poverty",
+  "direct-cash": "Extreme Poverty", // retired
+  "intestinal-worms": "Intestinal Worms",
+  deworming: "Intestinal Worms", // retired
+  "lead-poisoning": "Lead Poisoning",
+  "lead-exposure": "Lead Poisoning", // retired
 };
 
 export type DonationAlert = {

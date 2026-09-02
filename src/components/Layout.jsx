@@ -54,9 +54,8 @@ function Footer() {
           <p className="siteFooter__money">
             <Lock size={17} aria-hidden="true" />
             <span>
-              We never handle your money. You give on the charity's own site, or
-              through Every.org, a nonprofit that passes donations on. We take no
-              cut and never see the transaction.
+              We never handle your money, and take no cut of any gift. Giving
+              happens on the charity's own site or through Every.org.
             </span>
           </p>
         </div>
@@ -82,6 +81,9 @@ function Footer() {
             rel="noopener noreferrer"
           >
             Giving Green
+          </a>
+          <a href="https://www.founderspledge.com/" target="_blank" rel="noopener noreferrer">
+            Founders Pledge
           </a>
         </nav>
       </div>

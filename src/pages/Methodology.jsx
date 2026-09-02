@@ -82,7 +82,7 @@ export default function Methodology() {
             </div>
           </div>
 
-          <h2 id="the-100x-claim">The "~100x" on our front page</h2>
+          <h2 id="the-100x-claim">The "100x the median" claim</h2>
           <p>
             It's the biggest claim on this site, so it gets a source like every other
             one. The best evidence comes from global health, where cost-effectiveness
@@ -100,13 +100,13 @@ export default function Methodology() {
               "The Moral Imperative toward Cost-Effectiveness in Global Health"
             </a>{" "}
             {/* VERIFY: re-read the essay and confirm this link and the "~100x vs
-                median" characterisation before launch — don't let the summary
+                median" characterization before launch — don't let the summary
                 drift stronger than the source. */}
             is the classic treatment of that data, and it's where our framing comes
             from.
           </p>
           <p>
-            Two honest limits. First, that spread is measured across{" "}
+            Two limits. First, that spread is measured across{" "}
             <em>interventions</em>, not charity ratings — we use it as evidence about
             how wide the distribution is, and rely on the evaluators to find the
             organizations at its top end. Second, the measurement is sharpest in
@@ -153,7 +153,7 @@ export default function Methodology() {
             That's why the language on this site is careful in a specific way. We write{" "}
             <strong>"provides"</strong>, <strong>"funds"</strong>, and{" "}
             <strong>"delivers"</strong>. We never write "buys this exact pill" or "your
-            $6 sent this net to this child," because no honest accounting can trace one
+            $6 sent this net to this child," because no accounting can trace one
             donation to one item. Charities that talk that way are describing a feeling,
             not a transaction.
           </p>
@@ -225,26 +225,31 @@ export default function Methodology() {
             Often, but it depends on the charity and on where you pay tax — several of
             these organizations are registered charities in multiple countries, with
             different entities for different donors. The charity's own donation page
-            is the authoritative answer, and since you give there directly, nothing
-            about using Ripple Good changes your tax situation in either direction.
+            is the authoritative answer. If you give on the charity's own site,
+            nothing about using Ripple Good changes your tax situation in either
+            direction. Through Every.org the receipt comes from Every.org instead,
+            which is a US 501(c)(3) — worth checking if you file outside the US, or
+            if your employer's matching scheme excludes intermediaries.
             {/* VERIFY: keep this generic — do not name specific 501(c)(3) statuses
                 here without checking each charity's current registrations. */}
           </p>
 
           <h3>Can I give monthly?</h3>
           <p>
-            Yes — set it up on the charity's donation page when you land there.
-            {/* VERIFY: confirm every donate page actually offers a recurring
+            Yes. Every cause page has a monthly toggle, and on the Every.org route
+            the cadence is carried across with the amount. Giving on the charity's
+            own site instead means setting the recurrence up there yourself.
+            {/* VERIFY: confirm every direct donate page offers a recurring
                 option before promising this. */}{" "}
-            Steady monthly funding is genuinely worth more to these organizations than
-            the same total in one-off spikes: it's what lets them sign contracts for
-            next year's distributions.
+            Steady monthly funding is worth more to these organizations than the same
+            total in one-off spikes: it's what lets them sign contracts for next
+            year's distributions.
           </p>
 
           <h3>Why isn't my favorite charity here?</h3>
           <p>
-            One of two honest reasons: either no rigorous public evaluation of it
-            exists, or its evaluator's numbers put another organization ahead within
+            One of two reasons: either no rigorous public evaluation of it exists,
+            or its evaluator's numbers put another organization ahead within
             the same cause. Neither means your charity does no good — this site ranks
             by measured cost-effectiveness, which is a narrower question than whether
             an organization is worthwhile. If you think we've missed an evaluation
