@@ -15,8 +15,19 @@ export default function ScrollToTop() {
   const { pathname, hash, key } = useLocation();
 
   useEffect(() => {
-    if (hash) {
-      const target = document.querySelector(hash);
+    // Not every hash is a selector. Legacy links from when this site used a
+    // HashRouter look like "#/cause/climate", and querySelector throws a
+    // SyntaxError on that — which, unguarded, took the whole app down with it
+    // rather than merely failing to scroll. An id can't contain "/" anyway, so
+    // that alone rules out the entire old URL shape; the try/catch covers the
+    // rest of what a hand-typed fragment can be.
+    if (hash && hash.length > 1 && !hash.includes("/")) {
+      let target = null;
+      try {
+        target = document.querySelector(hash);
+      } catch {
+        target = null;
+      }
       if (target) {
         target.scrollIntoView({ block: "start" });
         return;

@@ -128,7 +128,9 @@ export const charities = [
         label: "Cost per life saved (estimate)",
         value: "~$5,500",
         source:
-          "GiveWell estimate, 2022–2024. Some GiveWell materials cite a $3,000–$5,000 range; the figure moves with where nets are sent.",
+          "GiveWell's stated average for AMF, checked 2026-09-01. The figure moves with where nets are sent.",
+        comparable: 5500,
+        range: { low: 3000, high: 8000 },
       },
     ],
     outcomeFramings: [
@@ -198,8 +200,11 @@ export const charities = [
       {
         // VERIFY: GiveWell Top Charities Fund per-life-saved estimate.
         label: "Cost per life saved (estimate)",
-        value: "~$3,600",
-        source: "GiveWell Top Charities Fund estimate",
+        // Was ~$3,600, which was stale: GiveWell's top-charities page states
+        // $4,000 as the average for seasonal malaria chemoprevention.
+        value: "~$4,000",
+        source: "GiveWell's stated average for SMC, checked 2026-09-01",
+        comparable: 4000,
       },
     ],
     outcomeFramings: [
@@ -272,8 +277,13 @@ export const charities = [
         // VERIFY: the per-death-averted range is wide and country-dependent.
         // Confirm against GiveWell's current review before launch.
         label: "Cost per death averted",
-        value: "$1,000–$8,500",
-        source: "GiveWell estimate, varying widely by country and baseline mortality",
+        value: "~$3,500",
+        source:
+          "GiveWell's stated average for vitamin A supplementation, checked 2026-09-01. The country-by-country spread is wide, and the bar below shows it.",
+        comparable: 3500,
+        // Drawn as a bar rather than left as text: "$1,000-$8,500" is a number
+        // nobody can feel, and the point is how wide it is.
+        range: { low: 1000, high: 8500 },
       },
     ],
     outcomeFramings: [

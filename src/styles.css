@@ -1424,6 +1424,112 @@ a.mark:hover {
   color: var(--ink-faint);
 }
 
+/* A range drawn, not written. */
+.rangeBar {
+  margin: var(--s-3) 0 var(--s-2);
+  max-width: 340px;
+}
+
+.rangeBar__track {
+  position: relative;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--gray);
+  border: 1px solid var(--border);
+}
+
+.rangeBar__span {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-pill);
+  background: var(--mist-deep);
+}
+
+/* The published average, marked on the spread it sits inside. */
+.rangeBar__point {
+  position: absolute;
+  top: 50%;
+  width: 3px;
+  height: 18px;
+  margin-left: -1px;
+  border-radius: 2px;
+  background: var(--blue-700);
+  transform: translateY(-50%);
+}
+
+.rangeBar__ends {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--s-1);
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The same figure across the picks whose evaluator publishes it on one scale. */
+.compare {
+  display: grid;
+  gap: var(--s-2);
+  margin: 0 0 var(--s-3);
+  padding: 0;
+  list-style: none;
+}
+
+.compare__row {
+  display: grid;
+  grid-template-columns: minmax(0, 9rem) 1fr auto;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.compare__row.is-self {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.compare__name {
+  min-width: 0;
+}
+
+.compare__track {
+  height: 10px;
+  border-radius: var(--r-pill);
+  background: var(--gray);
+}
+
+.compare__fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--mist-deep);
+}
+
+.compare__row.is-self .compare__fill {
+  background: var(--blue);
+}
+
+.compare__value {
+  font-variant-numeric: tabular-nums;
+}
+
+.compare__note {
+  font-size: var(--t-xs);
+  color: var(--ink-faint);
+}
+
+@media (max-width: 639px) {
+  .compare__row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .compare__track {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+}
+
 .caveats {
   margin: 0;
   padding: 0;
@@ -2663,6 +2769,64 @@ a.mark:hover {
 .splitPlan__sub {
   margin-top: var(--s-3);
   color: var(--ink-soft);
+}
+
+/* --------------------------------------------------- same dollar strip -- */
+
+.sameDollar__title {
+  font-size: var(--t-2xl);
+  color: var(--navy);
+}
+
+.sameDollar__lead {
+  margin-top: var(--s-2);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.sameDollar__list {
+  display: grid;
+  gap: 0;
+  margin: var(--s-4) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.sameDollar__row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 9rem) 1fr;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: background-color var(--dur-1) ease;
+}
+
+.sameDollar__row:hover {
+  background: var(--gray-50);
+}
+
+.sameDollar__cause {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.sameDollar__outcome {
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+@media (max-width: 639px) {
+  .sameDollar__row {
+    grid-template-columns: auto 1fr;
+  }
+
+  .sameDollar__outcome {
+    grid-column: 2;
+  }
 }
 
 /* ---------------------------------------------------------- utilities -- */

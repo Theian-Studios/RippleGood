@@ -1,6 +1,8 @@
 import { forwardRef } from "react";
 import { ChevronDown, ExternalLink, FlaskConical } from "lucide-react";
 import FreshnessBadge from "./FreshnessBadge.jsx";
+import { charities } from "../data/charities.js";
+import { money } from "../lib/format.js";
 
 /**
  * The rigorous half of "feeling on the surface, math underneath."
@@ -14,8 +16,43 @@ import FreshnessBadge from "./FreshnessBadge.jsx";
  * Open state is owned by the page so the "How we know" footnote next to the
  * headline can open this and scroll to it.
  */
+/**
+ * A range drawn instead of written. "$1,000-$8,500" is a pair of numbers most
+ * readers slide past; the same thing as a bar shows how wide the uncertainty
+ * is at a glance, with the average marked on it.
+ */
+function RangeBar({ range, point }) {
+  const span = range.high - range.low;
+  const at = point ? ((point - range.low) / span) * 100 : null;
+  return (
+    <div className="rangeBar">
+      <div className="rangeBar__track">
+        <div className="rangeBar__span" />
+        {at !== null && (
+          <div className="rangeBar__point" style={{ left: `${at}%` }} />
+        )}
+      </div>
+      <div className="rangeBar__ends">
+        <span>{money(range.low)}</span>
+        <span>{money(range.high)}</span>
+      </div>
+    </div>
+  );
+}
+
 const EvidenceCard = forwardRef(function EvidenceCard({ charity, open, onToggle }, ref) {
   const panelId = `evidence-${charity.id}`;
+
+  // Every cause whose evaluator publishes the same figure on the same scale.
+  const siblings = charities
+    .map((c) => {
+      const f = c.costFigures.find((x) => x.comparable);
+      return f ? { id: c.id, category: c.category, figure: f.comparable } : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.figure - b.figure);
+  const widest = Math.max(...siblings.map((s) => s.figure), 1);
+  const isSibling = siblings.some((s) => s.id === charity.id);
 
   return (
     <section className="evidence" ref={ref} aria-labelledby={`${panelId}-title`}>
@@ -41,11 +78,44 @@ const EvidenceCard = forwardRef(function EvidenceCard({ charity, open, onToggle 
               <div className="figure" key={f.label}>
                 <div className="figure__value">{f.value}</div>
                 <div className="figure__label">{f.label}</div>
+                {f.range && <RangeBar range={f.range} point={f.comparable} />}
                 <div className="figure__source">{f.source}</div>
               </div>
             ))}
           </div>
         </div>
+
+        {isSibling && siblings.length > 1 && (
+          <div className="evidence__block">
+            <h3 className="evidence__h">The same figure, across GiveWell's picks</h3>
+            {/* Not a ranking, and not a shortlist to choose from — the pick on
+                this page is still the pick. It is the one comparison GiveWell
+                publishes on a single scale, and seeing it makes the number
+                above mean something instead of floating on its own. */}
+            <ul className="compare" role="list">
+              {siblings.map((sib) => (
+                <li
+                  className={`compare__row${sib.id === charity.id ? " is-self" : ""}`}
+                  key={sib.id}
+                >
+                  <span className="compare__name">{sib.category}</span>
+                  <span className="compare__track" aria-hidden="true">
+                    <span
+                      className="compare__fill"
+                      style={{ width: `${(sib.figure / widest) * 100}%` }}
+                    />
+                  </span>
+                  <span className="compare__value">{money(sib.figure)}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="compare__note">
+              Lower is cheaper per life saved. All three sit far inside
+              GiveWell's funding bar; the spread between them is small next to
+              the spread between any of them and an unevaluated charity.
+            </p>
+          </div>
+        )}
 
         <div className="evidence__block">
           <h3 className="evidence__h">What {charity.name} does</h3>

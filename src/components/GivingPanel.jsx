@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowUpRight, Check, CircleAlert, Info } from "lucide-react";
 import { getDefaultLevel } from "../data/charities.js";
 import { causeUrl, everyOrgUrl, thanksUrl } from "../lib/donate.js";
@@ -18,7 +18,7 @@ import Pictogram from "./Pictogram.jsx";
  * involved in the transaction. We are not — the donor enters the amount, and
  * chooses one-time or monthly, on the charity's own page.
  */
-export default function GivingPanel({ charity }) {
+export default function GivingPanel({ charity, onSelectionChange }) {
   const [level, setLevel] = useState(() => getDefaultLevel(charity));
   const [customText, setCustomText] = useState("");
   const [monthly, setMonthly] = useState(false);
@@ -54,6 +54,12 @@ export default function GivingPanel({ charity }) {
 
   const priceLabel = (n) => (monthly ? `${money(n)}/month` : money(n));
   const customOutcome = customAmount === null ? null : outcomeFor(customAmount);
+
+  // Reported up rather than lifted out: the widget still owns its state, and
+  // the page only needs to read the result to show the same figure elsewhere.
+  useEffect(() => {
+    onSelectionChange?.({ amount, monthly });
+  }, [amount, monthly, onSelectionChange]);
 
   /**
    * Minted during render, not on click, so the attribution is already in the

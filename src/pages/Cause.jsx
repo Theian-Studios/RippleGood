@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowLeft, BadgeCheck, Scale } from "lucide-react";
 import EvidenceCard from "../components/EvidenceCard.jsx";
 import Illustration from "../components/Illustration.jsx";
 import GivingPanel from "../components/GivingPanel.jsx";
 import OtherCauses from "../components/OtherCauses.jsx";
+import SameDollar from "../components/SameDollar.jsx";
 import Wallpaper from "../components/Wallpaper.jsx";
 import { getCharityById, getOtherCharities, resolveCauseId } from "../data/charities.js";
 import { iconFor } from "../lib/icons.js";
@@ -15,6 +16,9 @@ export default function Cause() {
   const charity = getCharityById(causeId);
 
   const [evidenceOpen, setEvidenceOpen] = useState(false);
+  const [selection, setSelection] = useState(null);
+  // Stable identity, or the effect that reports it would fire every render.
+  const onSelectionChange = useCallback((next) => setSelection(next), []);
   const evidenceRef = useRef(null);
 
   // Moving between causes only changes the route param, so React keeps this
@@ -23,6 +27,11 @@ export default function Cause() {
   // for the same reason — otherwise its selected amount carries over too.)
   useEffect(() => {
     setEvidenceOpen(false);
+    // Deliberately not clearing `selection` here. Child effects run before
+    // parent ones, so GivingPanel — which is keyed by charity.id and therefore
+    // remounts on every cause change — has already reported the new cause's
+    // default by the time this runs. Resetting it here threw that away, and
+    // the strip only appeared once the reader touched a tier.
   }, [causeId]);
 
   // The same title the prerender writes into the static file, so a crawler that
@@ -81,7 +90,11 @@ export default function Cause() {
 
       <section className="section section--tight">
         <div className="wrap wrap--narrow">
-          <GivingPanel charity={charity} key={charity.id} />
+          <GivingPanel
+            charity={charity}
+            key={charity.id}
+            onSelectionChange={onSelectionChange}
+          />
 
           {/* Under the panel, not above it: the evaluator is what backs the ask
               up, so it reads better as the answer to "says who?" than as a
@@ -114,6 +127,18 @@ export default function Cause() {
           </div>
         </div>
       </section>
+
+      {selection && (
+        <section className="section section--tight">
+          <div className="wrap wrap--narrow">
+            <SameDollar
+              amount={selection.amount}
+              monthly={selection.monthly}
+              currentId={charity.id}
+            />
+          </div>
+        </section>
+      )}
 
       <section className="section section--gray section--textured">
         <Wallpaper />
