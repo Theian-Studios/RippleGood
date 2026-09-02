@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { ArrowUpRight, ClipboardCopy, Check, RotateCcw } from "lucide-react";
 import { charities } from "../data/charities.js";
 import { approxOutcome, money } from "../lib/format.js";
-import { iconFor } from "../lib/icons.js";
+import { iconFor } from "../lib/icons.jsx";
 import { usePageMeta } from "../lib/usePageMeta.js";
 
 /**
@@ -77,11 +77,11 @@ export default function Split() {
   async function copyPlan() {
     const lines = plan.map(
       (r) =>
-        `${money(r.amount)} — ${r.charity.name} (${r.charity.category})\n  ${
+        `${money(r.amount)} to ${r.charity.name} (${r.charity.category})\n  ${
           r.outcome || r.charity.headline
         }\n  ${r.charity.donateUrl}`,
     );
-    const text = `My giving plan — ${money(planned)} total\n\n${lines.join("\n\n")}\n\nBuilt with ripple-good.org`;
+    const text = `My giving plan: ${money(planned)} total\n\n${lines.join("\n\n")}\n\nBuilt with ripple-good.org`;
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
@@ -101,7 +101,7 @@ export default function Split() {
           </h1>
           <p>
             Nobody cares about exactly one thing. Set a budget, weight the causes,
-            and we'll work out the split and what it adds up to — then you give to
+            and we'll work out the split and what it adds up to. Then you give to
             each charity directly, as always.
           </p>
         </div>
@@ -199,7 +199,7 @@ export default function Split() {
               </h2>
               <p className="splitPlan__sub">
                 Give to each one on its own site. There's no order to follow and no
-                step you can miss — these are just {plan.length} ordinary donations.
+                step you can miss. These are just {plan.length} ordinary donations.
               </p>
 
               <ol className="planList">
@@ -228,7 +228,7 @@ export default function Split() {
               <p className="handoff u-mt-5">
                 <span>
                   Whole dollars, adding up to exactly your budget. Every link goes to
-                  the charity's own donation page — Ripple Good never handles any of it.
+                  the charity's own donation page. Ripple Good never handles any of it.
                 </span>
               </p>
             </>

@@ -118,7 +118,7 @@ function wrap(ctx, text, x, y, maxWidth, lineHeight, maxLines = 3) {
 function costLine(charity) {
   const figure = charity.costFigures?.[0];
   if (!figure || /pending/i.test(figure.value)) return null;
-  return `${figure.value} — ${figure.label.toLowerCase()}`;
+  return `${figure.value} ${figure.label.toLowerCase()}`;
 }
 
 function render(charity) {
@@ -183,9 +183,9 @@ const escape = (s) =>
   );
 
 function sharePage(charity) {
-  const title = `${charity.category}: ${charity.headline} — Ripple Good`;
+  const title = `${charity.category}: ${charity.headline} · Ripple Good`;
   const description = charity.provisional
-    ? `${charity.subhead} (Provisional entry — figures not yet verified.)`
+    ? `${charity.subhead} (Provisional entry. Figures not yet verified.)`
     : charity.subhead;
   // Relative, so the bounce works on a custom domain and a project page alike:
   // /share/<id>/ -> ../../ -> the site root that owns index.html.

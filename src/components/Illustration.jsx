@@ -41,18 +41,14 @@ function GlobalHealth() {
 function ChildNutrition() {
   return (
     <>
-      {/* A capsule offered in an open palm, sun behind. */}
+      {/* A vitamin A softgel offered in an open palm. It used to have sun rays
+          behind it, which said vitamin D. The capsule is the same oval-with-a-
+          tail the tile icon draws. */}
       <circle cx="120" cy="82" r="60" fill={wash} />
-      <g stroke={accent} strokeWidth="3" strokeLinecap="round">
-        <path d="M120 12v14M168 34l-9 10M72 34l9 10M188 82h-13M52 82h13" />
-      </g>
-      {/* Long and low, with a visible seam: at 44×34 with a 17 radius this read
-          as a circle rather than a capsule. */}
       <g transform="rotate(-30 120 72)">
-        <rect x="88" y="57" width="64" height="30" rx="15" fill={accent} />
-        <path d="M120 57h17a15 15 0 0 1 0 30h-17V57Z" fill={ink} />
-        <rect x="88" y="57" width="64" height="30" rx="15" fill="none" stroke={ink} strokeWidth="2.5" />
-        <path d="M120 57v30" stroke={ink} strokeWidth="2" opacity=".45" />
+        <rect x="86" y="58" width="64" height="28" rx="14" fill={accent} />
+        <path d="M150 72h12" stroke={accent} strokeWidth="7" strokeLinecap="round" />
+        <path d="M100 66c6-3 14-3 20 0" stroke={wash} strokeWidth="3" strokeLinecap="round" opacity=".7" />
       </g>
       <path d="M64 118c8-10 22-14 34-10l30 10h26c9 0 16 7 16 16s-7 16-16 16H96c-14 0-26-6-34-16l-8-10 10-6Z" fill={ink} />
       <path d="M74 116c10-6 22-6 32-2" stroke={wash} strokeWidth="2.5" fill="none" opacity=".5" />
@@ -63,12 +59,15 @@ function ChildNutrition() {
 function DiseasePrevention() {
   return (
     <>
-      {/* A shield over a season: four months of cover on an arc. */}
+      {/* A course of medicine under a season: the four months of cover sit on
+          an arc above the bottle. This was a shield with a checkmark, which is
+          the picture every insurance company uses. */}
       <circle cx="120" cy="86" r="60" fill={wash} />
       <path d="M60 44a150 150 0 0 1 120 0" stroke={inkSoft} strokeWidth="2" fill="none" opacity=".5" strokeDasharray="5 7" />
-      <path d="M120 26 74 44v40c0 30 20 55 46 62 26-7 46-32 46-62V44l-46-18Z" fill={ink} />
-      <path d="M120 40 88 52v32c0 23 14 42 32 48 18-6 32-25 32-48V52l-32-12Z" fill="none" stroke={accent} strokeWidth="2.5" opacity=".7" />
-      <path d="M104 88l12 13 22-27" stroke={accent} strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="104" y="52" width="32" height="18" rx="5" fill={inkSoft} />
+      <rect x="94" y="66" width="52" height="92" rx="12" fill={ink} />
+      <rect x="104" y="86" width="32" height="46" rx="6" fill={wash} />
+      <path d="M120 98v22M109 109h22" stroke={accent} strokeWidth="6" strokeLinecap="round" />
       <g fill={accent}>
         <circle cx="62" cy="52" r="6" />
         <circle cx="94" cy="34" r="6" />
@@ -186,18 +185,16 @@ function Deworming() {
 function LeadExposure() {
   return (
     <>
-      {/* A paint tin, sealed shut — and the child's development it protects. */}
+      {/* A paint tin: wire bail up, lid on, one drip of the paint down the
+          label. It had a light bulb on the label and a blue X floating beside
+          it, which read as a close button. The tile icon is the same tin. */}
       <circle cx="120" cy="84" r="60" fill={wash} />
-      <path d="M96 44c0-13 11-24 24-24s24 11 24 24v6h-8v-6a16 16 0 0 0-32 0v6h-8v-6Z" fill={inkSoft} opacity=".5" />
-      <rect x="74" y="62" width="92" height="76" rx="8" fill={ink} />
-      <rect x="68" y="52" width="104" height="16" rx="6" fill={inkSoft} />
-      <rect x="88" y="84" width="64" height="34" rx="5" fill={wash} />
-      <path d="M120 88c8 0 14 6 14 13 0 4-2 7-5 9v3a2 2 0 0 1-2 2h-14a2 2 0 0 1-2-2v-3c-3-2-5-5-5-9 0-7 6-13 14-13Z" fill={accent} />
-      <path d="M113 104h14M116 110h8" stroke={wash} strokeWidth="2" strokeLinecap="round" />
-      {/* The seal: a green cross-out over the tin's spout. */}
-      <g stroke={accent} strokeWidth="6" strokeLinecap="round">
-        <path d="M158 40l22 22M180 40l-22 22" />
-      </g>
+      <path d="M84 52V46c0-20 16-34 36-34s36 14 36 34v6h-9v-6c0-15-12-25-27-25S93 31 93 46v6h-9Z" fill={inkSoft} opacity=".55" />
+      <rect x="74" y="62" width="92" height="80" rx="8" fill={ink} />
+      <rect x="66" y="52" width="108" height="16" rx="6" fill={inkSoft} />
+      <rect x="88" y="84" width="64" height="36" rx="5" fill={wash} />
+      <path d="M100 96h40M100 106h24" stroke={inkSoft} strokeWidth="3" strokeLinecap="round" opacity=".55" />
+      <path d="M120 116c-6 8-9 13-9 17a9 9 0 0 0 18 0c0-4-3-9-9-17Z" fill={accent} />
     </>
   );
 }

@@ -66,7 +66,7 @@ export default function ShareGift({ charity, outcome }) {
 
       <p className="shareGift__note" aria-live="polite">
         {state === "failed"
-          ? "Couldn't copy — your browser blocked it."
+          ? "Couldn't copy. Your browser blocked it."
           : "The strongest reason anyone gives is that someone they know did."}
       </p>
     </div>

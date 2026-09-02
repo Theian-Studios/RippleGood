@@ -6,7 +6,7 @@ function Header() {
   return (
     <header className="siteHeader">
       <div className="wrap siteHeader__inner">
-        <Link to="/" className="siteHeader__brand" aria-label="Ripple Good — home">
+        <Link to="/" className="siteHeader__brand" aria-label="Ripple Good, home">
           {/* The header mounts once per page load, so the heart eases in on
               arrival and then stays put — not on every route change. */}
           <Logo size="sm" animate />

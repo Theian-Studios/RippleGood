@@ -34,7 +34,7 @@ export default function Methodology() {
           </h1>
           <p>
             Ripple Good is a translation layer, not a research institute. Everything below is
-            meant to let you check us — or skip us entirely and go straight to the
+            meant to let you check us, or skip us entirely and go straight to the
             people whose work this rests on.
           </p>
         </div>
@@ -107,14 +107,14 @@ export default function Methodology() {
           </p>
           <p>
             Two limits. First, that spread is measured across{" "}
-            <em>interventions</em>, not charity ratings — we use it as evidence about
+            <em>interventions</em>, not charity ratings. We use it as evidence about
             how wide the distribution is, and rely on the evaluators to find the
             organizations at its top end. Second, the measurement is sharpest in
             global health; for causes like animal welfare and climate, "the best is
             roughly 100x the typical" is an extrapolation from thinner data, not a
-            replicated result. We think the direction and rough scale hold — it's why
-            this site exists — but the number is an order-of-magnitude claim, not a
-            constant of nature.
+            replicated result. We think the direction and rough scale hold, and that
+            is why this site exists. But the number is an order-of-magnitude claim,
+            not a constant of nature.
           </p>
 
           <h2>Who we rely on</h2>
@@ -160,8 +160,9 @@ export default function Methodology() {
           <p>
             Cost-effectiveness estimates are also <strong>ranges with error bars</strong>,
             not settled facts. Where an evaluator publishes a range, we show the range.
-            Where a figure is the charity's own estimate rather than an independent one
-            — as with The Humane League's hens-per-dollar number — we say so on the page.
+            Where a figure is the charity's own estimate rather than an independent
+            one, as with The Humane League's hens-per-dollar number, we say so on the
+            page.
           </p>
 
           <h2>How often we re-check</h2>
@@ -180,7 +181,7 @@ export default function Methodology() {
             </li>
             <li>
               <strong>Immediately:</strong> if a figure turns out to be wrong, we correct
-              it and note that we did — rather than quietly editing the page.
+              it and note that we did, rather than quietly editing the page.
             </li>
           </ul>
           <p className="handoff u-mt-5">
@@ -193,8 +194,8 @@ export default function Methodology() {
           <ul className="xlist">
             <li>
               <strong>We never handle your money.</strong> No payment is processed on
-              this site. Every donate button is an outbound link — either to the
-              charity's own donation page, or to{" "}
+              this site. Every donate button is an outbound link, either to the
+              charity's own donation page or to{" "}
               <a href="https://www.every.org/" target="_blank" rel="noopener noreferrer">
                 Every.org
               </a>
@@ -222,13 +223,13 @@ export default function Methodology() {
 
           <h3>Is my donation tax-deductible?</h3>
           <p>
-            Often, but it depends on the charity and on where you pay tax — several of
+            Often, but it depends on the charity and on where you pay tax. Several of
             these organizations are registered charities in multiple countries, with
             different entities for different donors. The charity's own donation page
             is the authoritative answer. If you give on the charity's own site,
             nothing about using Ripple Good changes your tax situation in either
             direction. Through Every.org the receipt comes from Every.org instead,
-            which is a US 501(c)(3) — worth checking if you file outside the US, or
+            which is a US 501(c)(3). That is worth checking if you file outside the US, or
             if your employer's matching scheme excludes intermediaries.
             {/* VERIFY: keep this generic — do not name specific 501(c)(3) statuses
                 here without checking each charity's current registrations. */}
@@ -250,7 +251,7 @@ export default function Methodology() {
           <p>
             One of two reasons: either no rigorous public evaluation of it exists,
             or its evaluator's numbers put another organization ahead within
-            the same cause. Neither means your charity does no good — this site ranks
+            the same cause. Neither means your charity does no good. This site ranks
             by measured cost-effectiveness, which is a narrower question than whether
             an organization is worthwhile. If you think we've missed an evaluation
             that should change a pick, tell us below.
@@ -259,7 +260,7 @@ export default function Methodology() {
           <h3>Do you earn anything when I give?</h3>
           <p>
             No. No referral fees, no affiliate links, no payments from the charities,
-            no cut of any donation — the donate buttons are plain links. Nobody can
+            no cut of any donation. The donate buttons are plain links. Nobody can
             pay to be listed here, and nobody pays us when you give.
           </p>
 
@@ -274,7 +275,7 @@ export default function Methodology() {
             The trade-offs, plainly: the money goes to Every.org first and is granted
             on to the charity, your tax receipt comes from Every.org rather than the
             charity, and at checkout Every.org suggests an optional contribution to
-            itself on top of your gift — <strong>which you can set to zero</strong>.
+            itself on top of your gift, <strong>which you can set to zero</strong>.
             Some employer matching schemes also decline gifts made through an
             intermediary. That's why every cause page keeps the charity's own donation
             page as an equally visible second option, and why we've left our{" "}
@@ -285,7 +286,7 @@ export default function Methodology() {
 
           <h2>Think we got one wrong?</h2>
           <p>
-            Good — tell us. The point of naming a single pick and showing the arithmetic
+            Good. Tell us. The point of naming a single pick and showing the arithmetic
             is that both can be challenged. Email{" "}
             <a href="mailto:hello@ripple-good.org">hello@ripple-good.org</a>{" "}
             {/* VERIFY: set up this mailbox, or swap in a real contact address, before launch. */}

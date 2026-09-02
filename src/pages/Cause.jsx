@@ -5,9 +5,8 @@ import EvidenceCard from "../components/EvidenceCard.jsx";
 import Illustration from "../components/Illustration.jsx";
 import GivingPanel from "../components/GivingPanel.jsx";
 import SameDollar from "../components/SameDollar.jsx";
-import Wallpaper from "../components/Wallpaper.jsx";
 import { getCharityById, resolveCauseId } from "../data/charities.js";
-import { iconFor } from "../lib/icons.js";
+import { iconFor } from "../lib/icons.jsx";
 import { usePageMeta } from "../lib/usePageMeta.js";
 
 export default function Cause() {
@@ -106,7 +105,7 @@ export default function Cause() {
           >
             <BadgeCheck size={18} aria-hidden="true" />
             <span>
-              <strong>{charity.evaluator}</strong> — {charity.evaluatorNote}
+              <strong>{charity.evaluator}</strong>: {charity.evaluatorNote}
             </span>
           </a>
 
@@ -128,8 +127,7 @@ export default function Cause() {
       </section>
 
       {selection && (
-        <section className="section section--gray section--textured">
-          <Wallpaper />
+        <section className="section section--gray">
           <div className="wrap wrap--narrow">
             <SameDollar
               amount={selection.amount}

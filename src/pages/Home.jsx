@@ -2,10 +2,8 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import CauseCard from "../components/CauseCard.jsx";
 import HeroCurve from "../components/HeroCurve.jsx";
-import Ripple from "../components/Ripple.jsx";
 import HomePanel from "../components/HomePanel.jsx";
 import VerifiedTotal from "../components/VerifiedTotal.jsx";
-import Wallpaper from "../components/Wallpaper.jsx";
 import { charities } from "../data/charities.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
 import { useReveal } from "../lib/useReveal.js";
@@ -22,7 +20,7 @@ const STEPS = [
   },
   {
     title: "See what your gift does",
-    body: "Nets, medicine, vitamin A, cash — each with its cost figure and the evaluator behind it.",
+    body: "Nets, medicine, vitamin A, cash, each with its cost figure and the evaluator behind it.",
   },
   {
     title: "Give, and keep going",
@@ -67,9 +65,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* Faint, still, behind the copy: the name's own shape, present in the
-            place the name is said. */}
-        <Ripple className="hero__ripple" />
         <HeroCurve />
       </section>
 
@@ -77,8 +72,7 @@ export default function Home() {
           before anyone could see what the site actually offered, which the
           hero button then jumped straight past. If the button has to skip your
           copy, the copy is in the wrong place. */}
-      <section className="section section--tight section--textured" id="causes">
-        <Wallpaper />
+      <section className="section section--tight" id="causes">
         <div className="wrap">
           <div className="sectionHead sectionHead--centered">
             <h2>Pick your cause</h2>
@@ -140,9 +134,9 @@ export default function Home() {
             The public conversation is dominated by the second one. Nearly all
             the real-world good comes from the third, where the best options can
             be on the order of{" "}
-            <Link to="/methodology#the-100x-claim">100x the median</Link> — an
-            order-of-magnitude claim, sourced and qualified on the methodology
-            page.
+            <Link to="/methodology#the-100x-claim">100x the median</Link>, an
+            order-of-magnitude claim that is sourced and qualified on the
+            methodology page.
           </p>
           <p>
             That gap is why Ripple Good exists. Rigorous impact research is

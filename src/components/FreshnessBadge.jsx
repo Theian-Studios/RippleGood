@@ -19,7 +19,7 @@ export default function FreshnessBadge({ iso, className = "" }) {
     tone === "fresh"
       ? "Figures checked against the evaluator's research within the last six months."
       : tone === "aging"
-        ? `These figures were last checked about ${monthsOld} months ago — they may have moved since.`
+        ? `These figures were last checked about ${monthsOld} months ago, and may have moved since.`
         : `These figures are over a year old. Treat them as indicative and check the evaluator's own page.`;
 
   return (

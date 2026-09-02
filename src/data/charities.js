@@ -68,7 +68,7 @@ const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));
  * Shape:
  *   id             slug used in the URL: /cause/:id
  *   category       human label for the cause
- *   icon           lucide-react icon name (see lib/icons.js for the registry)
+ *   icon           the cause drawing, by name (see components/CauseIcon.jsx)
  *   tagline        one line for the home-page card
  *   name           charity name
  *   evaluator      display name of the research org that made the call
@@ -107,7 +107,7 @@ export const charities = [
     seoTitle: "The most effective malaria charity",
     defaultAmount: 30,
     category: "Malaria Nets",
-    icon: "MoonStar",
+    icon: "net",
     tagline:
       "Malaria still kills a child about every minute. Almost every one of those deaths is preventable.",
     name: "Against Malaria Foundation",
@@ -149,7 +149,7 @@ export const charities = [
       // than one that starts higher. $30 replaces it at five nets.
       { amount: 12, outcomeText: "Funds two nets over sleeping families." },
       { amount: 30, outcomeText: "Funds five nets over sleeping families." },
-      { amount: 60, outcomeText: "Funds ten nets — a cluster of homes." },
+      { amount: 60, outcomeText: "Funds ten nets, a cluster of homes." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -184,7 +184,7 @@ export const charities = [
     seoTitle: "The best charity for seasonal malaria prevention",
     defaultAmount: 70,
     category: "Malaria Medicine",
-    icon: "Pill",
+    icon: "medicine",
     tagline:
       "Malaria has a season. Most child deaths from it fall in a few predictable months.",
     name: "Malaria Consortium",
@@ -228,7 +228,7 @@ export const charities = [
       whatTheyDo:
         "Malaria Consortium runs seasonal malaria chemoprevention across the Sahel: community distributors go door to door each month of the high-transmission season, giving young children a preventive antimalarial course.",
       method:
-        "Chemoprevention has strong trial evidence for reducing malaria cases in children during the transmission season. GiveWell models delivered courses, local malaria burden, adherence to the full monthly regimen, and what the funding displaces or unlocks — then discounts for the share that other funders would likely have covered.",
+        "Chemoprevention has strong trial evidence for reducing malaria cases in children during the transmission season. GiveWell models delivered courses, local malaria burden, adherence to the full monthly regimen, and what the funding displaces or unlocks, then discounts for the share that other funders would likely have covered.",
       caveats: [
         "The intervention is seasonal by design. It protects during the transmission months, not year-round.",
         "Effectiveness depends on children completing the monthly courses, which is measured through household surveys rather than observed directly for every child.",
@@ -241,7 +241,7 @@ export const charities = [
       one: "Shields one child through the malaria season.",
       many: "Shields ~{n} children through the malaria season.",
       tooSmall: "Joins the pool covering the next child's seasonal course.",
-      pictogram: { glyph: "shield", label: "children shielded" },
+      pictogram: { glyph: "child", label: "children shielded" },
     },
     // Verified 2026-08-17 by loading every.org/malaria-consortium and reading back
     // the organization name. EIN 98-0627052 — Malaria Consortium.
@@ -257,7 +257,7 @@ export const charities = [
     seoTitle: "The most effective child survival charity",
     defaultAmount: 20,
     category: "Child Survival",
-    icon: "Baby",
+    icon: "capsule",
     tagline:
       "Most child deaths come from causes we already know how to stop, cheaply.",
     name: "Helen Keller Intl",
@@ -308,13 +308,13 @@ export const charities = [
     ],
     evidenceNotes: {
       whatTheyDo:
-        "Helen Keller Intl supports national vitamin A supplementation campaigns — the technical assistance, the logistics, and the funding gap that keeps a country's twice-yearly campaign running.",
+        "Helen Keller Intl supports national vitamin A supplementation campaigns: the technical assistance, the logistics, and the funding gap that keeps a country's twice-yearly campaign running.",
       method:
         "The underlying evidence is a set of randomised trials showing meaningful reductions in child mortality from vitamin A supplementation. GiveWell then adjusts hard for present-day conditions: whether deficiency is still widespread in a given country, whether the government would have funded the campaign anyway, and how much of the trial-era effect should still be expected today.",
       caveats: [
         "The trials behind vitamin A supplementation are decades old, and child mortality has fallen a great deal since. GiveWell explicitly discounts the expected effect for this, and reasonable researchers disagree about how large the discount should be.",
         "Cost per death averted spans nearly an order of magnitude depending on the country. The low end is not the typical case.",
-        "This is a supplement delivered alongside existing national campaigns, not a standalone clinic. The counterfactual — what happens without this funding — is a real part of the estimate.",
+        "This is a supplement delivered alongside existing national campaigns, not a standalone clinic. The counterfactual, what happens without this funding, is a real part of the estimate.",
       ],
     },
     custom: {
@@ -341,7 +341,7 @@ export const charities = [
       "Hens-per-dollar is The Humane League's own estimate, not an independent one. It was on every outcome line; it belongs here, once.",
     defaultAmount: 50,
     category: "Animal Welfare",
-    icon: "Bird",
+    icon: "hen",
     tagline: "Most hens in the world live in a cage the size of a sheet of paper. That is changing, company by company.",
     name: "The Humane League",
     evaluator: evaluatorById.ace.name,
@@ -377,7 +377,7 @@ export const charities = [
         "ACE reviews THL on programmatic effectiveness, cost-effectiveness, and organizational health, and has recommended it repeatedly. The hens-per-dollar figure comes from THL's own modelling: commitments won, hens covered by those commitments, expected implementation rates, and the share of the win attributable to THL rather than the wider movement.",
       caveats: [
         "The 2-hens-per-dollar figure is The Humane League's own estimate, not an independently reproduced one. We flag it as such because attribution in a coalition campaign is hard: many groups push the same company, and each may reasonably claim the win.",
-        "A corporate commitment is a promise about the future. Some are implemented late, and some are quietly walked back — which is why the follow-up enforcement work matters as much as the campaign.",
+        "A corporate commitment is a promise about the future. Some are implemented late, and some are quietly walked back, which is why the follow-up enforcement work matters as much as the campaign.",
         "Cage-free is a large improvement in one dimension of a hen's life, not a good life. This is harm reduction at scale, and worth saying plainly.",
         "Comparing animal welfare to human health means putting a value on animal suffering. There is no objective exchange rate, and we won't pretend there is one.",
       ],
@@ -408,7 +408,7 @@ export const charities = [
       "These tonnages are expected values across a portfolio of policy bets, not measured reductions. Most bets fail; the few that land carry the average.",
     defaultAmount: 50,
     category: "Climate",
-    icon: "Wind",
+    icon: "turbine",
     tagline:
       "Emissions are still rising. The cheapest ton is the one never emitted.",
     name: "Giving Green Fund",
@@ -440,12 +440,12 @@ export const charities = [
     ],
     evidenceNotes: {
       whatTheyDo:
-        "The Giving Green Fund pools donations across Giving Green's current top climate nonprofits, so your gift follows their research as it updates rather than being locked to one organization. If you would rather back a single group, Clean Air Task Force — policy and advocacy for neglected clean-energy technologies — is the most common single pick from their list.", // VERIFY: confirm CATF is still on Giving Green's current top list before naming it here.
+        "The Giving Green Fund pools donations across Giving Green's current top climate nonprofits, so your gift follows their research as it updates rather than being locked to one organization. If you would rather back a single group, Clean Air Task Force, which does policy and advocacy for neglected clean-energy technologies, is the most common single pick from their list.", // VERIFY: confirm CATF is still on Giving Green's current top list before naming it here.
       method:
         "Giving Green estimates expected tons of CO₂-equivalent averted per dollar, explicitly modelling the probability that an advocacy effort succeeds at all. A policy campaign that fails averts nothing; one that succeeds can shift emissions far beyond what the donation could ever buy directly. The estimate is that gamble, multiplied out.",
       caveats: [
         "\"In expectation\" is doing real work in that sentence. This is a probability-weighted average across outcomes, not tons you can point at. A given campaign may avert nothing at all.",
-        "Systems change is harder to measure than offsets. An offset gives you a tidy receipt for a small, verifiable quantity; policy work gives you a large, uncertain one. Giving Green argues — and we agree — that the second is the better bet, but the honest cost of that is a much wider error bar.",
+        "Systems change is harder to measure than offsets. An offset gives you a tidy receipt for a small, verifiable quantity; policy work gives you a large, uncertain one. Giving Green argues, and we agree, that the second is the better bet, but the honest cost of that is a much wider error bar.",
         "Attribution is contested. When a policy passes, many organizations pushed for it, and any share assigned to one of them is a judgment call.",
         "This is the only cause on the site where the outcome is a modeled expectation rather than a delivered unit. We kept it because the expected value is high, but it does not carry the same kind of certainty as a bed net.",
       ],
@@ -480,7 +480,7 @@ export const charities = [
     seoTitle: "The best charity for extreme poverty",
     defaultAmount: 25,
     category: "Extreme Poverty",
-    icon: "HandCoins",
+    icon: "banknote",
     tagline: "Hundreds of millions of people live on under $2 a day. They know what they need.",
     name: "GiveDirectly",
     evaluator: evaluatorById.givewell.name,
@@ -506,15 +506,15 @@ export const charities = [
     givingLevels: [
       { amount: 25, outcomeText: "About $22 lands directly with a family." },
       { amount: 100, outcomeText: "About $90 lands directly with a family." },
-      { amount: 500, outcomeText: "About $450 — roughly half a household's full transfer." },
+      { amount: 500, outcomeText: "About $450, roughly half a household's full transfer." },
     ],
     evidenceNotes: {
       whatTheyDo:
-        "GiveDirectly identifies households in extreme poverty, enrolls them, and sends money to their phones. Recipients decide what to do with it — a roof, school fees, a business, food, medicine.",
+        "GiveDirectly identifies households in extreme poverty, enrolls them, and sends money to their phones. Recipients decide what to do with it: a roof, school fees, a business, food, medicine.",
       method:
         "Direct cash is the most-studied intervention on this site. Multiple randomised controlled trials have tracked what recipients do with unconditional transfers and what happens afterwards to consumption, assets, earnings, and psychological wellbeing. GiveWell uses cash as the benchmark unit: every other charity's cost-effectiveness is expressed as a multiple of what the same money would do as a direct transfer.",
       caveats: [
-        "Cash is the benchmark, not the maximum. GiveWell's top health charities are estimated to do considerably more good per dollar than cash — which is exactly why cash is the yardstick rather than the headline pick.",
+        "Cash is the benchmark, not the maximum. GiveWell's top health charities are estimated to do considerably more good per dollar than cash, which is exactly why cash is the yardstick rather than the headline pick.",
         "The ~90% figure is a program-level efficiency ratio, not a guarantee about your specific gift, and it varies by program and country.",
         "The strongest long-run evidence covers a subset of programs and geographies. Effects measured years out are smaller and noisier than the effects measured immediately.",
       ],
@@ -544,7 +544,7 @@ export const charities = [
     defaultAmount: 50,
     provisional: true,
     category: "Intestinal Worms",
-    icon: "Worm",
+    icon: "school",
     tagline:
       "Hundreds of millions of children carry worms that cost pennies a year to clear.",
     name: "Evidence Action — Deworm the World",
@@ -556,7 +556,7 @@ export const charities = [
     // below; re-read the review before this cause leaves `provisional`.
     evaluatorUrl: "https://www.givewell.org/charities/deworm-world-initiative",
     evaluatorNote:
-      "Reviewed by GiveWell and still eligible for their All Grants Fund — but no longer a Top Charity. GiveWell dropped deworming from that list in 2022.",
+      "Reviewed by GiveWell and still eligible for their All Grants Fund, but no longer a Top Charity. GiveWell dropped deworming from that list in 2022.",
     headline: "Deworm a whole classroom for a year.",
     subhead:
       "School-based mass treatment: one tablet, once or twice a year, delivered by teachers who are already standing in front of the children.",
@@ -577,7 +577,7 @@ export const charities = [
     ],
     givingLevels: [
       { amount: 10, outcomeText: "Deworms about ten children for a year." },
-      { amount: 50, outcomeText: "Deworms a classroom — about fifty children — for a year." },
+      { amount: 50, outcomeText: "Deworms a classroom, about fifty children, for a year." },
       { amount: 150, outcomeText: "Deworms a small school of about 150 children." },
     ],
     custom: {
@@ -590,14 +590,14 @@ export const charities = [
     },
     evidenceNotes: {
       whatTheyDo:
-        "Deworm the World supports governments running school-based deworming programs — training teachers, supplying tablets, and monitoring whether the children actually receive them. The delivery cost is low precisely because it rides on schools that already exist.",
+        "Deworm the World supports governments running school-based deworming programs: training teachers, supplying tablets, and monitoring whether the children actually receive them. The delivery cost is low precisely because it rides on schools that already exist.",
       method:
-        "GiveWell's case for deworming rests less on immediate health than on long-run economic effects: follow-up studies of dewormed children found higher earnings years later. GiveWell models that effect, then applies a large explicit discount for the chance it doesn't replicate — and still finds the intervention competitive, because the cost per child is so low.",
+        "GiveWell's case for deworming rests less on immediate health than on long-run economic effects: follow-up studies of dewormed children found higher earnings years later. GiveWell models that effect, then applies a large explicit discount for the chance it doesn't replicate, and still finds the intervention competitive, because the cost per child is so low.",
       caveats: [
-        "GiveWell removed deworming from its Top Charity list in August 2022, when it raised the bar for that list. The program is still funded through GiveWell's All Grants Fund, but it no longer carries their strongest endorsement — and you should weigh that before giving here rather than after.",
+        "GiveWell removed deworming from its Top Charity list in August 2022, when it raised the bar for that list. The program is still funded through GiveWell's All Grants Fund, but it no longer carries their strongest endorsement. You should weigh that before giving here rather than after.",
         "This is the most contested pick on the site, and we'd rather say so than bury it. The long-run income evidence rests on a small number of studies, one of which has been re-analyzed and disputed in public. GiveWell's own model applies a heavy discount for exactly this reason.",
         "The immediate health benefit for a typical treated child is modest. Most children treated do not have a heavy worm infection; the case rests on cheaply treating many to reach the few who do.",
-        "If the long-run income effect turns out to be much smaller than estimated, this intervention's cost-effectiveness falls sharply — more than any other cause listed here.",
+        "If the long-run income effect turns out to be much smaller than estimated, this intervention's cost-effectiveness falls sharply, more than any other cause listed here.",
         "We include it because a low cost multiplied by a very uncertain benefit can still be a good bet. That's a judgment about risk, not a settled fact, and you may reasonably decline it.",
       ],
     },
@@ -624,7 +624,7 @@ export const charities = [
     defaultAmount: 25,
     provisional: true,
     category: "Lead Poisoning",
-    icon: "Brain",
+    icon: "paint",
     tagline:
       "Lead paint is still sold legally across much of the world. A child's brain does not recover.",
     name: "Lead Exposure Elimination Project",
@@ -667,7 +667,7 @@ export const charities = [
         "We have not yet verified a cost-per-child figure, and we would rather show you that gap than fill it with a number we like the look of.",
         "Like climate policy, this is expected value, not delivered units. A campaign that fails protects no one; the estimate is an average across outcomes that includes those failures.",
         "Attribution is hard. When a country adopts a lead standard, many actors contributed, and any share assigned to one organization is a judgment call.",
-        "The benefit is counterfactual and invisible: nobody can point to the child whose lead exposure never happened. That's what makes the cause neglected — and it's also why it resists the kind of photograph a bed net gets.",
+        "The benefit is counterfactual and invisible: nobody can point to the child whose lead exposure never happened. That's what makes the cause neglected, and it's also why it resists the kind of photograph a bed net gets.",
       ],
     },
     // Verified 2026-08-17 by loading every.org/leep and reading back

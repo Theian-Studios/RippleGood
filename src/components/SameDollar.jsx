@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { charities } from "../data/charities.js";
 import { approxOutcome, money } from "../lib/format.js";
-import { iconFor } from "../lib/icons.js";
+import { iconFor } from "../lib/icons.jsx";
 
 /**
  * The same amount, read across the other causes.
@@ -32,7 +32,7 @@ export default function SameDollar({ amount, monthly, currentId }) {
       </h2>
       <p className="sameDollar__lead">
         The same {monthly ? "year of giving" : "gift"}, in each of the other
-        causes. Not a ranking — just what it buys there.
+        causes. Not a ranking, just what it buys there.
       </p>
 
       <ul className="sameDollar__list" role="list">

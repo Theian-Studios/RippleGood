@@ -184,21 +184,27 @@ export default function GivingPanel({ charity, onSelectionChange }) {
                 .filter(Boolean)
                 .join(" ")}
             >
-              {/* All three tiers look alike; .is-selected is the only thing
-                  that marks the chosen one. */}
-              <Check className="level__check" size={18} aria-hidden="true" />
               <span className="level__outcome">{annual || l.outcomeText}</span>
-              {/* In monthly mode the figure that matters is the year, not the
-                  instalment, so the year is the one set large. The toggle used
-                  to change almost nothing you could see. */}
-              {monthly ? (
-                <span className="level__amount level__amount--annual">
-                  <span className="level__annual">{money(l.amount * 12)} a year</span>
-                  <span className="level__per">{money(l.amount)} a month</span>
-                </span>
-              ) : (
-                <span className="level__amount">{money(l.amount)}</span>
-              )}
+              {/* The price and the check share a row, so the check sits on the
+                  price's own centre line and inside the same text column. It
+                  used to be positioned absolutely against the tier's corner,
+                  which put it below the figure it marks. */}
+              <span className="level__foot">
+                {/* In monthly mode the figure that matters is the year, not the
+                    instalment, so the year is the one set large. The toggle used
+                    to change almost nothing you could see. */}
+                {monthly ? (
+                  <span className="level__amount level__amount--annual">
+                    <span className="level__annual">{money(l.amount * 12)} a year</span>
+                    <span className="level__per">{money(l.amount)} a month</span>
+                  </span>
+                ) : (
+                  <span className="level__amount">{money(l.amount)}</span>
+                )}
+                {/* All three tiers look alike; .is-selected is the only thing
+                    that marks the chosen one. */}
+                <Check className="level__check" size={18} aria-hidden="true" />
+              </span>
             </button>
           );
         })}
@@ -209,7 +215,7 @@ export default function GivingPanel({ charity, onSelectionChange }) {
       {charity.custom && (
         <div className="customAmount">
           <label className="customAmount__label" htmlFor={inputId}>
-            Custom
+            Custom amount
           </label>
           <div className="customAmount__row">
             <span className="customAmount__prefix" aria-hidden="true">
@@ -274,7 +280,7 @@ export default function GivingPanel({ charity, onSelectionChange }) {
             <span>
               Goes via <strong>Every.org</strong>, a nonprofit that passes your
               gift to {charity.name} and issues the receipt. It suggests a tip
-              for itself at checkout —{" "}
+              for itself at checkout. That tip is{" "}
               <strong>optional, and you can set it to zero.</strong>
             </span>
           </p>

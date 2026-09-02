@@ -134,8 +134,11 @@
   /* ---- motion ----------------------------------------------------------
      One decelerating curve for everything that moves, one spring for the
      two places that should feel like they snap. Five durations. */
-  --ease: var(--ease);
-  --ease-spring: var(--ease-spring);
+  /* Real curves. These read `--ease: var(--ease)` — a custom property defined
+     in terms of itself, which is invalid, so every animation and transition
+     below that referenced them was silently dropped and nothing moved. */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --dur-1: 150ms;
   --dur-2: 200ms;
   --dur-3: 280ms;
@@ -643,42 +646,6 @@ a.mark {
   }
 }
 
-/* ---------------------------------------------------------- wallpaper -- */
-
-/* A band, not a backdrop. Only sections that opt in get the texture, and only
-   the two card grids do, where it shows through the gaps between tiles.
-   Never behind running prose. */
-.section--textured {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-
-.wallpaper {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  color: var(--navy);
-  opacity: 0.07;
-  /* Fades in and out so the texture never stops on a straight line, and so it
-     is at its faintest where the section heading sits. */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    #000 28%,
-    #000 88%,
-    transparent
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    #000 28%,
-    #000 88%,
-    transparent
-  );
-}
-
 /* ------------------------------------------------------------ section -- */
 
 .section {
@@ -794,6 +761,10 @@ a.mark {
 .causeCard__body {
   display: flex;
   flex-direction: column;
+  /* Fills the card the grid stretched. Without this the body is only as tall
+     as its text, so the outcome line and evaluator label sat at a different
+     height on every card in a row, with dead space under the short ones. */
+  flex: 1;
   gap: var(--s-2);
   padding: var(--s-5) var(--s-5) var(--s-4);
 }
@@ -836,16 +807,6 @@ a.mark {
   margin: 0 var(--s-1) 0 3px;
   color: var(--tile-fg, var(--blue-700));
   font-weight: 700;
-}
-
-.causeCard__by {
-  display: block;
-  margin-top: var(--s-1);
-  font-size: var(--t-2xs);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
 }
 
 /* --------------------------------------------------------- cause page -- */
@@ -902,10 +863,8 @@ a.mark {
 
 .causeHero__category {
   display: block;
-  font-size: var(--t-2xs);
+  font-size: var(--t-sm);
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--blue-600);
 }
 
@@ -959,27 +918,21 @@ a.mark {
 
 /* ------------------------------------------------------- giving levels -- */
 
+/* A ruled section of the page rather than a card. It was a shadowed white
+   box holding three bordered tiers, a bordered input and a tinted note:
+   boxes inside boxes inside a box. The tiers keep their borders because they
+   are choices; everything around them sits on the page. */
 .give {
-  margin-top: var(--s-2);
-  padding: var(--s-7) var(--s-6);
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow);
-}
-
-@media (min-width: 640px) {
-  .give {
-    padding: var(--s-8) var(--s-7);
-  }
+  margin-top: var(--s-6);
+  padding-top: var(--s-7);
+  border-top: 1px solid var(--border);
 }
 
 .give__label {
-  font-size: var(--t-xs);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
+  font-size: var(--t-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy);
 }
 
 .levels {
@@ -1025,10 +978,6 @@ a.mark {
 }
 
 .level__amount {
-  /* Pins the price to the foot of the tier so all three align however many
-     lines the outcome above it runs to. */
-  margin-top: auto;
-  padding-top: var(--s-1);
   font-size: var(--t-xs);
   font-weight: 500;
   color: var(--ink-faint);
@@ -1068,12 +1017,22 @@ a.mark {
   color: var(--ink-faint);
 }
 
-/* Bottom-right, alongside the amount: at the top it collided with the outcome
-   text, which is the line that has to stay readable. */
+/* The foot of the tier: the price on the left, the check on the right, on one
+   centre line. Both are pinned here rather than on the price itself, so all
+   three tiers align however many lines the outcome above them runs to.
+   The check used to be absolutely positioned at a hand-set offset, which left
+   it sitting below the price it marks and poking past the text column. */
+.level__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: auto;
+  padding-top: var(--s-1);
+}
+
 .level__check {
-  position: absolute;
-  bottom: 18px;
-  right: 16px;
+  flex: none;
   color: var(--blue);
   opacity: 0;
   transition: opacity var(--dur-1) ease;
@@ -1093,11 +1052,9 @@ a.mark {
 
 .customAmount__label {
   display: block;
-  font-size: var(--t-xs);
+  font-size: var(--t-sm);
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--ink-mid);
 }
 
 .customAmount__row {
@@ -1178,11 +1135,15 @@ a.mark {
   gap: var(--s-3);
   width: 100%;
   padding: var(--s-5) var(--s-7);
+  /* Transparent by default so the outline variant's border doesn't make it the
+     taller of the two once they stack on a phone. */
+  border: 2px solid transparent;
   border-radius: var(--r-pill);
   background: var(--blue);
   color: var(--white);
   font-size: var(--t-lg);
   font-weight: 600;
+  line-height: 1.2;
   text-decoration: none;
   box-shadow: 0 12px 28px -16px rgba(36, 114, 236, 0.95);
   transition: background-color var(--dur-1) ease, transform var(--dur-1) ease;
@@ -1196,17 +1157,15 @@ a.mark {
   transform: translateY(1px);
 }
 
-/* The two facts that change the decision, directly above the button. */
+/* The two facts that change the decision, directly above the button. Plain
+   text: it was a tinted box sitting between bordered tiers and a button. */
 .routeNote {
   display: flex;
   align-items: flex-start;
   gap: var(--s-2);
-  padding: var(--s-3) var(--s-4);
-  border-radius: var(--r-sm);
-  background: var(--mist);
   font-size: var(--t-sm);
   line-height: 1.55;
-  color: var(--navy);
+  color: var(--ink-mid);
 }
 
 .routeNote svg {
@@ -1249,13 +1208,15 @@ a.mark {
   }
 }
 
+/* Same box as the primary, quieter paint. Side by side the grid stretched the
+   two to match; stacked on a phone the smaller padding and type made this one
+   11px shorter with its label starting 20px further in. The hierarchy is
+   carried by fill against outline, which survives at one size. */
 .donate--alt {
   background: var(--white);
-  border: 2px solid var(--border-strong);
+  border-color: var(--border-strong);
   color: var(--navy);
   box-shadow: none;
-  font-size: var(--t-md);
-  padding: var(--s-4) var(--s-5);
 }
 
 .donate--alt:hover {
@@ -1269,10 +1230,8 @@ a.mark {
   align-items: flex-start;
   gap: var(--s-2);
   margin-bottom: var(--s-5);
-  padding: var(--s-3) var(--s-4);
-  border: 1px solid var(--amber-line);
-  border-radius: var(--r-sm);
-  background: var(--amber-bg);
+  padding: var(--s-1) 0 var(--s-1) var(--s-4);
+  border-left: 3px solid var(--amber-line);
   font-size: var(--t-sm);
   line-height: 1.55;
   color: var(--amber-ink);
@@ -1404,12 +1363,7 @@ a.mark {
    factors by number. */
 .factors li::before {
   content: counter(factor);
-  display: block;
-  margin-bottom: var(--s-2);
-  color: var(--blue);
-  font-size: var(--t-2xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  margin-bottom: var(--s-3);
 }
 
 .factors strong {
@@ -1419,8 +1373,18 @@ a.mark {
   font-size: var(--t-base);
 }
 
-.aboutIntro__cta {
-  margin-top: var(--s-6);
+/* The CTA sits in its own paragraph, so that paragraph's own margins are the
+   ones in play — the .aboutIntro__cta rule that used to live here never
+   applied, losing to the more specific `.aboutIntro p` above. */
+.aboutIntro p.aboutIntro__cta {
+  margin: 0;
+}
+
+/* The last body paragraph's bottom margin would otherwise stack under the
+   button's own top margin and open 32px here against the 20px under the
+   methodology panel's identical CTA. The button sets the distance, in both. */
+.aboutIntro p:nth-last-of-type(2) {
+  margin-bottom: 0;
 }
 
 .aboutIntro .btn {
@@ -1695,13 +1659,12 @@ a.mark {
 
 /* --------------------------------------------------------------- note -- */
 
+/* A left rule, not a tinted box. */
 .note {
   display: flex;
   gap: var(--s-3);
-  padding: var(--s-5) var(--s-6);
-  border-radius: var(--r);
-  background: var(--mist);
-  border: 1px solid var(--mist-deep);
+  padding: var(--s-1) 0 var(--s-1) var(--s-5);
+  border-left: 3px solid var(--mist-deep);
   font-size: var(--t-md);
   color: var(--navy);
 }
@@ -1716,8 +1679,7 @@ a.mark {
   font-weight: 600;
 }
 
-/* A footnote, not a panel. The warning variants below keep their box — a box
-   is how you tell someone something is wrong, so it has to stay rare. */
+/* A footnote: no rule at all. */
 .note--plain {
   padding: 0;
   background: none;
@@ -1803,37 +1765,37 @@ a.mark {
   color: var(--ink-soft);
 }
 
-/* Numbered steps on the methodology page. */
+/* Numbered steps on the methodology page: ruled rows, not a stack of cards. */
 .steps {
   display: grid;
-  gap: var(--s-4);
+  gap: 0;
   margin-top: var(--s-6);
+  border-top: 1px solid var(--border);
   counter-reset: step;
 }
 
+/* The badge is a grid item rather than an absolutely positioned ::before, so
+   the text column starts from the badge's real width instead of a padding
+   figure hand-matched to it. */
 .step {
-  position: relative;
-  padding: var(--s-6) var(--s-6) var(--s-6) var(--s-10);
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0 var(--s-4);
+  padding: var(--s-5) 0;
+  border-bottom: 1px solid var(--border);
 }
 
 .step::before {
   counter-increment: step;
   content: counter(step);
-  position: absolute;
-  left: 22px;
-  top: 22px;
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--navy);
-  color: var(--white);
-  font-size: var(--t-sm);
-  font-weight: 600;
+}
+
+/* Both belong in the text column; auto-placement would drop the paragraph
+   under the badge. */
+.step h3,
+.step p {
+  grid-column: 2;
 }
 
 .step h3 {
@@ -1847,18 +1809,17 @@ a.mark {
   color: var(--ink-soft);
 }
 
-/* Evaluator credits. */
+/* Evaluator credits: ruled rows. */
 .evaluatorList {
   display: grid;
-  gap: var(--s-4);
+  gap: 0;
   margin-top: var(--s-6);
+  border-top: 1px solid var(--border);
 }
 
 .evaluatorCard {
-  padding: var(--s-6);
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
+  padding: var(--s-5) 0;
+  border-bottom: 1px solid var(--border);
 }
 
 .evaluatorCard__top {
@@ -1876,11 +1837,9 @@ a.mark {
 }
 
 .evaluatorCard__focus {
-  font-size: var(--t-2xs);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--blue-700);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  color: var(--ink-faint);
 }
 
 .evaluatorCard p {
@@ -1909,11 +1868,10 @@ a.mark {
 .siteFooter__main {
   display: grid;
   gap: var(--s-7);
-  /* Extra inset on the footer specifically: the navy band runs edge to edge, so
-     the 20px the .wrap gives every other section reads tighter here against a
-     dark ground than it does on white. Note this REPLACES the wrap's padding
-     rather than adding to it — 28 is the final figure, not 20 plus 28. */
-  padding: var(--s-8) var(--s-7);
+  /* The horizontal figure REPLACES the wrap's padding rather than adding to it,
+     so it has to restate the same 20px: at 32 the footer logo sat 12px inside
+     the header logo directly above it, on every page. */
+  padding: var(--s-8) var(--s-5);
 }
 
 @media (min-width: 900px) {
@@ -1951,10 +1909,8 @@ a.mark {
 }
 
 .footerNav h4 {
-  font-size: var(--t-2xs);
+  font-size: var(--t-sm);
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
   color: rgba(255, 255, 255, 0.5);
   margin-bottom: 3px;
 }
@@ -1974,7 +1930,7 @@ a.mark {
 
 .siteFooter__legal {
   /* One shorthand. A padding-inline followed by a shorthand loses to it. */
-  padding: var(--s-5) var(--s-7) var(--s-8);
+  padding: var(--s-5) var(--s-5) var(--s-8);
   border-top: 1px solid var(--navy-700);
   display: flex;
   flex-wrap: wrap;
@@ -2024,7 +1980,6 @@ a.mark {
 }
 
 .note--warn {
-  background: var(--amber-bg);
   border-color: var(--amber-line);
   color: var(--amber-ink);
 }
@@ -2195,7 +2150,10 @@ a.mark {
   appearance: none;
   width: 22px;
   height: 22px;
-  margin-top: -var(--s-2);
+  /* Centres the 22px thumb on the 8px track. This read `-var(--s-2)`, which is
+     not valid CSS — the declaration was dropped and the thumb hung below the
+     track it rides on. calc() is the only way to negate a custom property. */
+  margin-top: calc((8px - 22px) / 2);
   border-radius: 50%;
   background: var(--white);
   border: 3px solid var(--blue);
@@ -2257,20 +2215,20 @@ a.mark {
   padding: 0;
   list-style: none;
   display: grid;
-  gap: var(--s-3);
+  gap: 0;
+  border-top: 1px solid var(--border);
   counter-reset: plan;
 }
 
+/* Ruled rows: eight bordered cards in a column read as a wall. */
 .planRow {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--s-4);
-  padding: var(--s-5) var(--s-5);
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--border);
 }
 
 .planRow__amount {
@@ -2305,10 +2263,9 @@ a.mark {
 /* Deliberately quiet, and not a link: it states a fact and
    asks nothing. Centered so it reads as a standing figure rather than a row. */
 .verifiedTotal {
-  padding: var(--s-6) var(--s-6);
-  border: 1px solid var(--mist-deep);
-  border-radius: var(--r-lg);
-  background: var(--mist);
+  padding: var(--s-6) 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   text-align: center;
 }
 .verifiedTotal__figure {
@@ -2497,15 +2454,17 @@ a.mark {
 .hero {
   position: relative;
   overflow: hidden;
-  /* Bottom padding clears the curve at the foot of the hero. */
-  padding: var(--s-10) 0 140px;
+  /* Bottom padding clears the curve at the foot of the hero — the curve's own
+     height, and no more. The extra 30px on top of that left a long empty run
+     of navy under the button. */
+  padding: var(--s-10) 0 110px;
   background: var(--navy);
   text-align: center;
 }
 
 @media (min-width: 640px) {
   .hero {
-    padding: var(--s-11) 0 190px;
+    padding: var(--s-11) 0 150px;
   }
 }
 
@@ -2597,18 +2556,26 @@ a.mark {
   gap: var(--s-5);
 }
 
-.stepRow__num {
+/* ---- the numbered badge ----------------------------------------------
+   One badge for every numbered list on the site: the home "How it works"
+   rows, the methodology steps, and the three factors above the cause grid.
+   These were three treatments — a 54px blue circle, a 30px navy one, and a
+   bare 12px numeral — which read as three components rather than one. */
+.stepRow__num,
+.step::before,
+.factors li::before {
   display: grid;
   place-items: center;
   flex: none;
-  width: 54px;
-  height: 54px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: var(--blue-600);
   color: var(--white);
-  font-size: var(--t-2xl);
+  font-size: var(--t-base);
   font-weight: 700;
   line-height: 1;
+  letter-spacing: 0;
 }
 
 .stepRow__title {
@@ -2932,26 +2899,6 @@ a.mark {
   margin: 0 auto var(--s-5);
 }
 
-/* A still, very faint ring set in the hero, low and to the right of the
-   headline — the metaphor present rather than announced. */
-.hero__ripple {
-  position: absolute;
-  right: -90px;
-  bottom: -40px;
-  width: 420px;
-  opacity: 0.13;
-  pointer-events: none;
-  z-index: 1;
-}
-
-@media (max-width: 899px) {
-  .hero__ripple {
-    right: -170px;
-    width: 320px;
-    opacity: 0.1;
-  }
-}
-
 /* --------------------------------------------------- same dollar strip -- */
 
 .sameDollar__title {
@@ -3016,8 +2963,23 @@ a.mark {
   text-align: center;
 }
 
+/* Centre the box, not just the text inside it. `.pageHead p` carries a 58ch
+   max-width, so on the thank-you page every centred line — the eyebrow, the
+   gift, the share note, the receipt — was centred inside a box anchored to the
+   left of the column, landing ~50px left of the headline above it. */
+.u-centered p {
+  margin-inline: auto;
+}
+
 .u-centre-row {
   display: flex;
+  justify-content: center;
+}
+
+/* A count too wide for one row wraps, and the wrapped rows and the unit label
+   have to stay under the centred column rather than stacking up on its left. */
+.u-centre-row .pictogram,
+.u-centre-row .pictogram__row {
   justify-content: center;
 }
 

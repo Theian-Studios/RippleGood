@@ -30,35 +30,35 @@ const esc = (s) =>
 const routes = [
   {
     path: "/",
-    title: "Ripple Good — make the biggest ripple.",
+    title: "Ripple Good: make the biggest ripple.",
     description:
       "One evidence-backed charity per cause, with the cost figures and the evaluator behind every claim. Start from the cause you already care about.",
     og: "default.png",
   },
   {
     path: "/about",
-    title: "Where you give matters more than how much — Ripple Good",
+    title: "Where you give matters more than how much · Ripple Good",
     description:
       "Ripple Good exists to close the gap between wanting to help and knowing where to send it. One evidence-backed pick per cause, with the math shown.",
     og: "default.png",
   },
   {
     path: "/methodology",
-    title: "How we pick, and what we don't do — Ripple Good",
+    title: "How we pick, and what we don't do · Ripple Good",
     description:
       "How Ripple Good picks one charity per cause, which evaluators we rely on, what our dollar figures do and don't mean, and how often we re-check them.",
     og: "default.png",
   },
   {
     path: "/plan",
-    title: "Split it across everything you care about — Ripple Good",
+    title: "Split it across everything you care about · Ripple Good",
     description:
       "Build a giving plan across several causes at once, with what each share buys shown as you go.",
     og: "default.png",
   },
   {
     path: "/thanks",
-    title: "Thank you — Ripple Good",
+    title: "Thank you · Ripple Good",
     description: "Where Every.org returns a donor after a completed gift.",
     og: "default.png",
     noindex: true,
@@ -67,7 +67,7 @@ const routes = [
     path: `/cause/${c.id}`,
     // The query first, the organisation second. Nobody searches for a filing
     // label, and "Against Malaria Foundation · Global Health" was one.
-    title: `${c.seoTitle}: ${c.name} — Ripple Good`,
+    title: `${c.seoTitle}: ${c.name} · Ripple Good`,
     description: `${c.headline} ${c.subhead}`,
     og: `${c.id}.png`,
   })),
@@ -156,7 +156,7 @@ for (const route of routes) {
 // anyone remembers to add it to the list above.
 const fallback = stripped
   .replace("</head>", `  ${headBlock({
-    title: "Ripple Good — make the biggest ripple.",
+    title: "Ripple Good: make the biggest ripple.",
     description: "One evidence-backed charity per cause.",
     url: `${SITE}${prefix}/`,
     ogUrl: `${SITE}${prefix}/og/default.png`,

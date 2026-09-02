@@ -1,16 +1,15 @@
 import { Link } from "react-router-dom";
 import Illustration from "./Illustration.jsx";
-import { evaluatorShort } from "../data/charities.js";
 import { money } from "../lib/format.js";
 
 /**
  * One cause on the home grid. The whole card is the link — the primary act.
  *
  * The card used to be a tinted icon tile, a label and a tagline, which asked
- * for a click on faith: nothing on it said what a gift buys or who stands
- * behind the pick. It now carries the cause's own illustration on its own tint,
- * and the bottom line answers the two questions a browser actually has —
- * what do I get, and says who.
+ * for a click on faith: nothing on it said what a gift buys. It now carries the
+ * cause's own illustration on its own tint, and the bottom line answers the
+ * question a browser actually has: what does my money do here. The evaluator's
+ * name belongs on the cause page, where there is room to say what it means.
  *
  * The provisional warning is still not here. `provisional: true` renders the
  * full caveat inside the giving widget, above the amounts, which is where a
@@ -36,7 +35,6 @@ export default function CauseCard({ charity }) {
             →
           </span>
           {charity.cardOutcome}
-          <span className="causeCard__by">{evaluatorShort(charity)}</span>
         </span>
       </span>
     </Link>

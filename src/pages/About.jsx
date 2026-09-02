@@ -41,8 +41,8 @@ export default function About() {
 
           <h2>What we do about it</h2>
           <p>
-            We read the evaluators — <Link to="/methodology">GiveWell, Animal Charity
-            Evaluators, Giving Green</Link> — and translate their research into one
+            We read the evaluators, <Link to="/methodology">GiveWell, Animal Charity
+            Evaluators and Giving Green</Link>, and translate their research into one
             clear pick per cause, phrased as what actually happens rather than what it
             costs. The feeling is on the surface. The math is one click underneath, in
             full, including what could be wrong with it.

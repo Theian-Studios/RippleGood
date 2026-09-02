@@ -10,8 +10,8 @@ const SUFFIX = "Ripple Good";
 export function usePageMeta(title, description) {
   useEffect(() => {
     document.title = title
-      ? `${title} — ${SUFFIX}`
-      : `${SUFFIX} — make the biggest ripple.`;
+      ? `${title} · ${SUFFIX}`
+      : `${SUFFIX}: make the biggest ripple.`;
 
     if (!description) return;
     let tag = document.querySelector('meta[name="description"]');

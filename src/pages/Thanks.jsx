@@ -86,7 +86,7 @@ export default function Thanks() {
           </>
         ) : (
           <p className="u-mt-5 u-lead">
-            If you just gave, thank you — your receipt comes by email from
+            If you just gave, thank you. Your receipt comes by email from
             wherever you gave. If you landed here by accident, the causes are
             still below.
           </p>
