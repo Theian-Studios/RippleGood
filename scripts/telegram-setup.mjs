@@ -67,11 +67,27 @@ for (const u of updates.result ?? []) {
 }
 
 if (chats.size === 0) {
-  console.error(
-    "\nNo chats found.\n" +
-      "Open the bot in Telegram and send it any message, then run this again.\n" +
-      "A bot can never message you first, so until you do there is no chat id.",
-  );
+  // There are exactly two reasons for an empty result, and they need opposite
+  // fixes, so say which one this is rather than guessing.
+  const hook = await api("getWebhookInfo");
+  if (hook.ok && hook.result?.url) {
+    console.error(
+      `\nThis bot has a webhook registered (${hook.result.url}).\n` +
+        "While one is set, Telegram delivers updates there and getUpdates always\n" +
+        "returns empty — so no amount of messaging the bot will help. Remove it:\n\n" +
+        "  curl -X POST https://api.telegram.org/bot<token>/deleteWebhook\n\n" +
+        "then message the bot and run this again.",
+    );
+  } else {
+    console.error(
+      "\nNo chats found.\n" +
+        `Open Telegram, search for @${me.result.username}, and tap Start (or send\n` +
+        "it any message). Then run this again.\n\n" +
+        "A bot can never message you first, so until you do there is no chat id\n" +
+        "for it to send to. Note also that Telegram only keeps recent updates, so\n" +
+        "a message sent days ago may have aged out — send a fresh one.",
+    );
+  }
   process.exit(1);
 }
 
