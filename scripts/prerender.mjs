@@ -131,7 +131,13 @@ const prefix = BASE.replace(/\/$/, "");
 let written = 0;
 for (const route of routes) {
   const app = render(route.path);
-  const url = `${SITE}${prefix}${route.path}`;
+  // Trailing slash, because that is the URL GitHub Pages actually serves: a
+  // request for /cause/climate is 301'd to /cause/climate/ so the directory
+  // index can answer it. Declaring the pre-redirect form as canonical points
+  // search engines at a URL that immediately redirects, which splits the
+  // signal for no reason.
+  const url =
+    route.path === "/" ? `${SITE}${prefix}/` : `${SITE}${prefix}${route.path}/`;
   const ogUrl = `${SITE}${prefix}/og/${route.og}`;
 
   const html = stripped
