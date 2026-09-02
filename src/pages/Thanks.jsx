@@ -1,7 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { ArrowRight, Heart } from "lucide-react";
+
 import Pictogram from "../components/Pictogram.jsx";
+import Ripple from "../components/Ripple.jsx";
+import ShareGift from "../components/ShareGift.jsx";
 import { getCharityById } from "../data/charities.js";
 import { approxOutcome, money, unitsFor } from "../lib/format.js";
 import { clearPending, readPending } from "../lib/donationRef.js";
@@ -51,9 +53,8 @@ export default function Thanks() {
   return (
     <section className="pageHead">
       <div className="wrap wrap--narrow u-centered">
-        <span className="tile tile--lg thanks__tile">
-          <Heart size={24} strokeWidth={1.75} aria-hidden="true" />
-        </span>
+        {/* The site is named after this and had never once drawn it. */}
+        <Ripple live className="thanks__ripple" />
 
         <p className="eyebrow">Thank you</p>
         <h1>
@@ -77,10 +78,10 @@ export default function Thanks() {
               </div>
             )}
 
+            <ShareGift charity={charity} outcome={outcome} />
+
             <p className="handoff handoff--centered u-mt-6">
-              <span>
-                Your receipt comes from Every.org by email.
-              </span>
+              <span>Your receipt comes from Every.org by email.</span>
             </p>
           </>
         ) : (
@@ -92,7 +93,7 @@ export default function Thanks() {
         )}
 
         <div className="hero__actions hero__actions--centered u-mt-7">
-          <Link to="/#causes" className="btn btn--outline btn--lg">
+          <Link to="/#causes" className="btn btn--outline">
             Pick another cause
           </Link>
         </div>

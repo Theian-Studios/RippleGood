@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ArrowUpRight, Check, CircleAlert, Info } from "lucide-react";
 import { getDefaultLevel } from "../data/charities.js";
 import { causeUrl, everyOrgUrl, thanksUrl } from "../lib/donate.js";
@@ -19,9 +20,24 @@ import Pictogram from "./Pictogram.jsx";
  * chooses one-time or monthly, on the charity's own page.
  */
 export default function GivingPanel({ charity, onSelectionChange }) {
-  const [level, setLevel] = useState(() => getDefaultLevel(charity));
-  const [customText, setCustomText] = useState("");
-  const [monthly, setMonthly] = useState(false);
+  // Restored from the exit URL when someone cancelled out of Every.org, so the
+  // panel they come back to is the one they left. Read once, at mount: this is
+  // an initial value, not a binding, or typing in the custom field would fight
+  // the query string still sitting in the address bar.
+  const [params] = useSearchParams();
+  const restored = Number(params.get("amount"));
+  const restoredAmount = Number.isFinite(restored) && restored >= 1 ? Math.floor(restored) : null;
+  const restoredLevel =
+    restoredAmount === null
+      ? null
+      : charity.givingLevels.find((l) => l.amount === restoredAmount);
+
+  const [level, setLevel] = useState(() => restoredLevel ?? getDefaultLevel(charity));
+  // A restored amount that isn't one of the tiers belongs in the custom field.
+  const [customText, setCustomText] = useState(() =>
+    restoredAmount !== null && !restoredLevel ? String(restoredAmount) : "",
+  );
+  const [monthly, setMonthly] = useState(() => params.get("monthly") === "1");
 
   const host = displayHost(charity.donateUrl);
   const inputId = `custom-amount-${charity.id}`;
@@ -82,7 +98,7 @@ export default function GivingPanel({ charity, onSelectionChange }) {
     monthly,
     ref,
     returnUrl: thanksUrl({ causeId: charity.id, amount, monthly }),
-    exitUrl: causeUrl(charity.id),
+    exitUrl: causeUrl(charity.id, { amount, monthly }),
   });
 
   /** The one thing that genuinely belongs in the gesture: the local record. */
@@ -172,10 +188,17 @@ export default function GivingPanel({ charity, onSelectionChange }) {
                   that marks the chosen one. */}
               <Check className="level__check" size={18} aria-hidden="true" />
               <span className="level__outcome">{annual || l.outcomeText}</span>
-              <span className="level__amount">
-                {priceLabel(l.amount)}
-                {annual ? " · a year of it" : ""}
-              </span>
+              {/* In monthly mode the figure that matters is the year, not the
+                  instalment, so the year is the one set large. The toggle used
+                  to change almost nothing you could see. */}
+              {monthly ? (
+                <span className="level__amount level__amount--annual">
+                  <span className="level__annual">{money(l.amount * 12)} a year</span>
+                  <span className="level__per">{money(l.amount)} a month</span>
+                </span>
+              ) : (
+                <span className="level__amount">{money(l.amount)}</span>
+              )}
             </button>
           );
         })}

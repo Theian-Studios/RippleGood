@@ -172,8 +172,19 @@ export function thanksUrl({ causeId, amount, monthly }) {
  * thanksUrl is: 404.html puts the hash back, and a redirect target that has
  * no "#" in it cannot be truncated at one. Verified against the live site.
  */
-export function causeUrl(causeId) {
+export function causeUrl(causeId, { amount, monthly } = {}) {
   const origin = siteOrigin();
   const base = import.meta.env.BASE_URL || "/";
-  return `${origin}${base}cause/${causeId}`;
+  const url = `${origin}${base}cause/${causeId}`;
+  if (!amount) return url;
+
+  // Cancelling used to land the donor back on a freshly reset page, so the
+  // amount and cadence they had just chosen were gone and had to be chosen
+  // again. Carrying them on the exit URL costs nothing and is the difference
+  // between "come back" and "start over".
+  const q = new URLSearchParams({
+    amount: String(amount),
+    ...(monthly ? { monthly: "1" } : {}),
+  });
+  return `${url}?${q.toString()}`;
 }

@@ -65,6 +65,8 @@
 
   --ink: #0c2340;
   --ink-soft: #52627a;
+  /* Between the two. For text that has to be read rather than skimmed. */
+  --ink-mid: #41526b;
   --ink-faint: #78869b;
   --border: #e2e8f1;
   --border-strong: #cfd9e6;
@@ -440,31 +442,42 @@ main {
 }
 
 /* A word lifted into the accent, with the brand's short blue rule beneath. */
+/* Blue text with a thin rule under it is the single most ingrained "this is a
+   link" signal on the web, and none of these are links. Same emphasis, drawn
+   as a highlighter band behind the words instead: the colour sits low and
+   wide, the text keeps the heading's own ink, and nobody tries to click it. */
 .mark {
-  color: var(--blue-600);
-  background-image: linear-gradient(var(--blue), var(--blue));
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--sky) 55%, transparent),
+    color-mix(in srgb, var(--sky) 55%, transparent)
+  );
   background-repeat: no-repeat;
-  background-size: 100% 4px;
-  background-position: 0 100%;
-  padding-bottom: var(--s-1);
+  background-size: 100% 0.42em;
+  background-position: 0 88%;
+  padding: 0 0.08em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
 
-/* 3.85:1 on navy at 16.8px, under AA's 4.5:1 at that size. Deliberate. */
+/* On navy the pale band vanishes, so it deepens to the brand blue — and has to
+   grow to nearly the full line box while it does. At the light band's height a
+   solid blue rule under white text reads as an underline again, which is the
+   exact thing this rule exists to stop. */
 .onDark .mark,
 .mark--onDark {
-  color: var(--blue);
+  color: var(--white);
+  background-image: linear-gradient(var(--blue-600), var(--blue-600));
+  background-size: 100% 1.15em;
+  background-position: 0 78%;
+  border-radius: 3px;
+  padding: 0 0.22em;
 }
 
-/* A .mark that is also a link keeps the brand underline rather than stacking
-   the browser's on top of it. */
+/* A .mark that is also a link has to look like one again. */
 a.mark {
-  text-decoration: none;
-}
-
-a.mark:hover {
   color: var(--blue-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .eyebrow {
@@ -742,14 +755,14 @@ a.mark:hover {
 .causeCard {
   display: flex;
   flex-direction: column;
-  gap: var(--s-3);
-  padding: var(--s-6) var(--s-6) var(--s-6);
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
   text-decoration: none;
-  transition: transform var(--dur-2) ease, box-shadow var(--dur-2) ease, border-color var(--dur-2) ease;
+  transition: transform var(--dur-2) ease, box-shadow var(--dur-2) ease,
+    border-color var(--dur-2) ease;
 }
 
 .causeCard:hover {
@@ -758,16 +771,81 @@ a.mark:hover {
   box-shadow: var(--shadow);
 }
 
+/* The cause's own art on the cause's own tint. This is where the per-cause
+   colour earns its keep — eight cards, eight grounds. */
+.causeCard__art {
+  display: grid;
+  place-items: center;
+  padding: var(--s-4) var(--s-4) var(--s-2);
+  background: var(--tile-bg, var(--mist));
+}
+
+.causeCard__art .illustration {
+  width: 100%;
+  max-width: 168px;
+  height: auto;
+  transition: transform var(--dur-3) var(--ease);
+}
+
+.causeCard:hover .illustration {
+  transform: scale(1.04);
+}
+
+.causeCard__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-5) var(--s-5) var(--s-4);
+}
+
 .causeCard__name {
   font-size: var(--t-xl);
   font-weight: 700;
   letter-spacing: -0.02em;
+  color: var(--navy);
 }
 
 .causeCard__tagline {
-  font-size: var(--t-md);
+  font-size: var(--t-sm);
+  line-height: 1.55;
   color: var(--ink-soft);
   flex: 1;
+}
+
+/* What a gift buys, and who says so. The two questions a browser has. */
+.causeCard__outcome {
+  /* Plain text flow, not flex: as a flex row the amount and the phrase broke
+     onto separate lines on the cards whose phrase was long, so half the grid
+     had a hanging "$70 →". */
+  display: block;
+  margin-top: var(--s-1);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--border);
+  font-size: var(--t-sm);
+  line-height: 1.5;
+  color: var(--ink-mid);
+}
+
+.causeCard__outcome strong {
+  color: var(--navy);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.causeCard__arrow {
+  margin: 0 var(--s-1) 0 3px;
+  color: var(--tile-fg, var(--blue-700));
+  font-weight: 700;
+}
+
+.causeCard__by {
+  display: block;
+  margin-top: var(--s-1);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
 }
 
 /* --------------------------------------------------------- cause page -- */
@@ -788,7 +866,17 @@ a.mark:hover {
 }
 
 .causeHero {
-  padding: var(--s-8) 0 var(--s-2);
+  position: relative;
+  padding: var(--s-8) 0 var(--s-7);
+  /* A wash of the cause's own tint, fading out before the giving card. The
+     site was one dark hero and then white for the rest of its length; eight
+     cause pages had no colour identity beyond a 46px icon. */
+  background: linear-gradient(
+    to bottom,
+    var(--tile-bg, var(--mist)) 0%,
+    color-mix(in srgb, var(--tile-bg, var(--mist)) 45%, var(--gray-50)) 55%,
+    var(--gray-50) 100%
+  );
 }
 
 /* The label spans exactly the tile's height: "GLOBAL HEALTH" sits on its top
@@ -957,6 +1045,29 @@ a.mark:hover {
   color: var(--blue-700);
 }
 
+/* Monthly: the annual total leads, the instalment is the footnote. */
+.level__amount--annual {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.level__annual {
+  font-size: var(--t-base);
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.level.is-selected .level__annual {
+  color: var(--blue-700);
+}
+
+.level__per {
+  font-size: var(--t-2xs);
+  font-weight: 500;
+  color: var(--ink-faint);
+}
+
 /* Bottom-right, alongside the amount: at the top it collided with the outcome
    text, which is the line that has to stay readable. */
 .level__check {
@@ -1024,6 +1135,12 @@ a.mark:hover {
   background: var(--white);
   appearance: textfield;
   -moz-appearance: textfield;
+}
+
+.customAmount__input::placeholder {
+  font-weight: 500;
+  color: var(--ink-faint);
+  opacity: 1;
 }
 
 .customAmount__input::-webkit-outer-spin-button,
@@ -1278,9 +1395,9 @@ a.mark:hover {
 
 .factors li {
   counter-increment: factor;
-  color: var(--ink-soft);
-  font-size: var(--t-sm);
-  line-height: 1.6;
+  color: var(--ink-mid);
+  font-size: var(--t-md);
+  line-height: 1.65;
 }
 
 /* The numeral is content, not decoration — the copy underneath refers to the
@@ -1610,52 +1727,6 @@ a.mark:hover {
 }
 
 .note--plain svg {
-  color: var(--ink-faint);
-}
-
-/* --------------------------------------------------------- other causes -- */
-
-/* Flex, not grid: there are seven of these and any fixed column count strands
-   the last row against the left edge. Wrapping and centring means an odd
-   remainder sits in the middle and reads as intended. */
-.otherGrid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--s-3);
-}
-
-.otherGrid > * {
-  flex: 1 1 260px;
-  max-width: 360px;
-}
-
-.otherCard {
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-  padding: var(--s-4) var(--s-5);
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  text-decoration: none;
-  transition: border-color var(--dur-1) ease, transform var(--dur-1) ease;
-}
-
-.otherCard:hover {
-  border-color: var(--mist-deep);
-  transform: translateY(-2px);
-}
-
-.otherCard__label {
-  font-weight: 600;
-  font-size: var(--t-md);
-  letter-spacing: -0.01em;
-}
-
-.otherCard__name {
-  display: block;
-  font-size: var(--t-xs);
   color: var(--ink-faint);
 }
 
@@ -2273,10 +2344,32 @@ a.mark:hover {
 }
 
 .pictogram__glyph {
-  width: 19px;
-  height: 19px;
+  width: var(--glyph, 19px);
+  height: var(--glyph, 19px);
   fill: var(--blue-600);
   animation: glyph-in var(--dur-3) ease-out both;
+}
+
+/* Size follows count: a handful reads as objects, a hundred as a mass. */
+.pictogram--lg {
+  --glyph: 34px;
+}
+
+.pictogram--md {
+  --glyph: 24px;
+}
+
+.pictogram--sm {
+  --glyph: 15px;
+}
+
+.pictogram--xs {
+  --glyph: 11px;
+}
+
+.pictogram--sm .pictogram__row,
+.pictogram--xs .pictogram__row {
+  gap: 3px;
 }
 
 .pictogram__row--single .pictogram__glyph {
@@ -2713,8 +2806,7 @@ a.mark:hover {
     background-color var(--dur-2) ease;
 }
 
-.causeCard:hover .tile,
-.otherCard:hover .tile {
+.causeCard:hover .tile {
   transform: scale(1.09) rotate(-4deg);
 }
 
@@ -2757,8 +2849,14 @@ a.mark:hover {
   justify-content: center;
 }
 
-.thanks__tile {
-  margin: 0 auto var(--s-5);
+.shareGift {
+  margin-top: var(--s-7);
+}
+
+.shareGift__note {
+  margin-top: var(--s-3);
+  font-size: var(--t-sm);
+  color: var(--ink-faint);
 }
 
 .splitPlan__h {
@@ -2769,6 +2867,89 @@ a.mark:hover {
 .splitPlan__sub {
   margin-top: var(--s-3);
   color: var(--ink-soft);
+}
+
+/* -------------------------------------------------------------- ripple -- */
+
+.ripple {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ripple circle {
+  stroke: var(--blue);
+}
+
+.ripple__drop {
+  fill: var(--blue-600);
+  stroke: none;
+}
+
+/* Rings spread out and fade, once. The drop lands first and stays. */
+.ripple--live circle {
+  animation: ring-out 1.5s var(--ease) both;
+  transform-origin: 50% 50%;
+}
+
+.ripple--live .ripple__drop {
+  animation: drop-in var(--dur-4) var(--ease-spring) both;
+  transform-origin: 50% 50%;
+}
+
+@keyframes ring-out {
+  from {
+    opacity: 0;
+    transform: scale(0.25);
+  }
+  45% {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 0.32;
+    transform: scale(1);
+  }
+}
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+
+.onDark .ripple circle {
+  stroke: var(--sky);
+}
+
+.onDark .ripple__drop {
+  fill: var(--sky);
+}
+
+/* The mark behind the thank-you headline, at the size of a real moment. */
+.thanks__ripple {
+  width: 168px;
+  margin: 0 auto var(--s-5);
+}
+
+/* A still, very faint ring set in the hero, low and to the right of the
+   headline — the metaphor present rather than announced. */
+.hero__ripple {
+  position: absolute;
+  right: -90px;
+  bottom: -40px;
+  width: 420px;
+  opacity: 0.13;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 899px) {
+  .hero__ripple {
+    right: -170px;
+    width: 320px;
+    opacity: 0.1;
+  }
 }
 
 /* --------------------------------------------------- same dollar strip -- */
@@ -2869,7 +3050,6 @@ a.mark:hover {
   .verifiedTotal,
   .cadence,
   .customAmount,
-  .otherGrid,
   .wrap,
   .wrap--narrow {
     max-width: none;

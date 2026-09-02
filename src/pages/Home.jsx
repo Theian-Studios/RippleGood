@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import CauseCard from "../components/CauseCard.jsx";
 import HeroCurve from "../components/HeroCurve.jsx";
+import Ripple from "../components/Ripple.jsx";
 import HomePanel from "../components/HomePanel.jsx";
 import VerifiedTotal from "../components/VerifiedTotal.jsx";
 import Wallpaper from "../components/Wallpaper.jsx";
@@ -66,6 +67,9 @@ export default function Home() {
             </div>
           </div>
         </div>
+        {/* Faint, still, behind the copy: the name's own shape, present in the
+            place the name is said. */}
+        <Ripple className="hero__ripple" />
         <HeroCurve />
       </section>
 

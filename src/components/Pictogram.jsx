@@ -8,9 +8,26 @@ import { useEffect, useRef, useState } from "react";
  * so anyone can count them and find the sentence true. Past that we stop
  * pretending and switch to a multiplication statement — "1,000 ×" beside a
  * single icon — because a grid of 40 icons captioned "1,000" would be a picture
- * that lies. The × is the brand mark doing its literal job.
+ * that lies.
+ *
+ * The cap used to be 30, which meant the widget collapsed to "100 ×" beside a
+ * single hen at exactly the amount worth feeling. Drawing a hundred is the
+ * whole point of drawing anything, and it stays honest because it really is a
+ * hundred: the number rendered is never larger than the number counted.
  */
-const COUNTABLE = 30;
+const COUNTABLE = 300;
+
+/**
+ * Glyph size by count. Few icons should be large enough to read as objects;
+ * a hundred should be small enough to read as a mass. One size for both made
+ * the small counts timid and the large ones a wall.
+ */
+function densityFor(n) {
+  if (n <= 12) return "lg";
+  if (n <= 40) return "md";
+  if (n <= 120) return "sm";
+  return "xs";
+}
 
 /* Small filled glyphs, drawn on a 16×16 box. Filled rather than stroked: at
    14px in a dense row, line icons turn to mush. */
@@ -75,7 +92,7 @@ export default function Pictogram({ units, pictogram }) {
   const overflow = units > COUNTABLE;
 
   return (
-    <div className="pictogram" aria-hidden="true">
+    <div className={`pictogram pictogram--${densityFor(counted)}`} aria-hidden="true">
       {overflow && (
         <span className="pictogram__multiplier">
           {shownCount.toLocaleString("en-US")}
@@ -91,7 +108,9 @@ export default function Pictogram({ units, pictogram }) {
             className="pictogram__glyph"
             style={{
               // Staggered, but capped so the last icon of thirty isn't late.
-              animationDelay: `${Math.min(i * 18, 380)}ms`,
+              // Staggered, but the ramp shortens as the count grows so a
+              // hundred icons still land inside half a second.
+              animationDelay: `${Math.min(i * (counted > 60 ? 4 : 18), 460)}ms`,
             }}
           >
             <path d={path} />

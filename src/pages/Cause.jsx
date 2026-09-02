@@ -4,10 +4,9 @@ import { ArrowLeft, BadgeCheck, Scale } from "lucide-react";
 import EvidenceCard from "../components/EvidenceCard.jsx";
 import Illustration from "../components/Illustration.jsx";
 import GivingPanel from "../components/GivingPanel.jsx";
-import OtherCauses from "../components/OtherCauses.jsx";
 import SameDollar from "../components/SameDollar.jsx";
 import Wallpaper from "../components/Wallpaper.jsx";
-import { getCharityById, getOtherCharities, resolveCauseId } from "../data/charities.js";
+import { getCharityById, resolveCauseId } from "../data/charities.js";
 import { iconFor } from "../lib/icons.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
 
@@ -57,7 +56,7 @@ export default function Cause() {
   /** The small footnote under the headline opens the evidence and goes to it. */
   return (
     <>
-      <section className="causeHero">
+      <section className="causeHero" data-cause={charity.id}>
         <div className="wrap wrap--narrow">
           <Link to="/#causes" className="crumb">
             <ArrowLeft size={16} aria-hidden="true" />
@@ -129,7 +128,8 @@ export default function Cause() {
       </section>
 
       {selection && (
-        <section className="section section--tight">
+        <section className="section section--gray section--textured">
+          <Wallpaper />
           <div className="wrap wrap--narrow">
             <SameDollar
               amount={selection.amount}
@@ -140,16 +140,6 @@ export default function Cause() {
         </section>
       )}
 
-      <section className="section section--gray section--textured">
-        <Wallpaper />
-        <div className="wrap">
-          <div className="sectionHead">
-            <h2>Care about something else too?</h2>
-            <p>Every cause here has one pick and the evidence behind it.</p>
-          </div>
-          <OtherCauses charities={getOtherCharities(charity.id)} />
-        </div>
-      </section>
     </>
   );
 }

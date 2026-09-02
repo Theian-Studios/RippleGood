@@ -23,6 +23,7 @@ export const AVERAGE_COST_DISCLAIMER =
 export const evaluators = [
   {
     id: "givewell",
+    short: "GiveWell",
     name: "GiveWell",
     url: "https://www.givewell.org/",
     focus: "Global health and poverty",
@@ -31,6 +32,7 @@ export const evaluators = [
   },
   {
     id: "ace",
+    short: "ACE",
     name: "Animal Charity Evaluators",
     url: "https://animalcharityevaluators.org/",
     focus: "Animal welfare",
@@ -39,6 +41,7 @@ export const evaluators = [
   },
   {
     id: "founders-pledge",
+    short: "Founders Pledge",
     name: "Founders Pledge",
     url: "https://www.founderspledge.com/research",
     focus: "Cross-cause research",
@@ -47,6 +50,7 @@ export const evaluators = [
   },
   {
     id: "giving-green",
+    short: "Giving Green",
     name: "Giving Green",
     url: "https://www.givinggreen.earth/",
     focus: "Climate",
@@ -99,6 +103,7 @@ const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));
 export const charities = [
   {
     id: "malaria-nets",
+    cardOutcome: "five nets",
     seoTitle: "The most effective malaria charity",
     defaultAmount: 30,
     category: "Malaria Nets",
@@ -175,6 +180,7 @@ export const charities = [
 
   {
     id: "malaria-medicine",
+    cardOutcome: "ten children through the season",
     seoTitle: "The best charity for seasonal malaria prevention",
     defaultAmount: 70,
     category: "Malaria Medicine",
@@ -247,6 +253,7 @@ export const charities = [
 
   {
     id: "child-survival",
+    cardOutcome: "ten children, a year each",
     seoTitle: "The most effective child survival charity",
     defaultAmount: 20,
     category: "Child Survival",
@@ -328,6 +335,7 @@ export const charities = [
 
   {
     id: "animal-welfare",
+    cardOutcome: "100 hens out of cages",
     seoTitle: "The most effective animal welfare charity",
     estimateNote:
       "Hens-per-dollar is The Humane League's own estimate, not an independent one. It was on every outcome line; it belongs here, once.",
@@ -392,6 +400,7 @@ export const charities = [
 
   {
     id: "climate",
+    cardOutcome: "fifty tons of CO₂e",
     seoTitle: "The most effective climate charity",
     directOnlyReason:
       "Direct only: the entity listed on Every.org is Giving Green's research organization, not the regranting fund we recommend. Your amount isn't carried across for this one.",
@@ -467,6 +476,7 @@ export const charities = [
 
   {
     id: "extreme-poverty",
+    cardOutcome: "$22 straight to a family",
     seoTitle: "The best charity for extreme poverty",
     defaultAmount: 25,
     category: "Extreme Poverty",
@@ -529,6 +539,7 @@ export const charities = [
     // checked against Evidence Action's or GiveWell's current published pages.
     // `provisional: true` keeps that visible to readers until you do.
     id: "intestinal-worms",
+    cardOutcome: "a classroom dewormed",
     seoTitle: "The most effective deworming charity",
     defaultAmount: 50,
     provisional: true,
@@ -606,6 +617,7 @@ export const charities = [
     // checked against Founders Pledge's or LEEP's published research.
     // `provisional: true` keeps that visible to readers until you do.
     id: "lead-poisoning",
+    cardOutcome: "a national lead standard",
     seoTitle: "The most effective lead poisoning charity",
     estimateNote:
       "These tiers are illustrative of the kind of work your gift funds, not costed line items. LEEP does not price regulatory work per donation.",
@@ -685,6 +697,14 @@ export const charities = [
  * somebody else is still holding.
  */
 /**
+ * `cardOutcome` — what defaultAmount buys, as a noun phrase for the grid.
+ *
+ * Not derived from the tier's outcomeText, which is a full sentence and reads
+ * as one. A card has room for a fragment, and the job here is to turn browsing
+ * into choosing: a label and a tagline ask for a click on faith.
+ */
+
+/**
  * `seoTitle` — the page title, written as the thing someone types into a
  * search box rather than as the name of the thing we happen to have. "The most
  * effective malaria charity" is a query; "Against Malaria Foundation · Global
@@ -708,6 +728,11 @@ export const CAUSE_ALIASES = {
   "lead-exposure": "lead-poisoning",
 };
 
+/** The evaluator's short name, for surfaces with no room for the full one. */
+export function evaluatorShort(charity) {
+  return evaluators.find((e) => e.name === charity.evaluator)?.short ?? charity.evaluator;
+}
+
 /** The current id for a slug, following one rename hop. */
 export function resolveCauseId(id) {
   return CAUSE_ALIASES[id] ?? id;
@@ -720,11 +745,6 @@ export function resolveCauseId(id) {
 export function getCharityById(id) {
   const current = resolveCauseId(id);
   return charities.find((c) => c.id === current);
-}
-
-/** The other five causes, for the "keep looking" strip at the foot of a page. */
-export function getOtherCharities(id) {
-  return charities.filter((c) => c.id !== id);
 }
 
 /**
