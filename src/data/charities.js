@@ -62,7 +62,7 @@ const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));
  * on this site a cause IS its recommendation.
  *
  * Shape:
- *   id             slug used in the URL: /#/cause/:id
+ *   id             slug used in the URL: /cause/:id
  *   category       human label for the cause
  *   icon           lucide-react icon name (see lib/icons.js for the registry)
  *   tagline        one line for the home-page card
@@ -99,6 +99,7 @@ const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));
 export const charities = [
   {
     id: "malaria-nets",
+    seoTitle: "The most effective malaria charity",
     defaultAmount: 30,
     category: "Malaria Nets",
     icon: "MoonStar",
@@ -172,6 +173,7 @@ export const charities = [
 
   {
     id: "malaria-medicine",
+    seoTitle: "The best charity for seasonal malaria prevention",
     defaultAmount: 70,
     category: "Malaria Medicine",
     icon: "Pill",
@@ -240,6 +242,7 @@ export const charities = [
 
   {
     id: "child-survival",
+    seoTitle: "The most effective child survival charity",
     defaultAmount: 20,
     category: "Child Survival",
     icon: "Baby",
@@ -315,6 +318,7 @@ export const charities = [
 
   {
     id: "animal-welfare",
+    seoTitle: "The most effective animal welfare charity",
     estimateNote:
       "Hens-per-dollar is The Humane League's own estimate, not an independent one. It was on every outcome line; it belongs here, once.",
     defaultAmount: 50,
@@ -378,6 +382,7 @@ export const charities = [
 
   {
     id: "climate",
+    seoTitle: "The most effective climate charity",
     directOnlyReason:
       "Direct only: the entity listed on Every.org is Giving Green's research organization, not the regranting fund we recommend. Your amount isn't carried across for this one.",
     estimateNote:
@@ -452,6 +457,7 @@ export const charities = [
 
   {
     id: "extreme-poverty",
+    seoTitle: "The best charity for extreme poverty",
     defaultAmount: 25,
     category: "Extreme Poverty",
     icon: "HandCoins",
@@ -513,6 +519,7 @@ export const charities = [
     // checked against Evidence Action's or GiveWell's current published pages.
     // `provisional: true` keeps that visible to readers until you do.
     id: "intestinal-worms",
+    seoTitle: "The most effective deworming charity",
     defaultAmount: 50,
     provisional: true,
     category: "Intestinal Worms",
@@ -589,6 +596,7 @@ export const charities = [
     // checked against Founders Pledge's or LEEP's published research.
     // `provisional: true` keeps that visible to readers until you do.
     id: "lead-poisoning",
+    seoTitle: "The most effective lead poisoning charity",
     estimateNote:
       "These tiers are illustrative of the kind of work your gift funds, not costed line items. LEEP does not price regulatory work per donation.",
     defaultAmount: 25,
@@ -666,6 +674,13 @@ export const charities = [
  * keeping one is two lines, and the cost of dropping one is a dead link
  * somebody else is still holding.
  */
+/**
+ * `seoTitle` — the page title, written as the thing someone types into a
+ * search box rather than as the name of the thing we happen to have. "The most
+ * effective malaria charity" is a query; "Against Malaria Foundation · Global
+ * Health" is a filing label, and nobody searches for a filing label.
+ */
+
 /**
  * `estimateNote` — the one place a cause's figures get their caveat.
  *

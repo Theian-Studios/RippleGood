@@ -25,8 +25,10 @@ export default function Cause() {
     setEvidenceOpen(false);
   }, [causeId]);
 
+  // The same title the prerender writes into the static file, so a crawler that
+  // runs JavaScript doesn't see a different one from a crawler that doesn't.
   usePageMeta(
-    charity ? `${charity.name} · ${charity.category}` : null,
+    charity ? `${charity.seoTitle}: ${charity.name}` : null,
     charity ? `${charity.headline} ${charity.subhead}` : undefined,
   );
 

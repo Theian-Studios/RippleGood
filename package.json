@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "node scripts/build-og-images.mjs",
-    "build": "vite build",
+    "build": "vite build && npm run build:ssr && node scripts/prerender.mjs",
     "build:og": "node scripts/build-og-images.mjs",
     "check:links": "node scripts/check-links.mjs",
     "preview": "vite preview",
@@ -16,7 +16,8 @@
     "db:link": "supabase link --project-ref $SUPABASE_PROJECT_REF",
     "db:push": "supabase db push",
     "fn:deploy": "supabase functions deploy everyorg-webhook --no-verify-jwt",
-    "fn:logs": "echo 'The Supabase CLI has no logs subcommand. Dashboard -> Edge Functions -> everyorg-webhook -> Logs'"
+    "fn:logs": "echo 'The Supabase CLI has no logs subcommand. Dashboard -> Edge Functions -> everyorg-webhook -> Logs'",
+    "build:ssr": "vite build --ssr src/entry-server.jsx --outDir dist-ssr"
   },
   "dependencies": {
     "lucide-react": "^0.460.0",

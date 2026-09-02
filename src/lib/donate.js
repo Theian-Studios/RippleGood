@@ -33,6 +33,19 @@
 const EVERY_ORG = "https://www.every.org";
 
 /**
+ * The origin these links point back to.
+ *
+ * Read from the browser wherever there is one, so a preview deployment sends
+ * donors back to itself rather than to production. The fallback exists because
+ * these run during prerender too, in Node, where there is no window — and a
+ * bare `window.location` there would crash the whole build.
+ */
+function siteOrigin() {
+  if (typeof window !== "undefined") return window.location.origin;
+  return import.meta.env.VITE_SITE_ORIGIN || "https://ripple-good.org";
+}
+
+/**
  * Tints Every.org's modal to our interactive blue, so the handoff doesn't look
  * like it landed on an unrelated site. Bare hex, no "#": a literal # would end
  * the query string, and while URLSearchParams escapes it to %23, there is no
@@ -144,7 +157,7 @@ export function everyOrgUrl(
  * donor lands on the thank-you page or on the home page.
  */
 export function thanksUrl({ causeId, amount, monthly }) {
-  const { origin } = window.location;
+  const origin = siteOrigin();
   const base = import.meta.env.BASE_URL || "/";
   const q = new URLSearchParams({
     cause: causeId,
@@ -160,7 +173,7 @@ export function thanksUrl({ causeId, amount, monthly }) {
  * no "#" in it cannot be truncated at one. Verified against the live site.
  */
 export function causeUrl(causeId) {
-  const { origin } = window.location;
+  const origin = siteOrigin();
   const base = import.meta.env.BASE_URL || "/";
   return `${origin}${base}cause/${causeId}`;
 }

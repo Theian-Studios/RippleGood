@@ -3,7 +3,7 @@ import { usePageMeta } from "../lib/usePageMeta.js";
 
 export default function About() {
   usePageMeta(
-    "About",
+    "Where you give matters more than how much",
     "Ripple Good exists to close the gap between wanting to help and knowing where to send it. One evidence-backed pick per cause, with the math shown.",
   );
 

@@ -28,11 +28,46 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://ripple-good.org/og/default.png" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script>
+      // Legacy links. This site used a HashRouter, so URLs already in the wild
+      // look like /#/cause/climate. Real paths are served now, so translate on
+      // arrival — before React mounts, and with replace() so the old form never
+      // enters history. Anything that isn't a "#/" route is left alone.
+      (function () {
+        function migrate() {
+          var h = window.location.hash;
+          if (h.indexOf("#/") !== 0) return;
+          window.location.replace(
+            window.location.pathname.replace(/\/$/, "") +
+              h.slice(1) +
+              window.location.search,
+          );
+        }
+        migrate();
+        // A hash-only change is a same-document navigation: nothing reloads and
+        // this file never runs again. An in-page legacy link would otherwise
+        // sit there doing nothing at all.
+        window.addEventListener("hashchange", migrate);
+      })();
+    </script>
+
+    <!-- Self-hosted. A site that tells people "we never see your details"
+         shouldn't hand Google a request, and an IP address, on every load.
+         Subset to Latin and woff2: five faces, ~76KB, no third-party origin.
+         Regenerate with scripts/fonts/README.md. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/poppins-600.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/poppins-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
 
     <!-- VERIFY: the urls below assume the final home is https://ripple-good.org/ —

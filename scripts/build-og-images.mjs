@@ -14,8 +14,8 @@
  * real, static HTML file carrying that cause's Open Graph tags, which bounces a
  * human visitor straight on to the app.
  *
- *   Share this:  ripple-good.org/share/global-health
- *   Reader gets: ripple-good.org/#/cause/global-health
+ *   Share this:  ripple-good.org/share/malaria-nets
+ *   Reader gets: ripple-good.org/cause/malaria-nets
  *
  * NOTE: nothing in the app links to these any more. The "Share this cause"
  * button was removed, so /share/<id> is now an author-facing URL — paste it
@@ -189,7 +189,7 @@ function sharePage(charity) {
     : charity.subhead;
   // Relative, so the bounce works on a custom domain and a project page alike:
   // /share/<id>/ -> ../../ -> the site root that owns index.html.
-  const appUrl = `../../#/cause/${charity.id}`;
+  const appUrl = `../../cause/${charity.id}`;
 
   return `<!doctype html>
 <html lang="en">
@@ -198,7 +198,7 @@ function sharePage(charity) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escape(title)}</title>
     <meta name="description" content="${escape(description)}" />
-    <link rel="canonical" href="${SITE_URL}/#/cause/${charity.id}" />
+    <link rel="canonical" href="${SITE_URL}/cause/${charity.id}" />
 
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="Ripple Good" />
