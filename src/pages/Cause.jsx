@@ -86,7 +86,7 @@ export default function Cause() {
         </div>
       </section>
 
-      <section className="section section--tight">
+      <section className="section">
         <div className="wrap wrap--narrow">
           <GivingPanel
             charity={charity}

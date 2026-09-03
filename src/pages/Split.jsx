@@ -107,7 +107,7 @@ export default function Split() {
         </div>
       </section>
 
-      <section className="section section--tight">
+      <section className="section">
         <div className="wrap wrap--narrow">
           <div className="give">
             <div className="splitBudget">

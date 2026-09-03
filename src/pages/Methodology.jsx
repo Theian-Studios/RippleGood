@@ -40,7 +40,7 @@ export default function Methodology() {
         </div>
       </section>
 
-      <section className="section section--tight">
+      <section className="section">
         <div className="wrap wrap--narrow prose">
           <h2>How a pick gets made</h2>
           <div className="steps">

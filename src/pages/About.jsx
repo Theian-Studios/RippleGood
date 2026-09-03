@@ -23,7 +23,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="section section--tight">
+      <section className="section">
         <div className="wrap wrap--narrow prose">
           <h2>The gap we're trying to close</h2>
           <p>
@@ -80,7 +80,7 @@ export default function About() {
             <a href="mailto:hello@ripple-good.org">hello@ripple-good.org</a>.
           </p>
 
-          <p className="u-mt-7">
+          <p className="u-mt-6">
             <Link to="/#causes" className="btn btn--primary">
               Pick your cause
             </Link>

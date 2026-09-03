@@ -32,7 +32,7 @@ export default function VerifiedTotal() {
   if (!totals || totals.allGifts < MIN_GIFTS) return null;
 
   return (
-    <section className="section section--tight">
+    <section className="section">
       <div className="wrap">
         <div className="verifiedTotal">
           <p className="verifiedTotal__figure">

@@ -85,9 +85,11 @@
   --r-lg: 22px;
   --r-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(10, 27, 51, 0.06);
-  --shadow: 0 2px 6px rgba(10, 27, 51, 0.06), 0 12px 28px -18px rgba(10, 27, 51, 0.3);
-  --shadow-lg: 0 4px 12px rgba(10, 27, 51, 0.08), 0 28px 60px -32px rgba(10, 27, 51, 0.45);
+  /* No decorative gradients, and one drop shadow on the whole site: the
+     cause cards lift on hover, because they are the one thing that behaves
+     like an object you pick up. Everything else is borders and rules. The
+     rings on a selected tier and a focused field are state, not decoration. */
+  --shadow-lift: 0 2px 6px rgba(10, 27, 51, 0.06), 0 12px 28px -18px rgba(10, 27, 51, 0.3);
 
 
   /* ---- type scale ------------------------------------------------------
@@ -522,7 +524,6 @@ a.mark {
   background: var(--blue);
   border-color: var(--blue);
   color: var(--white);
-  box-shadow: 0 10px 24px -14px rgba(36, 114, 236, 0.9);
 }
 
 .btn--primary:hover {
@@ -561,8 +562,7 @@ a.mark {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(248, 249, 251, 0.88);
-  backdrop-filter: saturate(1.6) blur(10px);
+  background: var(--gray-50);
   border-bottom: 1px solid var(--border);
 }
 
@@ -648,11 +648,17 @@ a.mark {
 
 /* ------------------------------------------------------------ section -- */
 
+/* ---- vertical rhythm -------------------------------------------------
+   One system, stated once:
+     between sections            40 + 40 = 80 (this rule, every width)
+     heading to its body         h1 20 · h2 16 · h3 12 (steps down with size)
+     paragraph to paragraph      16
+     paragraph to a block        24 (a list, a figure, a note, a button)
+     inside the giving flow      24 between groups, 16 within one
+   The home page used to run 40, 80, 120 and 120 between its sections,
+   paragraphs were 12 in some places and 16 in others, and the cause page
+   had 128px between its subhead and "Choose a result". */
 .section {
-  padding: var(--s-9) 0;
-}
-
-.section--tight {
   padding: var(--s-8) 0;
 }
 
@@ -679,17 +685,6 @@ a.mark {
 .sectionHead p {
   margin-top: var(--s-3);
   color: var(--ink-soft);
-}
-
-@media (min-width: 640px) {
-  .section {
-    padding: var(--s-11) 0;
-  }
-  /* Restated here because it would otherwise lose to the rule above, which is
-     equally specific and comes later — the modifier has to win at every width. */
-  .section--tight {
-    padding: var(--s-8) 0;
-  }
 }
 
 /* ---------------------------------------------------------- cause grid -- */
@@ -725,7 +720,6 @@ a.mark {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-sm);
   overflow: hidden;
   text-decoration: none;
   transition: transform var(--dur-2) ease, box-shadow var(--dur-2) ease,
@@ -735,7 +729,7 @@ a.mark {
 .causeCard:hover {
   transform: translateY(-3px);
   border-color: var(--mist-deep);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-lift);
 }
 
 /* The cause's own art on the cause's own tint. This is where the per-cause
@@ -828,16 +822,10 @@ a.mark {
 
 .causeHero {
   position: relative;
-  padding: var(--s-8) 0 var(--s-7);
-  /* A wash of the cause's own tint, fading out before the giving card. The
-     site was one dark hero and then white for the rest of its length; eight
-     cause pages had no colour identity beyond a 46px icon. */
-  background: linear-gradient(
-    to bottom,
-    var(--tile-bg, var(--mist)) 0%,
-    color-mix(in srgb, var(--tile-bg, var(--mist)) 45%, var(--gray-50)) 55%,
-    var(--gray-50) 100%
-  );
+  padding: var(--s-8) 0;
+  /* A flat band of the cause's own tint. It was a gradient fading into the
+     page, which is the one effect that most reliably says "generated". */
+  background: var(--tile-bg, var(--mist));
 }
 
 /* The label spans exactly the tile's height: "GLOBAL HEALTH" sits on its top
@@ -892,7 +880,7 @@ a.mark {
   display: flex;
   align-items: flex-start;
   gap: var(--s-2);
-  margin-top: var(--s-5);
+  margin-top: var(--s-6);
   font-size: var(--t-sm);
   color: var(--ink-soft);
   text-decoration: none;
@@ -923,9 +911,7 @@ a.mark {
    boxes inside boxes inside a box. The tiers keep their borders because they
    are choices; everything around them sits on the page. */
 .give {
-  margin-top: var(--s-6);
-  padding-top: var(--s-7);
-  border-top: 1px solid var(--border);
+  margin-top: 0;
 }
 
 .give__label {
@@ -938,7 +924,7 @@ a.mark {
 .levels {
   display: grid;
   gap: var(--s-3);
-  margin: var(--s-5) 0 0;
+  margin: var(--s-6) 0 0;
   grid-template-columns: 1fr;
 }
 
@@ -1045,8 +1031,8 @@ a.mark {
 /* ------------------------------------------------------- custom amount -- */
 
 .customAmount {
-  margin-top: var(--s-5);
-  padding-top: var(--s-5);
+  margin-top: var(--s-6);
+  padding-top: var(--s-6);
   border-top: 1px dashed var(--border-strong);
 }
 
@@ -1119,10 +1105,7 @@ a.mark {
 }
 
 .give__foot {
-  /* Tight to the amount field above it. The live-region paragraph in
-     .customAmount already reserves a blank line even when it has nothing to
-     say, so a large margin here read as a gap twice over. */
-  margin-top: var(--s-3);
+  margin-top: var(--s-6);
   display: flex;
   flex-direction: column;
   gap: var(--s-4);
@@ -1145,7 +1128,6 @@ a.mark {
   font-weight: 600;
   line-height: 1.2;
   text-decoration: none;
-  box-shadow: 0 12px 28px -16px rgba(36, 114, 236, 0.95);
   transition: background-color var(--dur-1) ease, transform var(--dur-1) ease;
 }
 
@@ -1216,7 +1198,6 @@ a.mark {
   background: var(--white);
   border-color: var(--border-strong);
   color: var(--navy);
-  box-shadow: none;
 }
 
 .donate--alt:hover {
@@ -1291,8 +1272,7 @@ a.mark {
 /* About and Methodology on the home page. Plain sections, not disclosures:
    nothing to expand, so nothing to miss. */
 .homePanel {
-  padding-top: var(--s-7);
-  border-top: 1px solid var(--border);
+  padding-top: 0;
 }
 
 .homePanel + .homePanel {
@@ -1316,7 +1296,7 @@ a.mark {
 }
 
 .homePanel__body p {
-  margin: 0 0 var(--s-3);
+  margin: 0 0 var(--s-4);
   color: var(--ink-soft);
   line-height: 1.62;
 }
@@ -1328,7 +1308,7 @@ a.mark {
 /* ------------------------------------------------------- about intro -- */
 
 .aboutIntro p {
-  margin: 0 0 var(--s-3);
+  margin: 0 0 var(--s-4);
   color: var(--ink-soft);
   line-height: 1.65;
 }
@@ -1388,11 +1368,11 @@ a.mark {
 }
 
 .aboutIntro .btn {
-  margin-top: var(--s-5);
+  margin-top: var(--s-6);
 }
 
 .homePanel__body .btn {
-  margin-top: var(--s-5);
+  margin-top: var(--s-6);
 }
 
 .evidence__toggle {
@@ -1705,6 +1685,12 @@ a.mark {
   color: var(--navy);
 }
 
+/* The first heading sits on the page head's own spacing; its usual 48 on top
+   of that made 96 between the standfirst and the first section. */
+.prose > h2:first-child {
+  margin-top: 0;
+}
+
 .prose h3 {
   margin: var(--s-7) 0 var(--s-3);
   font-size: var(--t-xl);
@@ -1770,8 +1756,13 @@ a.mark {
   display: grid;
   gap: 0;
   margin-top: var(--s-6);
-  border-top: 1px solid var(--border);
   counter-reset: step;
+}
+
+/* On the first ruled row only. The home page's "How it works" list shares
+   this class and was picking up a rule under its heading. */
+.steps > .step:first-child {
+  border-top: 1px solid var(--border);
 }
 
 /* The badge is a grid item rather than an absolutely positioned ::before, so
@@ -2022,7 +2013,7 @@ a.mark {
   height: calc(100% - 6px);
   border-radius: var(--r-pill);
   background: var(--white);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
   transition: transform var(--dur-3) var(--ease-spring);
 }
 
@@ -2157,7 +2148,6 @@ a.mark {
   border-radius: 50%;
   background: var(--white);
   border: 3px solid var(--blue);
-  box-shadow: 0 2px 6px rgba(10, 27, 51, 0.18);
   transition: transform var(--dur-1) ease, box-shadow var(--dur-1) ease;
 }
 
@@ -2167,7 +2157,6 @@ a.mark {
   border-radius: 50%;
   background: var(--white);
   border: 3px solid var(--blue);
-  box-shadow: 0 2px 6px rgba(10, 27, 51, 0.18);
 }
 
 .slider input[type="range"]:hover::-webkit-slider-thumb,
@@ -2290,7 +2279,7 @@ a.mark {
   flex-wrap: wrap;
   align-items: center;
   gap: var(--s-nudge) var(--s-3);
-  margin-top: var(--s-4);
+  margin-top: var(--s-6);
 }
 
 .pictogram__row {
@@ -2504,7 +2493,7 @@ a.mark {
 }
 
 .hero__sub {
-  margin: var(--s-6) auto 0;
+  margin: var(--s-5) auto 0;
   max-width: 56ch;
   font-size: var(--t-lead);
   color: rgba(255, 255, 255, 0.76);
@@ -2602,7 +2591,6 @@ a.mark {
   background: var(--navy);
   border-color: var(--navy);
   color: var(--white);
-  box-shadow: 0 10px 24px -14px rgba(10, 27, 51, 0.85);
 }
 
 .btn--navy:hover {
@@ -2907,7 +2895,7 @@ a.mark {
 }
 
 .sameDollar__lead {
-  margin-top: var(--s-2);
+  margin-top: var(--s-3);
   font-size: var(--t-sm);
   color: var(--ink-soft);
 }
@@ -2983,16 +2971,18 @@ a.mark {
   justify-content: center;
 }
 
+/* !important so a utility beats `.prose p + p`: without it the closing
+   button on About and Methodology got paragraph spacing, not its own. */
 .u-mt-5 {
-  margin-top: var(--s-5);
+  margin-top: var(--s-5) !important;
 }
 
 .u-mt-6 {
-  margin-top: var(--s-6);
+  margin-top: var(--s-6) !important;
 }
 
 .u-mt-7 {
-  margin-top: var(--s-7);
+  margin-top: var(--s-7) !important;
 }
 
 .u-lead {
@@ -3019,7 +3009,6 @@ a.mark {
   }
 
   .section,
-  .section--tight,
   .pageHead,
   .causeHero {
     padding: 0 0 14pt;

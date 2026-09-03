@@ -47,14 +47,11 @@ export default function Home() {
               <br />
               <span className="hero__accent">Make the biggest ripple.</span>
             </h1>
-            {/* This line was buried on the methodology page and is the sharpest
-                thing the site says about itself. The old one — "charities
-                proven to create the most impact" — claimed more certainty than
-                any page underneath it does. */}
+            {/* One plain sentence. The argument about other sites belongs on
+                the methodology page, where it is made properly. */}
             <p className="hero__sub">
-              Most effective-giving sites ask you to reorder your values, then
-              hand you a global health charity. We don't. You pick the cause;
-              we name the strongest evidence inside it.
+              We connect your generosity to charities proven to make the most
+              impact.
             </p>
 
             <div className="hero__actions">
@@ -72,7 +69,7 @@ export default function Home() {
           before anyone could see what the site actually offered, which the
           hero button then jumped straight past. If the button has to skip your
           copy, the copy is in the wrong place. */}
-      <section className="section section--tight" id="causes">
+      <section className="section" id="causes">
         <div className="wrap">
           <div className="sectionHead sectionHead--centered">
             <h2>Pick your cause</h2>
@@ -86,7 +83,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section--tight">
+      <section className="section">
         <div className="wrap wrap--narrow aboutIntro">
           <div className="sectionHead sectionHead--centered">
             <h2>Why the choice matters more than the amount</h2>
@@ -185,7 +182,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section--tight">
+      <section className="section">
         <div className="wrap wrap--narrow">
           <HomePanel
             title="Methodology"
