@@ -103,6 +103,12 @@ const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));
  *   directPrefill  optional {style, form}. Set ONLY where loading the real
  *                  page with the parameters has been seen to fill the amount
  *                  in. See lib/donate.js for the styles and what was tested.
+ *   learnMoreIntro two to four sentences on the problem itself, for a reader
+ *                  who arrived knowing the cause's name and little else
+ *   learnMore[]    {title, source, url, note} — three places to read about
+ *                  the problem itself, not the charity. A fact sheet from a
+ *                  health body, a data page, and the evaluator's intervention
+ *                  report where one exists. All checked by check:links.
  *   lastVerified   ISO date the figures were last checked against source, or
  *                  null when they have not been — a provisional entry shows no
  *                  freshness date at all rather than a placeholder one
@@ -187,6 +193,28 @@ export const charities = [
     everyOrg: { slug: "againstmalaria", ein: "20-3069841" },
     donateUrl: "https://www.againstmalaria.com/Donation.aspx",
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "Malaria is a parasite carried by mosquitoes that bite at night. It kills around six hundred thousand people a year, most of them children under five in sub-Saharan Africa. A net treated with insecticide stops the bite and kills the mosquito, which is why it protects the household around it and not only the person underneath.",
+    learnMore: [
+      {
+        title: "Malaria",
+        source: "World Health Organization",
+        url: "https://www.who.int/news-room/fact-sheets/detail/malaria",
+        note: "The fact sheet: who gets it, where, and what the death toll is each year.",
+      },
+      {
+        title: "Malaria",
+        source: "Our World in Data",
+        url: "https://ourworldindata.org/malaria",
+        note: "Charts of cases and deaths over time, by country, and how far nets and treatment have moved them.",
+      },
+      {
+        title: "Insecticide-treated nets",
+        source: "GiveWell",
+        url: "https://www.givewell.org/international/technical/programs/insecticide-treated-nets",
+        note: "The evidence that nets reduce child deaths, and what it costs to get one hung.",
+      },
+    ],
   },
 
   {
@@ -202,7 +230,7 @@ export const charities = [
     evaluator: evaluatorById.givewell.name,
     evaluatorUrl: "https://www.givewell.org/charities/malaria-consortium",
     evaluatorNote:
-      "A GiveWell Top Charity, and historically the recipient of the largest share of GiveWell-directed funding.",
+      "A GiveWell Top Charity, historically the largest recipient of GiveWell-directed funding.",
     headline: "Shield a child through the entire malaria season.",
     subhead:
       "Seasonal malaria chemoprevention: a course of preventive medicine given monthly through the months when transmission peaks.",
@@ -262,6 +290,28 @@ export const charities = [
     everyOrg: { slug: "malaria-consortium", ein: "98-0627052" },
     donateUrl: "https://www.malariaconsortium.org/pages/donate.htm",
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "Across the Sahel, malaria transmission is concentrated in a few rainy months each year. Seasonal malaria chemoprevention gives children under five a full course of antimalarial medicine once a month through that season, so the parasite is cleared before it can take hold. In the trials that established it, the children who received it had about three quarters fewer cases of malaria.",
+    learnMore: [
+      {
+        title: "Malaria",
+        source: "World Health Organization",
+        url: "https://www.who.int/news-room/fact-sheets/detail/malaria",
+        note: "The fact sheet, including why transmission is seasonal across the Sahel.",
+      },
+      {
+        title: "Seasonal malaria chemoprevention",
+        source: "GiveWell",
+        url: "https://www.givewell.org/international/technical/programs/seasonal-malaria-chemoprevention",
+        note: "The trial evidence behind giving preventive medicine monthly through the season.",
+      },
+      {
+        title: "Malaria",
+        source: "Our World in Data",
+        url: "https://ourworldindata.org/malaria",
+        note: "Cases and deaths over time, and the share that falls on children under five.",
+      },
+    ],
   },
 
   {
@@ -277,7 +327,7 @@ export const charities = [
     evaluator: evaluatorById.givewell.name,
     evaluatorUrl: "https://www.givewell.org/charities/new-incentives",
     evaluatorNote:
-      "A GiveWell Top Charity. GiveWell rates the evidence behind it \"exceptionally strong\", its highest grade.",
+      "A GiveWell Top Charity. Evidence rated \"exceptionally strong\", GiveWell's highest grade.",
     headline: "Get an infant every vaccine on the schedule.",
     subhead:
       "Small cash payments to caregivers in northern Nigeria, handed over at the clinic, for each routine vaccination visit an infant completes.",
@@ -334,6 +384,28 @@ export const charities = [
     everyOrg: { slug: "newincentives" },
     donateUrl: "https://www.newincentives.org/donate",
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "The routine vaccines a child gets in the first year, against measles, whooping cough, diphtheria, pneumonia and more, are among the cheapest ways ever found to stop a child dying before five. Millions of infants still miss them, and rarely for lack of vaccine. The clinic is far, the trip costs money, and the full schedule needs several visits. Northern Nigeria has some of the lowest coverage in the world.",
+    learnMore: [
+      {
+        title: "Immunization coverage",
+        source: "World Health Organization",
+        url: "https://www.who.int/news-room/fact-sheets/detail/immunization-coverage",
+        note: "How many children get the routine schedule, and how many are still missed.",
+      },
+      {
+        title: "Vaccination",
+        source: "Our World in Data",
+        url: "https://ourworldindata.org/vaccination",
+        note: "Coverage by vaccine and country, and how many deaths vaccines prevent.",
+      },
+      {
+        title: "Vaccines and immunization",
+        source: "World Health Organization",
+        url: "https://www.who.int/health-topics/vaccines-and-immunization",
+        note: "WHO's programme page: what the routine schedule is and how many children miss it.",
+      },
+    ],
   },
 
   {
@@ -421,6 +493,28 @@ export const charities = [
     // amount field of the Fundraise Up form on giving.helenkellerintl.org.
     directPrefill: { style: "fundraiseup", form: "FUNUYQRJGHG" },
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "Vitamin A keeps a child's immune system and eyes working. Where diets are short of it, a child who catches measles or a bad bout of diarrhoea is far more likely to die of it. Two high-dose capsules a year, from six months to five years old, measurably lower that risk, and cost almost nothing to deliver alongside campaigns that already exist.",
+    learnMore: [
+      {
+        title: "Vitamin A supplementation",
+        source: "GiveWell",
+        url: "https://www.givewell.org/international/technical/programs/vitamin-A",
+        note: "The trials behind supplementation and how much child mortality it reduces.",
+      },
+      {
+        title: "Child mortality",
+        source: "Our World in Data",
+        url: "https://ourworldindata.org/child-mortality",
+        note: "How child deaths have fallen, where they still happen, and from what.",
+      },
+      {
+        title: "Micronutrients",
+        source: "World Health Organization",
+        url: "https://www.who.int/health-topics/micronutrients",
+        note: "Why vitamin A deficiency weakens a child's immune system and sight.",
+      },
+    ],
   },
 
   {
@@ -428,7 +522,7 @@ export const charities = [
     cardOutcome: "one child treated",
     seoTitle: "The most effective malnutrition charity",
     estimateNote:
-      "Cost per child is GiveWell's figure. The cost-per-life-saved range in the evidence panel is Taimaka's own model, not an independent one.",
+      "Cost per child is GiveWell's figure. The cost-per-life range in the evidence panel is Taimaka's own model.",
     defaultAmount: 105,
     category: "Malnutrition",
     icon: "bowl",
@@ -439,7 +533,7 @@ export const charities = [
     evaluatorUrl:
       "https://www.givewell.org/research/grants/taimaka-acute-malnutrition-treatment-in-gombe-state-nigeria-november-2024-and-program-monitoring-march-2025",
     evaluatorNote:
-      "A GiveWell grantee, not a Top Charity. GiveWell funded three years of the program in November 2024 and expects to decide on renewal in 2026.",
+      "A GiveWell grantee, not a Top Charity: three years funded from November 2024, renewal decision due 2026.",
     headline: "Treat a severely malnourished child through to recovery.",
     subhead:
       "Community health workers in Gombe State, Nigeria, find the children, treat them with ready-to-use therapeutic food and basic medicine, and follow each one until they are well.",
@@ -507,6 +601,28 @@ export const charities = [
     everyOrg: { slug: "taimaka", ein: "84-3964208" },
     donateUrl: "https://taimaka.org/donate",
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "Severe acute malnutrition is a child so undernourished that ordinary food will not bring them back. It is treated with ready-to-use therapeutic food, a fortified peanut paste, together with antibiotics, over several weeks of weekly visits. Untreated, a large share of these children die. Treated in the community rather than in hospital, most recover.",
+    learnMore: [
+      {
+        title: "Malnutrition",
+        source: "World Health Organization",
+        url: "https://www.who.int/news-room/fact-sheets/detail/malnutrition",
+        note: "The fact sheet on wasting, stunting and what severe acute malnutrition does to a child.",
+      },
+      {
+        title: "Hunger and undernourishment",
+        source: "Our World in Data",
+        url: "https://ourworldindata.org/hunger-and-undernourishment",
+        note: "Where undernourishment is concentrated and how it has changed.",
+      },
+      {
+        title: "Community management of acute malnutrition",
+        source: "GiveWell",
+        url: "https://www.givewell.org/international/technical/programs/community-based-management-acute-malnutrition",
+        note: "How outpatient treatment with therapeutic food works and what it costs.",
+      },
+    ],
   },
 
   {
@@ -517,7 +633,7 @@ export const charities = [
     cardOutcome: "ten people, a year of safe water",
     seoTitle: "The most effective safe water charity",
     estimateNote:
-      "GiveWell published $1.22 to $1.87 per person per year in 2022, then in 2025 cut its estimate of how many people the dispensers reach by about 20%, after finding fewer households used them than monitoring had suggested. The figures here apply that cut to the top of the published range, so they understate rather than overstate.",
+      "GiveWell's 2022 cost was $1.22 to $1.87 per person per year. Its 2025 review cut estimated reach by about 20%, and our figures apply that cut, so they understate.",
     defaultAmount: 25,
     category: "Safe Water",
     icon: "dispenser",
@@ -527,7 +643,7 @@ export const charities = [
     evaluator: evaluatorById.givewell.name,
     evaluatorUrl: "https://www.givewell.org/research/lookbacks/Dispensers-for-Safe-Water-2025",
     evaluatorNote:
-      "A GiveWell grantee since 2022, currently estimated at about 5 times the value of cash transfers, down from 7 at the time of the grant.",
+      "A GiveWell grantee since 2022, now estimated at about 5x cash, down from 7x at the time of the grant.",
     headline: "Keep a family's drinking water clean all year.",
     subhead:
       "A dispenser of chlorine solution stands at the water source. People turn the valve as they fill their container, and the dose is already measured for them.",
@@ -584,7 +700,7 @@ export const charities = [
     // gift through it funds the organisation generally; only the charity's own
     // form can earmark this program, and it carries the amount across anyway.
     directOnlyReason:
-      "Direct only: Evidence Action runs several programs, and only its own form can send your gift to this one rather than to the organisation generally.",
+      "Direct only: Every.org lists Evidence Action as a whole, and only its own form can earmark this program.",
     donateUrl: "https://www.evidenceaction.org/donate/",
     // Verified 2026-09-02: prefills the amount and shows "Designate to Safe
     // Water Now", Evidence Action's current umbrella brand for the dispensers
@@ -592,6 +708,28 @@ export const charities = [
     // dispensers specifically, which is the larger part of it.
     directPrefill: { style: "fundraiseup", form: "safewaterdonate" },
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "Diarrhoeal disease is one of the leading killers of children under five, and much of it comes from drinking water carrying faecal bacteria. Chlorine kills those bacteria cheaply and keeps working in the container on the walk home. The chemistry has never been the hard part. Getting people to use it every single day is.",
+    learnMore: [
+      {
+        title: "Drinking water",
+        source: "World Health Organization",
+        url: "https://www.who.int/news-room/fact-sheets/detail/drinking-water",
+        note: "How many people drink contaminated water and what it does to children.",
+      },
+      {
+        title: "Clean water",
+        source: "Our World in Data",
+        url: "https://ourworldindata.org/clean-water",
+        note: "Access to safe water by country, and the diarrhoeal disease burden it drives.",
+      },
+      {
+        title: "Water quality interventions",
+        source: "GiveWell",
+        url: "https://www.givewell.org/international/technical/programs/water-quality-interventions",
+        note: "The evidence on chlorination and child mortality, and why GiveWell revised it upward.",
+      },
+    ],
   },
 
   {
@@ -608,7 +746,7 @@ export const charities = [
     evaluator: evaluatorById.givewell.name,
     evaluatorUrl: "https://www.givewell.org/international/technical/programs/iron-fortification",
     evaluatorNote:
-      "A GiveWell grantee since 2018, most recently renewed with a two-year grant. GiveWell expects to keep funding flour and rice fortification at $10 to $20 million a year.",
+      "A GiveWell grantee since 2018, most recently renewed for two years.",
     headline: "Put iron in the flour a family already eats.",
     subhead:
       "Fortify Health equips small wheat mills across India to add iron and folic acid to the flour they were milling anyway, so nobody has to buy anything new or change what they cook.",
@@ -658,6 +796,28 @@ export const charities = [
     },
     donateUrl: "https://www.fortifyhealth.global/donate",
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "Iron deficiency is the most common nutritional deficiency in the world and the main cause of anaemia, which leaves people exhausted, makes pregnancy more dangerous and holds back children's development. India carries a large share of the global burden. Adding iron and folic acid to staple flour at the mill reaches people through the food they already buy, at no change in price or habit.",
+    learnMore: [
+      {
+        title: "Anaemia",
+        source: "World Health Organization",
+        url: "https://www.who.int/news-room/fact-sheets/detail/anaemia",
+        note: "Who is anaemic, why iron deficiency is the main cause, and what it costs a person.",
+      },
+      {
+        title: "Micronutrient deficiency",
+        source: "Our World in Data",
+        url: "https://ourworldindata.org/micronutrient-deficiency",
+        note: "The scale of iron, vitamin A and iodine deficiency worldwide.",
+      },
+      {
+        title: "Food Fortification Initiative",
+        source: "FFI",
+        url: "https://ffinetwork.org/",
+        note: "Which countries fortify which staples, and the case for doing it at the mill.",
+      },
+    ],
   },
 
   {
@@ -666,7 +826,7 @@ export const charities = [
     cardOutcome: "the test that catches it",
     seoTitle: "The most effective charity for syphilis in pregnancy",
     estimateNote:
-      "GiveWell publishes a cost per life saved for this program but no cost per woman screened, so the amounts below are illustrative of the kind of work your gift funds rather than a price per test.",
+      "No published cost per woman screened, so the tiers describe the work rather than a price per test.",
     defaultAmount: 100,
     category: "Syphilis in Pregnancy",
     icon: "test",
@@ -676,7 +836,7 @@ export const charities = [
     evaluator: evaluatorById.givewell.name,
     evaluatorUrl: "https://www.givewell.org/research/grants/evidence-action-syphilis-july-2022",
     evaluatorNote:
-      "A GiveWell grantee estimated at 29 times the value of cash transfers, the highest multiple of any pick on this site.",
+      "A GiveWell grantee estimated at 29x cash, the highest multiple on this site.",
     headline: "Catch syphilis before it reaches the baby.",
     subhead:
       "Women already come to antenatal clinics and are already tested for HIV. Swapping in a test that checks for both, and stocking the penicillin that treats it, is most of the work.",
@@ -721,12 +881,34 @@ export const charities = [
       ],
     },
     directOnlyReason:
-      "Direct only: Evidence Action runs several programs, and only its own form can send your gift to this one rather than to the organisation generally.",
+      "Direct only: Every.org lists Evidence Action as a whole, and only its own form can earmark this program.",
     donateUrl: "https://www.evidenceaction.org/donate/",
     // Verified 2026-09-02: prefills the amount and shows "Designate to
     // Syphilis-Free Start", Evidence Action's name for this program.
     directPrefill: { style: "fundraiseup", form: "syphilisdonate" },
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "Syphilis is a bacterial infection that passes from a pregnant woman to her baby. Left untreated it causes stillbirth, newborn death and lifelong disability in a large share of cases. A rapid test at a routine antenatal visit finds it, and an injection of benzathine penicillin, given in time, prevents almost all of that harm.",
+    learnMore: [
+      {
+        title: "Syphilis",
+        source: "World Health Organization",
+        url: "https://www.who.int/news-room/fact-sheets/detail/syphilis",
+        note: "The fact sheet, including what untreated syphilis in pregnancy does to the baby.",
+      },
+      {
+        title: "Syphilis",
+        source: "World Health Organization",
+        url: "https://www.who.int/health-topics/syphilis",
+        note: "WHO's programme page on eliminating mother-to-child transmission.",
+      },
+      {
+        title: "Syphilis screening and treatment in pregnancy",
+        source: "GiveWell",
+        url: "https://www.givewell.org/international/technical/programs/syphilis-screening-and-treatment-during-pregnancy",
+        note: "GiveWell's report on the intervention: the evidence, the cost, and the open questions.",
+      },
+    ],
   },
 
   {
@@ -734,7 +916,7 @@ export const charities = [
     cardOutcome: "550 hens out of cages",
     seoTitle: "The most effective animal welfare charity",
     estimateNote:
-      "Hens-per-dollar is Animal Charity Evaluators' central estimate for THL's cage-free work. Its published range runs from about a fifth of this figure to four times it.",
+      "Hens per dollar is ACE's central estimate. Its published range runs from a fifth of this figure to four times it.",
     defaultAmount: 50,
     category: "Animal Welfare",
     icon: "hen",
@@ -799,6 +981,28 @@ export const charities = [
     // EveryAction form, with a "change" link back to the amounts.
     directPrefill: { style: "everyaction" },
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "Most of the world's egg-laying hens live in battery cages, each with less floor space than a sheet of paper, unable to spread their wings or turn around. Cage-free housing does not make a hen's life good, but it removes the worst of it. Because a handful of large food companies buy most of the eggs, a change in their purchasing policy changes the lives of millions of birds at once.",
+    learnMore: [
+      {
+        title: "Animal welfare",
+        source: "Our World in Data",
+        url: "https://ourworldindata.org/animal-welfare",
+        note: "How many animals are farmed, how they are housed, and how that is changing.",
+      },
+      {
+        title: "Open Wing Alliance",
+        source: "The Humane League",
+        url: "https://openwingalliance.org/",
+        note: "The coalition running cage-free campaigns worldwide, with progress by company.",
+      },
+      {
+        title: "Welfare Footprint Project",
+        source: "Welfare Footprint",
+        url: "https://welfarefootprint.org/",
+        note: "Research quantifying how much suffering a caged hen experiences compared with a cage-free one.",
+      },
+    ],
   },
 
   {
@@ -806,9 +1010,9 @@ export const charities = [
     cardOutcome: "the whole climate portfolio",
     seoTitle: "The most effective climate charity",
     directOnlyReason:
-      "Direct only: the entity listed on Every.org is Giving Green's research organization, not the regranting fund we recommend. Your amount isn't carried across for this one.",
+      "Direct only: Every.org lists Giving Green's research arm, not the fund we recommend.",
     estimateNote:
-      "Giving Green publishes no cost per tonne for this fund. This page used to quote roughly one tonne per dollar as their bar, which was never their figure. The amounts below describe what a gift joins rather than a tonnage it buys.",
+      "Giving Green publishes no cost per tonne for this fund, so the tiers describe what a gift joins, not a tonnage.",
     defaultAmount: 50,
     category: "Climate",
     icon: "turbine",
@@ -873,6 +1077,28 @@ export const charities = [
     // page is /give. Re-check on every refresh; this one has moved before.
     donateUrl: "https://www.givinggreen.earth/give",
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "Greenhouse gas emissions are still rising, and the warming they cause is already visible in heatwaves, floods and failed harvests. Most of the cheapest ways to cut emissions are decisions made by governments and large companies, not by individuals. That is why the most effective climate giving funds policy, research and advocacy rather than offsets.",
+    learnMore: [
+      {
+        title: "CO₂ and greenhouse gas emissions",
+        source: "Our World in Data",
+        url: "https://ourworldindata.org/co2-and-greenhouse-gas-emissions",
+        note: "Emissions by country, sector and over time.",
+      },
+      {
+        title: "Giving Green's 2025 to 2026 top climate nonprofits",
+        source: "Giving Green",
+        url: "https://www.givinggreen.earth/post/2025-2026-top-climate-nonprofits",
+        note: "Which organisations the fund backs and why.",
+      },
+      {
+        title: "Sixth Assessment Synthesis Report",
+        source: "IPCC",
+        url: "https://www.ipcc.ch/report/ar6/syr/",
+        note: "The scientific consensus on where the climate is heading and what changes it.",
+      },
+    ],
   },
 
   {
@@ -932,6 +1158,28 @@ export const charities = [
     everyOrg: { slug: "givedirectly", ein: "27-1661997" },
     donateUrl: "https://www.givedirectly.org/donate/",
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "Hundreds of millions of people live below the World Bank's line for extreme poverty, most of them in sub-Saharan Africa. Cash given directly is spent on whatever the household judges most urgent: a roof, school fees, livestock, a small business. Decades of studies have found it is not squandered, and that the gains last.",
+    learnMore: [
+      {
+        title: "Poverty",
+        source: "Our World in Data",
+        url: "https://ourworldindata.org/poverty",
+        note: "How many people live in extreme poverty, where, and how that has changed.",
+      },
+      {
+        title: "Cash transfers",
+        source: "GiveWell",
+        url: "https://www.givewell.org/international/technical/programs/cash-transfers",
+        note: "The evidence on what people do with unconditional cash, and what it changes.",
+      },
+      {
+        title: "Research",
+        source: "GiveDirectly",
+        url: "https://www.givedirectly.org/gdresearch/",
+        note: "The randomised trials of GiveDirectly's own transfers.",
+      },
+    ],
   },
 
   {
@@ -947,7 +1195,7 @@ export const charities = [
     // The claims understate wherever treatment is cheaper, which is the safe
     // direction; the reverse would not be.
     estimateNote:
-      "Cost per child varies by country. GiveWell publishes about $0.66 for Kenya and roughly half that for India, with no global average, so the figures here use the Kenya cost and understate wherever treatment is cheaper.",
+      "GiveWell publishes about $0.66 per child for Kenya and half that for India. We use the Kenya cost, so the figures understate elsewhere.",
     defaultAmount: 50,
     category: "Intestinal Worms",
     icon: "school",
@@ -961,7 +1209,7 @@ export const charities = [
     // had claimed Top Charity status it does not have.
     evaluatorUrl: "https://www.givewell.org/charities/deworm-world-initiative",
     evaluatorNote:
-      "Reviewed by GiveWell and still eligible for their All Grants Fund, but no longer a Top Charity. GiveWell dropped deworming from that list in 2022.",
+      "Reviewed by GiveWell and eligible for its All Grants Fund. Not a Top Charity since 2022.",
     headline: "Deworm a whole classroom for a year.",
     subhead:
       "School-based mass treatment: one tablet, once or twice a year, delivered by teachers who are already standing in front of the children.",
@@ -1026,87 +1274,30 @@ export const charities = [
     // all the freshness badge claims. It does not claim GiveWell's underlying
     // costing is recent; the caveats say plainly that it dates from 2020.
     lastVerified: "2026-09-02",
+    learnMoreIntro:
+      "Hundreds of millions of children carry parasitic worms picked up from contaminated soil. Heavy infections cause anaemia, stunting and missed school. Most infections are light and do little harm, which is why the case rests on treating whole schools cheaply, with a single tablet, rather than trying to find the few children who are badly affected.",
+    learnMore: [
+      {
+        title: "Soil-transmitted helminth infections",
+        source: "World Health Organization",
+        url: "https://www.who.int/news-room/fact-sheets/detail/soil-transmitted-helminth-infections",
+        note: "What the worms are, who carries them, and how mass treatment works.",
+      },
+      {
+        title: "Deworming",
+        source: "GiveWell",
+        url: "https://www.givewell.org/international/technical/programs/deworming",
+        note: "The contested long-run evidence, laid out by the evaluator that funds it anyway.",
+      },
+      {
+        title: "Deworm the World",
+        source: "Evidence Action",
+        url: "https://www.evidenceaction.org/dewormtheworld",
+        note: "The program page: countries, scale, and how school-based delivery works.",
+      },
+    ],
   },
 
-  {
-    // The pick changed on 2026-09-02. This cause named LEEP, whose figures we
-    // had never verified. Checking them turned up something that settles it:
-    // LEEP's own donate page says it has filled its 2026 funding gap and asks
-    // most individual donors to give elsewhere. Sending readers there anyway
-    // would have been the site recommending against the charity's own advice.
-    // Pure Earth works the same problem, is evaluated by HLI, and is asking.
-    id: "lead-poisoning",
-    cardOutcome: "lead found and taken out",
-    seoTitle: "The most effective lead poisoning charity",
-    estimateNote:
-      "Happier Lives Institute calls Pure Earth's Ghana cosmetics programme the most cost-effective thing it has evaluated, and in the same breath calls the analysis largely speculative and based on limited evidence. Both halves are true and the amounts below are illustrative rather than a price per outcome.",
-    defaultAmount: 25,
-    category: "Lead Poisoning",
-    icon: "paint",
-    tagline:
-      "Lead is still in paint, cosmetics and spices across much of the world. A child's brain does not recover.",
-    name: "Pure Earth",
-    evaluator: evaluatorById.hli.name,
-    evaluatorUrl: "https://www.happierlivesinstitute.org/pure-earth-summary/",
-    evaluatorNote:
-      "Rated a promising charity by Happier Lives Institute, which calls its Ghana cosmetics programme the most cost-effective intervention HLI has evaluated, and says plainly that the estimate is speculative.",
-    headline: "Find the lead, then get it out.",
-    subhead:
-      "Pure Earth tests paint, cosmetics, spices and cookware in low- and middle-income countries, shows governments where the lead actually is, and works with them to remove it.",
-    costFigures: [
-      {
-        label: "Cost per WELLBY",
-        value: "~$9",
-        source:
-          "Happier Lives Institute's estimate for the Ghana cosmetics programme, checked 2026-09-02. A WELLBY is one year of one point of life satisfaction on a 0 to 10 scale. HLI puts this at about 105 WELLBYs for every $1,000.",
-      },
-      {
-        label: "Unfunded gap, Ghana cosmetics",
-        value: "~$1.56m",
-        source:
-          "The programme HLI evaluated, and the one Pure Earth describes as its most cost-effective unfunded work. Figure from HLI's mid-2025 update, after a matching campaign closed $45,000 of it.",
-      },
-    ],
-    outcomeFramings: [
-      "HLI puts Pure Earth's Ghana cosmetics work at about $9 per WELLBY.",
-      "Testing is what turns an invisible problem into a regulated one.",
-    ],
-    givingLevels: [
-      { amount: 25, outcomeText: "Joins the fund testing cosmetics and paint for lead." },
-      { amount: 100, outcomeText: "Supports the lab work that shows a government where its lead is." },
-      { amount: 500, outcomeText: "Helps carry one country from testing through to regulation." },
-    ],
-    evidenceNotes: {
-      whatTheyDo:
-        "Pure Earth samples consumer goods and soil in low- and middle-income countries, runs the lab work that identifies which sources are actually poisoning children, and then works with governments and manufacturers to remove them. It has country offices across Africa, Asia and Latin America, and was a founding member of the Partnership for a Lead-Free Future.",
-      method:
-        "Happier Lives Institute modelled the Ghana cosmetics programme in wellbeing terms: how many people stop being exposed, how much that raises life satisfaction, and for how long. It arrived at about $9 per WELLBY, the best figure in its portfolio, while stating that the evidence base underneath is thin.",
-      caveats: [
-        "HLI's own words are that the analysis is largely speculative and relies on limited evidence, and that this is a high risk, high return opportunity. We are quoting its headline figure and its warning together because quoting one without the other would misrepresent it.",
-        "This is the least certain cost figure on the site. It rests on one programme in one country, modelled rather than measured.",
-        "We do not name the Lead Exposure Elimination Project here, although it is the better known lead charity and Founders Pledge estimates $1.66 per child's exposure prevented. LEEP's own donation page says it has filled its 2026 funding gap and asks most individual donors to give elsewhere. We think a site like this should take a charity at its word about that.",
-        "The benefit is counterfactual and invisible: nobody can point to the child whose lead exposure never happened. That is what makes the cause neglected, and also why it resists the kind of photograph a bed net gets.",
-        "Attribution is hard. When a country tightens a lead standard, many organisations contributed, and any share assigned to one of them is a judgment call.",
-      ],
-    },
-    // No `custom` block. HLI prices this in WELLBYs, which is a real unit but
-    // not one a reader can picture, and there is no published cost per child
-    // protected for this programme. A live "your $25 buys N" sentence would be
-    // inventing a unit that nobody publishes.
-    //
-    // No everyOrg entry: no Every.org listing for Pure Earth was found on
-    // 2026-09-02, so the panel falls back to naming their own site.
-    //
-    // Their donate page embeds Classy. Classy does accept ?amount= (verified
-    // on 2026-09-02, it prefilled $25), but the only campaign id on Pure
-    // Earth's site resolves to a page titled "2023 International Women's Day",
-    // and sending a donor to a stale campaign is worse than not prefilling.
-    // If Pure Earth publishes a current campaign id, add:
-    //   directPrefill: { style: "classy", url: "https://give.pureearth.org/give/<id>/" }
-    // and teach lib/donate.js that style first.
-    donateUrl: "https://www.pureearth.org/donate/",
-    lastVerified: "2026-09-02",
-  },
 ];
 
 /**

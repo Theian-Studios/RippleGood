@@ -14,7 +14,7 @@ import { iconFor } from "../lib/icons.jsx";
  *
  * Causes without a per-dollar figure are skipped rather than guessed at.
  */
-export default function SameDollar({ amount, monthly, currentId }) {
+export default function SameDollar({ amount, monthly = false, currentId = null }) {
   const annual = monthly ? amount * 12 : amount;
 
   const rows = charities
@@ -28,11 +28,13 @@ export default function SameDollar({ amount, monthly, currentId }) {
     <section className="sameDollar" aria-labelledby="sameDollar-title">
       <h2 className="sameDollar__title" id="sameDollar-title">
         {money(amount)}
-        {monthly ? " a month" : ""} somewhere else
+        {monthly ? " a month" : ""} {currentId ? "somewhere else" : "in one cause"}
       </h2>
       <p className="sameDollar__lead">
-        The same {monthly ? "year of giving" : "gift"}, in each of the other
-        causes. Not a ranking, just what it buys there.
+        {currentId
+          ? "The same gift, in each of the other causes."
+          : "Your whole budget sent to a single cause, for comparison."}{" "}
+        Not a ranking, just what it buys there.
       </p>
 
       <ul className="sameDollar__list" role="list">

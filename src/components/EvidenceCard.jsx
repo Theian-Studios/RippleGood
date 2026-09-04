@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
-import { ChevronDown, ExternalLink, FlaskConical } from "lucide-react";
+import { Link } from "react-router-dom";
+import { BadgeCheck, ChevronDown, ExternalLink, FlaskConical, Info, Scale } from "lucide-react";
 import FreshnessBadge from "./FreshnessBadge.jsx";
 import { charities } from "../data/charities.js";
 import { money } from "../lib/format.js";
@@ -65,12 +66,36 @@ const EvidenceCard = forwardRef(function EvidenceCard({ charity, open, onToggle 
       >
         <span className="evidence__title" id={`${panelId}-title`}>
           <FlaskConical size={21} aria-hidden="true" />
-          How we know
+          Why this charity
         </span>
         <ChevronDown className="evidence__chevron" size={22} aria-hidden="true" />
       </button>
 
       <div id={panelId} className="evidence__body" hidden={!open}>
+        {/* Who made the call, first. It used to sit on the page between the
+            button and this panel as a line on its own. */}
+        <a
+          className="evaluatorChip"
+          href={charity.evaluatorUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <BadgeCheck size={18} aria-hidden="true" />
+          <span>
+            <strong>{charity.evaluator}</strong>: {charity.evaluatorNote}
+          </span>
+        </a>
+
+        {/* The caveat about the figures sits with the figures. It used to sit
+            between the tiers and the button, where it was the only thing on
+            the giving block that wasn't a choice or an action. */}
+        {charity.estimateNote && (
+          <p className="evidence__note">
+            <Info size={15} aria-hidden="true" />
+            <span>{charity.estimateNote}</span>
+          </p>
+        )}
+
         <div className="evidence__block">
           <h3 className="evidence__h">The figures</h3>
           <div className="figures">
@@ -135,6 +160,14 @@ const EvidenceCard = forwardRef(function EvidenceCard({ charity, open, onToggle 
             ))}
           </ul>
         </div>
+
+        <p className="evidence__disclaimer">
+          <Scale size={16} aria-hidden="true" />
+          <span>
+            Every figure is an average program cost, not a receipt.{" "}
+            <Link to="/methodology">How we phrase things</Link>.
+          </span>
+        </p>
 
         <div className="evidence__foot">
           <a href={charity.evaluatorUrl} target="_blank" rel="noopener noreferrer">

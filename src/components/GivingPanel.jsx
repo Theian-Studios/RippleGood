@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ArrowUpRight, Check, CircleAlert, Info } from "lucide-react";
+import { ArrowUpRight, Check, CircleAlert } from "lucide-react";
 import { getDefaultLevel } from "../data/charities.js";
 import {
   causeUrl,
@@ -25,7 +25,7 @@ import Pictogram from "./Pictogram.jsx";
  * involved in the transaction. We are not — the donor enters the amount, and
  * chooses one-time or monthly, on the charity's own page.
  */
-export default function GivingPanel({ charity, onSelectionChange }) {
+export default function GivingPanel({ charity }) {
   // Restored from the exit URL when someone cancelled out of Every.org, so the
   // panel they come back to is the one they left. Read once, at mount: this is
   // an initial value, not a binding, or typing in the custom field would fight
@@ -44,6 +44,12 @@ export default function GivingPanel({ charity, onSelectionChange }) {
     restoredAmount !== null && !restoredLevel ? String(restoredAmount) : "",
   );
   const [monthly, setMonthly] = useState(() => params.get("monthly") === "1");
+  // Which of the four cards is the live one. Without this, clicking into the
+  // custom field left a tier looking selected until a valid number had been
+  // typed, so two cards read as chosen at once.
+  const [mode, setMode] = useState(() =>
+    restoredAmount !== null && !restoredLevel ? "custom" : "tier",
+  );
 
   const inputId = `custom-amount-${charity.id}`;
 
@@ -58,8 +64,11 @@ export default function GivingPanel({ charity, onSelectionChange }) {
   // Whole dollars only; anything unparseable or below the minimum falls back to
   // the selected level rather than producing a "Give $NaN" button.
   const parsed = Math.floor(Number(customText));
-  const customAmount =
+  const typedAmount =
     Number.isFinite(parsed) && parsed >= minAmount ? parsed : null;
+  // Only counts while the custom card is the live one; a tier click clears the
+  // field anyway, but this makes the rule explicit rather than incidental.
+  const customAmount = mode === "custom" ? typedAmount : null;
   const amount = customAmount ?? level.amount;
 
   // Typed something real, but under what Every.org will carry. Say so, rather
@@ -67,7 +76,7 @@ export default function GivingPanel({ charity, onSelectionChange }) {
   // Phrased as a minimum rather than as Every.org's behavior: the reader is
   // choosing an amount, not debugging our handoff.
   const belowMin =
-    Number.isFinite(parsed) && parsed >= 1 && parsed < minAmount;
+    mode === "custom" && Number.isFinite(parsed) && parsed >= 1 && parsed < minAmount;
 
   // A monthly gift's honest unit is the year it adds up to.
   const outcomeFor = (perGift) =>
@@ -75,12 +84,6 @@ export default function GivingPanel({ charity, onSelectionChange }) {
 
   const priceLabel = (n) => (monthly ? `${money(n)}/month` : money(n));
   const customOutcome = customAmount === null ? null : outcomeFor(customAmount);
-
-  // Reported up rather than lifted out: the widget still owns its state, and
-  // the page only needs to read the result to show the same figure elsewhere.
-  useEffect(() => {
-    onSelectionChange?.({ amount, monthly });
-  }, [amount, monthly, onSelectionChange]);
 
   /**
    * Minted during render, not on click, so the attribution is already in the
@@ -121,14 +124,17 @@ export default function GivingPanel({ charity, onSelectionChange }) {
 
   function pickLevel(next) {
     setLevel(next);
+    setMode("tier");
     setCustomText(""); // a card click is a decision — clear the free field
   }
 
+  const units = unitsFor(monthly ? amount * 12 : amount, charity.custom);
+  // Drawn at any count. Past Pictogram's own cap it switches to a multiplier
+  // beside one glyph, so a large number never becomes a wall of icons.
+  const showPictogram = Boolean(charity.custom?.pictogram) && units >= 1;
+
   return (
-    <div className={`give${charity.provisional ? " give--provisional" : ""}`}>
-      {/* First thing inside the widget, not a banner floating above it. An
-          unchecked figure has to be read before an amount is chosen, and a
-          caveat further up the page is one the eye skips on the way down. */}
+    <div className="give">
       {charity.provisional && (
         <p className="give__provisional">
           <CircleAlert size={17} aria-hidden="true" />
@@ -171,17 +177,19 @@ export default function GivingPanel({ charity, onSelectionChange }) {
 
       {monthly && (
         <p className="cadence__note">
-          Steady funding is worth more than the same total in one-off spikes: it's
-          what lets these organizations commit to next year's work. Outcomes below
-          show what a year of giving adds up to.
+          Monthly gifts let these organizations plan next year's work. Outcomes
+          below show a year of giving.
         </p>
       )}
 
-      <div className="levels">
+      {/* The tiers, and "Other" as a fourth tier rather than a separate block
+          under them: it is one more answer to the same question. */}
+      <div className={`levels${charity.custom ? " levels--other" : ""}`}>
         {charity.givingLevels.map((l) => {
-          const isSelected = customAmount === null && l.amount === level.amount;
-          // In monthly mode the preset text ("Hangs two nets") describes the
-          // wrong quantity, so use the annual figure where we can compute one.
+          // Keyed off the mode, not off whether a number has been typed:
+          // clicking into the custom field has to deselect the tier straight
+          // away, before the field holds anything valid.
+          const isSelected = mode === "tier" && l.amount === level.amount;
           const annual = monthly ? outcomeFor(l.amount) : null;
           return (
             <button
@@ -189,22 +197,10 @@ export default function GivingPanel({ charity, onSelectionChange }) {
               key={l.amount}
               onClick={() => pickLevel(l)}
               aria-pressed={isSelected}
-              className={[
-                "level",
-                isSelected ? "is-selected" : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
+              className={`level${isSelected ? " is-selected" : ""}`}
             >
               <span className="level__outcome">{annual || l.outcomeText}</span>
-              {/* The price and the check share a row, so the check sits on the
-                  price's own centre line and inside the same text column. It
-                  used to be positioned absolutely against the tier's corner,
-                  which put it below the figure it marks. */}
               <span className="level__foot">
-                {/* In monthly mode the figure that matters is the year, not the
-                    instalment, so the year is the one set large. The toggle used
-                    to change almost nothing you could see. */}
                 {monthly ? (
                   <span className="level__amount level__amount--annual">
                     <span className="level__annual">{money(l.amount * 12)} a year</span>
@@ -213,161 +209,92 @@ export default function GivingPanel({ charity, onSelectionChange }) {
                 ) : (
                   <span className="level__amount">{money(l.amount)}</span>
                 )}
-                {/* All three tiers look alike; .is-selected is the only thing
-                    that marks the chosen one. */}
                 <Check className="level__check" size={18} aria-hidden="true" />
               </span>
             </button>
           );
         })}
+
+        {charity.custom && (
+          <label
+            className={`level level--other${mode === "custom" ? " is-selected" : ""}`}
+            htmlFor={inputId}
+          >
+            {/* Same skeleton as the three tiers: the outcome on top, the
+                amount at the foot. The field is plain text sitting where the
+                price sits, not a bordered control of its own. */}
+            <span className="level__outcome" aria-live="polite">
+              {belowMin
+                ? `The minimum is ${money(minAmount)}.`
+                : customOutcome
+                  ? monthly
+                    ? `Each year: ${customOutcome}`
+                    : customOutcome
+                  : "Other amount"}
+            </span>
+            <span className="level__foot">
+              <span className="level__amount level__amount--input">
+                <span aria-hidden="true">$</span>
+                <input
+                  id={inputId}
+                  type="number"
+                  min={minAmount}
+                  step="1"
+                  inputMode="numeric"
+                  placeholder="25"
+                  aria-label="Other amount"
+                  value={customText}
+                  onFocus={() => setMode("custom")}
+                  onChange={(e) => {
+                    setMode("custom");
+                    setCustomText(e.target.value);
+                  }}
+                />
+                {monthly && <span aria-hidden="true">/mo</span>}
+              </span>
+            </span>
+          </label>
+        )}
       </div>
 
-      {/* Hidden for causes with no verified per-dollar figure: a live outcome
-          sentence there would be precision we haven't earned. */}
-      {charity.custom && (
-        <div className="customAmount">
-          <label className="customAmount__label" htmlFor={inputId}>
-            Custom amount
-          </label>
-          <div className="customAmount__row">
-            <span className="customAmount__prefix" aria-hidden="true">
-              $
-            </span>
-            <input
-              id={inputId}
-              className="customAmount__input"
-              type="number"
-              min={minAmount}
-              step="1"
-              inputMode="numeric"
-              placeholder="25"
-              value={customText}
-              onChange={(e) => setCustomText(e.target.value)}
-            />
-            {monthly && <span className="customAmount__suffix">/month</span>}
-          </div>
-          {/* Always rendered so the live region exists before it first speaks. */}
-          <p className="customAmount__outcome" aria-live="polite">
-            {belowMin
-              ? `The minimum donation is ${money(minAmount)}.`
-              : customOutcome
-                ? monthly
-                  ? `Each year: ${customOutcome}`
-                  : customOutcome
-                : " "}
-          </p>
-
-        </div>
-      )}
-
-      {/* The chosen quantity, drawn — for the selected tier as well as a typed
-          amount. This used to render only for custom amounts, so the one part
-          of the widget that makes a number feel like something was invisible
-          to anyone who just pressed a tier. Only for units you can count;
-          charity.custom.pictogram is absent where that isn't true. */}
-      {charity.custom?.pictogram && (
-        <Pictogram
-          units={unitsFor(monthly ? amount * 12 : amount, charity.custom)}
-          pictogram={charity.custom.pictogram}
-        />
-      )}
-
-      {/* One caveat, above the button, for the causes whose figures need it. */}
-      {charity.estimateNote && (
-        <p className="estimateNote">
-          <Info size={15} aria-hidden="true" />
-          <span>{charity.estimateNote}</span>
-        </p>
+      {showPictogram && (
+        <Pictogram units={units} pictogram={charity.custom.pictogram} />
       )}
 
       <div className="give__foot">
-        {/* Above the button, because these are the facts that change the
-            decision: where the money actually goes, and that the total on the
-            next screen will be higher than the figure just chosen unless the
-            donor changes it. The privacy line doesn't change any decision, so
-            it stays underneath. */}
-        {everyUrl ? (
-          <p className="routeNote">
-            <Info size={16} aria-hidden="true" />
-            <span>
-              Goes via <strong>Every.org</strong>, a nonprofit that passes your
-              gift to {charity.name} and issues the receipt. It suggests a tip
-              for itself at checkout. That tip is{" "}
-              <strong>optional, and you can set it to zero.</strong>
-            </span>
-          </p>
-        ) : (
-          <p className="routeNote">
-            <Info size={16} aria-hidden="true" />
-            <span>
-              {charity.directOnlyReason ? (
-                <>{charity.directOnlyReason} </>
-              ) : (
-                <>
-                  Goes straight to <strong>{host}</strong>.{" "}
-                </>
-              )}
-              {directPrefilled ? (
-                <>
-                  {priceLabel(amount)} is filled in for you
-                  {monthly ? ", and you set it to repeat" : ""} on their form.
-                </>
-              ) : (
-                <>
-                  You enter the amount
-                  {monthly ? " and set it to repeat" : ""} on their form.
-                </>
-              )}
-            </span>
-          </p>
-        )}
+        <a
+          className="donate"
+          href={everyUrl || directUrl}
+          rel="noreferrer"
+          onClick={everyUrl ? openEveryOrg : undefined}
+        >
+          Give {priceLabel(amount)} to {charity.name}
+          <ArrowUpRight size={20} aria-hidden="true" />
+        </a>
 
-        {/* Two routes, two buttons. The charity's own page was a text link
-            under a large button while the FAQ called it an "equally visible
-            second option", which it plainly wasn't. Both now say where they
-            go, so the label never hides the destination.
-
-            Same tab for Every.org: giving is what the reader came to do, and
-            success_url brings them back to /thanks. The direct route opens
-            beside the page instead, because it drops the amount and cadence
-            they just picked and they'll want this panel still on screen to
-            copy from. */}
-        <div className="routes">
-          <a
-            className="donate"
-            href={everyUrl || directUrl}
-            rel="noreferrer"
-            onClick={everyUrl ? openEveryOrg : undefined}
-          >
-            Give {priceLabel(amount)} {everyUrl ? "via Every.org" : `on ${host}`}
-            <ArrowUpRight size={20} aria-hidden="true" />
-          </a>
-
-          {everyUrl && (
-            <a
-              className="donate donate--alt"
-              href={directUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Give on {host}
-              <ArrowUpRight size={18} aria-hidden="true" />
-            </a>
-          )}
-        </div>
-
-        {everyUrl && (
-          <p className="handoff">
-            <span>
-              {priceLabel(amount)} is carried across for you. Giving on {host}{" "}
-              opens in a new tab and{" "}
+        {/* One sentence for the plumbing: where the money goes, the tip, the
+            other route, and that we never touch any of it. */}
+        <p className="give__note">
+          {everyUrl ? (
+            <>
+              Every.org passes your gift to {charity.name} and sends the
+              receipt; it suggests a tip you can set to zero. Or{" "}
+              <a href={directUrl} target="_blank" rel="noreferrer">
+                give on {host}
+              </a>
+              {directPrefilled ? " with the amount filled in" : ""}. We never
+              see your money or your details.
+            </>
+          ) : (
+            <>
+              {charity.directOnlyReason ?? `Goes straight to ${host}.`}{" "}
               {directPrefilled
-                ? "arrives with the amount already filled in"
-                : "starts from an empty form"}
-              . Ripple Good never sees your money or your details either way.
-            </span>
-          </p>
-        )}
+                ? `${priceLabel(amount)} is filled in.`
+                : "You enter the amount on their form."}{" "}
+              We never see your money or your details.
+            </>
+          )}
+        </p>
       </div>
     </div>
   );

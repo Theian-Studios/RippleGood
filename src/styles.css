@@ -210,10 +210,6 @@
   --tile-bg: #e4eaf1;
   --tile-fg: #394f68;
 }
-[data-cause="lead-poisoning"] {
-  --tile-bg: #f1e4f2;
-  --tile-fg: #662b71;
-}
 
 /* --------------------------------------------------------------- tiles -- */
 
@@ -674,7 +670,8 @@ a.mark {
      heading to its body         h1 20 · h2 16 · h3 12 (steps down with size)
      paragraph to paragraph      16
      paragraph to a block        24 (a list, a figure, a note, a button)
-     inside the giving flow      24 between groups, 16 within one
+     inside the giving flow      12 between groups, 8 within one; the cause
+                                 page runs much tighter than the prose pages
    The home page used to run 40, 80, 120 and 120 between its sections,
    paragraphs were 12 in some places and 16 in others, and the cause page
    had 128px between its subhead and "Choose a result". */
@@ -723,13 +720,12 @@ a.mark {
   }
 }
 
-/* Five. Thirteen is prime, so no column count divides the set and the rule is
-   the weaker one: keep the last row at least half full. Five gives rows of 5,
-   5 and 3. Four would give 4, 4, 4 and a single orphan, which looks like a
-   mistake rather than a short line. */
-@media (min-width: 1000px) {
+/* Four. Twelve causes divide into three full rows of four, and four columns
+   leave each card wide enough for its tagline to breathe. If the count
+   changes again, pick a column count that divides it. */
+@media (min-width: 900px) {
   .causeGrid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     /* One row is taller than the other only because a single cause name wraps.
        Equal rows keep the block rectangular. */
     grid-auto-rows: 1fr;
@@ -831,7 +827,7 @@ a.mark {
   display: inline-flex;
   align-items: center;
   gap: var(--s-2);
-  margin-bottom: var(--s-6);
+  margin-bottom: var(--s-3);
   font-size: var(--t-sm);
   font-weight: 500;
   color: var(--ink-soft);
@@ -844,7 +840,7 @@ a.mark {
 
 .causeHero {
   position: relative;
-  padding: var(--s-8) 0;
+  padding: var(--s-6) 0 var(--s-5);
   /* A wash of the cause's own tint, fading out before the giving panel, so the
      band ends by softening rather than on a hard line. */
   background: linear-gradient(
@@ -855,37 +851,8 @@ a.mark {
   );
 }
 
-/* The label spans exactly the tile's height: "GLOBAL HEALTH" sits on its top
-   edge, "Our pick" on its bottom. align-items: stretch makes the text column as
-   tall as the tile, and space-between pushes the two lines to its edges. */
-.causeHero__top {
-  display: flex;
-  align-items: stretch;
-  gap: var(--s-3);
-  margin-bottom: var(--s-5);
-}
-
-/* Was `.causeHero__top > span`, which also matched the tile — that selector
-   outranks `.tile`, so the tile lost its `display: grid; place-items: center`
-   to `flex` + `space-between` and sat its glyph against its own top edge. */
-.causeHero__label {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: var(--tile-md);
-  padding: 1px 0;
-}
-
-.causeHero__category {
-  display: block;
-  font-size: var(--t-sm);
-  font-weight: 600;
-  color: var(--blue-600);
-}
-
-.causeHero__charity {
-  font-size: var(--t-md);
-  color: var(--ink-soft);
+.causeHero .eyebrow {
+  margin-bottom: var(--s-3);
 }
 
 .causeHero h1 {
@@ -894,7 +861,7 @@ a.mark {
 }
 
 .causeHero__sub {
-  margin-top: var(--s-5);
+  margin-top: var(--s-3);
   max-width: 60ch;
   font-size: var(--t-lead);
   color: var(--ink-soft);
@@ -907,7 +874,7 @@ a.mark {
   display: flex;
   align-items: flex-start;
   gap: var(--s-2);
-  margin-top: var(--s-6);
+  margin-bottom: var(--s-5);
   font-size: var(--t-sm);
   color: var(--ink-soft);
   text-decoration: none;
@@ -933,6 +900,13 @@ a.mark {
 
 /* ------------------------------------------------------- giving levels -- */
 
+/* The hero's own bottom padding does the separating, so the section under it
+   opens tighter than the 40 a section normally has. 24 + 24 = 48 from the
+   subhead to "Choose a result"; it was 80. */
+.causeHero + .section {
+  padding-top: var(--s-4);
+}
+
 /* A ruled section of the page rather than a card. It was a shadowed white
    box holding three bordered tiers, a bordered input and a tinted note:
    boxes inside boxes inside a box. The tiers keep their borders because they
@@ -948,26 +922,82 @@ a.mark {
   color: var(--navy);
 }
 
+/* ---------------------------------------------------------- amounts -- */
+
+.give__label {
+  margin-bottom: var(--s-3);
+}
+
 .levels {
   display: grid;
   gap: var(--s-3);
-  margin: var(--s-6) 0 0;
+  margin: var(--s-3) 0 0;
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 900px) {
   .levels {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: stretch;
   }
+
+  /* All four equal. minmax(0, …) matters: a bare fr track has a min-content
+     floor, and the number input's intrinsic width was forcing the "Other"
+     column wider than the three beside it. */
+  .levels--other {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
+
+/* "Other" is a tier, sharing the skeleton of the three beside it: outcome on
+   top, amount at the foot. The amount is a plain field rather than a bordered
+   control, so the card reads as one of the four rather than as a form. */
+.level--other {
+  cursor: text;
+}
+
+.level__amount--input {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  color: var(--navy);
+}
+
+.level__amount--input input {
+  width: 5ch;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.level__amount--input input::placeholder {
+  color: var(--ink-faint);
+  opacity: 1;
+}
+
+.level__amount--input input::-webkit-outer-spin-button,
+.level__amount--input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.level--other.is-selected .level__amount--input {
+  color: var(--blue-700);
+}
+
+
 
 .level {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--s-2);
-  padding: var(--s-5) var(--s-5);
+  padding: var(--s-4);
   text-align: left;
   background: var(--white);
   border: 2px solid var(--border);
@@ -1055,14 +1085,7 @@ a.mark {
   opacity: 1;
 }
 
-/* ------------------------------------------------------- custom amount -- */
-
-.customAmount {
-  margin-top: var(--s-6);
-  padding-top: var(--s-6);
-  border-top: 1px dashed var(--border-strong);
-}
-
+/* The budget field on the plan page still uses these. */
 .customAmount__label {
   display: block;
   font-size: var(--t-sm);
@@ -1132,10 +1155,24 @@ a.mark {
 }
 
 .give__foot {
-  margin-top: var(--s-6);
+  margin-top: var(--s-3);
   display: flex;
   flex-direction: column;
-  gap: var(--s-4);
+  gap: var(--s-2);
+}
+
+/* The plumbing, in one sentence under the button: route, tip, the other way
+   in, and that we never touch it. It replaced three separate notes. */
+.give__note {
+  font-size: var(--t-xs);
+  line-height: 1.55;
+  color: var(--ink-faint);
+}
+
+.give__note a {
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-underline-offset: 3px;
 }
 
 .donate {
@@ -1181,55 +1218,6 @@ a.mark {
   flex: none;
   margin-top: 3px;
   color: var(--blue-700);
-}
-
-/* One caveat per cause, above the button, for figures that need one. */
-.estimateNote {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--s-2);
-  margin-top: var(--s-5);
-  padding-top: var(--s-4);
-  border-top: 1px solid var(--border);
-  font-size: var(--t-sm);
-  line-height: 1.55;
-  color: var(--ink-soft);
-}
-
-.estimateNote svg {
-  flex: none;
-  margin-top: 3px;
-  color: var(--ink-faint);
-}
-
-/* Two routes, side by side from 640px. The charity's own page used to be a
-   text link under a large button while the FAQ called it an equally visible
-   second option. */
-.routes {
-  display: grid;
-  gap: var(--s-3);
-}
-
-@media (min-width: 640px) {
-  .routes {
-    grid-template-columns: 1.35fr 1fr;
-    align-items: stretch;
-  }
-}
-
-/* Same box as the primary, quieter paint. Side by side the grid stretched the
-   two to match; stacked on a phone the smaller padding and type made this one
-   11px shorter with its label starting 20px further in. The hierarchy is
-   carried by fill against outline, which survives at one size. */
-.donate--alt {
-  background: var(--white);
-  border-color: var(--border-strong);
-  color: var(--navy);
-}
-
-.donate--alt:hover {
-  background: var(--gray-50);
-  border-color: var(--navy);
 }
 
 /* An unchecked cause says so before you can choose an amount. */
@@ -1288,10 +1276,52 @@ a.mark {
 
 /* ------------------------------------------------------------ evidence -- */
 
+.panels {
+  margin-top: var(--s-5);
+}
+
 .evidence {
-  margin-top: var(--s-6);
   border-top: 1px solid var(--border);
+}
+
+.evidence:last-child {
   border-bottom: 1px solid var(--border);
+}
+
+/* The figure caveat, at the top of the panel, where the figures are. */
+.evidence__note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  margin-bottom: var(--s-5);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--ink-mid);
+}
+
+.evidence__note svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--ink-faint);
+}
+
+.evidence__disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+  font-size: var(--t-xs);
+  color: var(--ink-faint);
+}
+
+.evidence__disclaimer svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.evidence__disclaimer a {
+  color: var(--ink-soft);
+  text-underline-offset: 3px;
 }
 
 /* ------------------------------------------------------- home panels -- */
@@ -1408,7 +1438,7 @@ a.mark {
   justify-content: space-between;
   gap: var(--s-4);
   width: 100%;
-  padding: var(--s-5) 0;
+  padding: var(--s-4) 0;
   border: 0;
   background: none;
   text-align: left;
@@ -2306,7 +2336,7 @@ a.mark {
   flex-wrap: wrap;
   align-items: center;
   gap: var(--s-nudge) var(--s-3);
-  margin-top: var(--s-6);
+  margin-top: var(--s-3);
 }
 
 .pictogram__row {
@@ -2972,6 +3002,69 @@ a.mark {
   }
 }
 
+/* ---------------------------------------------------------- learn more -- */
+
+.learnMore__intro {
+  margin-top: 0;
+  max-width: 62ch;
+  font-size: var(--t-md);
+  line-height: 1.62;
+  color: var(--ink-mid);
+}
+
+.learnMore__list {
+  margin: var(--s-3) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.learnMore__row {
+  display: block;
+  padding: var(--s-2) 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color var(--dur-1) ease;
+}
+
+.learnMore__row:hover .learnMore__name {
+  color: var(--blue-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.learnMore__head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-3);
+}
+
+.learnMore__head svg {
+  align-self: center;
+  color: var(--ink-faint);
+}
+
+.learnMore__name {
+  font-size: var(--t-base);
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.learnMore__source {
+  font-size: var(--t-sm);
+  color: var(--ink-faint);
+}
+
+.learnMore__note {
+  display: block;
+  margin-top: var(--s-1);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
 /* ---------------------------------------------------------- utilities -- */
 
 .u-centered {
@@ -3000,6 +3093,10 @@ a.mark {
 
 /* !important so a utility beats `.prose p + p`: without it the closing
    button on About and Methodology got paragraph spacing, not its own. */
+.u-mt-4 {
+  margin-top: var(--s-4) !important;
+}
+
 .u-mt-5 {
   margin-top: var(--s-5) !important;
 }
@@ -3028,7 +3125,6 @@ a.mark {
   .skip-link,
   .verifiedTotal,
   .cadence,
-  .customAmount,
   .wrap,
   .wrap--narrow {
     max-width: none;
@@ -3053,6 +3149,10 @@ a.mark {
      collapsed behind a control nobody can click. */
   .evidence__body[hidden] {
     display: block !important;
+  }
+
+  .level {
+    break-inside: avoid;
   }
 
   .evidence,
@@ -3083,10 +3183,6 @@ a.mark {
     font-size: 9pt;
     font-weight: 400;
     word-break: break-all;
-  }
-
-  .level {
-    break-inside: avoid;
   }
 
   a {

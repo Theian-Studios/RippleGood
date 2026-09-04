@@ -50,6 +50,9 @@ for (const c of charities) {
       url: `https://www.every.org/${c.everyOrg.slug}`,
     });
   }
+  for (const l of c.learnMore ?? []) {
+    targets.push({ cause: c.id, kind: "learn", url: l.url });
+  }
 }
 
 console.log(`Checking ${targets.length} outbound links…\n`);

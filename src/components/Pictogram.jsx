@@ -116,7 +116,14 @@ export default function Pictogram({ units, pictogram }) {
         ))}
       </span>
 
-      <span className="pictogram__label">{pictogram.label}</span>
+      {/* The count belongs in the sentence, not only in the picture: the
+          icons confirm the number, they don't have to be counted to find it.
+          Past the cap the multiplier beside the single glyph already says it. */}
+      <span className="pictogram__label">
+        {overflow
+          ? pictogram.label
+          : `${shownCount.toLocaleString("en-US")} ${pictogram.label}`}
+      </span>
     </div>
   );
 }

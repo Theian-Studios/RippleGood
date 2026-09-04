@@ -16,7 +16,7 @@ import { useReveal } from "../lib/useReveal.js";
 const STEPS = [
   {
     title: "Start from the cause you already care about",
-    body: "The ten above. Effective giving shouldn't ask you to swap your values for someone else's.",
+    body: "The twelve above. Effective giving shouldn't ask you to swap your values for someone else's.",
   },
   {
     title: "See what your gift does",

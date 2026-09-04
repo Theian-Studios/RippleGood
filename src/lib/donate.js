@@ -164,6 +164,9 @@ export function everyOrgUrl(
  *                 documented recurring parameter was confirmed.
  *   donorbox      ?amount=N, plus default_interval=m for monthly
  *                 Verified on LEEP.
+ *   classy        <campaign url>#!/donation/checkout?amount=N
+ *                 Verified on Pure Earth. Amount only; the donor picks
+ *                 recurring on the form.
  *
  * Deliberately NOT prefilled, having been tested and found not to take:
  *   GiveDirectly (donate.givedirectly.org ignores amount and recurring),
@@ -196,6 +199,13 @@ export function directDonateUrl(charity, { amount, monthly } = {}) {
   } else if (prefill.style === "donorbox") {
     url.searchParams.set("amount", String(amount));
     if (monthly) url.searchParams.set("default_interval", "m");
+  } else if (prefill.style === "classy") {
+    // Classy routes its checkout through the URL hash, so the amount goes
+    // after "#!/donation/checkout", not in the query string. Verified on
+    // Pure Earth: the custom-amount field renders the figure, one-time
+    // selected. No recurring parameter was confirmed, so a monthly donor
+    // arrives with the amount in and switches the toggle themselves.
+    return `${prefill.url}#!/donation/checkout?amount=${amount}`;
   } else {
     return charity.donateUrl;
   }

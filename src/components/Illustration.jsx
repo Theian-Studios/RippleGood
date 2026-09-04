@@ -190,23 +190,6 @@ function Deworming() {
   );
 }
 
-function LeadExposure() {
-  return (
-    <>
-      {/* A paint tin: wire bail up, lid on, one drip of the paint down the
-          label. It had a light bulb on the label and a blue X floating beside
-          it, which read as a close button. The tile icon is the same tin. */}
-      <circle cx="120" cy="84" r="60" fill={wash} />
-      <path d="M84 52V46c0-20 16-34 36-34s36 14 36 34v6h-9v-6c0-15-12-25-27-25S93 31 93 46v6h-9Z" fill={inkSoft} opacity=".55" />
-      <rect x="74" y="62" width="92" height="80" rx="8" fill={ink} />
-      <rect x="66" y="52" width="108" height="16" rx="6" fill={inkSoft} />
-      <rect x="88" y="84" width="64" height="36" rx="5" fill={wash} />
-      <path d="M100 96h40M100 106h24" stroke={inkSoft} strokeWidth="3" strokeLinecap="round" opacity=".55" />
-      <path d="M120 116c-6 8-9 13-9 17a9 9 0 0 0 18 0c0-4-3-9-9-17Z" fill={accent} />
-    </>
-  );
-}
-
 function Vaccines() {
   return (
     <>
@@ -313,7 +296,6 @@ const SET = {
   climate: Climate,
   "extreme-poverty": DirectCash,
   "intestinal-worms": Deworming,
-  "lead-poisoning": LeadExposure,
 };
 
 export default function Illustration({ causeId, className = "" }) {

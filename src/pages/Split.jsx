@@ -3,6 +3,7 @@ import { ArrowUpRight, ClipboardCopy, Check, RotateCcw } from "lucide-react";
 import { charities } from "../data/charities.js";
 import { approxOutcome, money } from "../lib/format.js";
 import { iconFor } from "../lib/icons.jsx";
+import SameDollar from "../components/SameDollar.jsx";
 import { usePageMeta } from "../lib/usePageMeta.js";
 
 /**
@@ -235,6 +236,14 @@ export default function Split() {
           )}
         </div>
       </section>
+
+      {budgetValue > 0 && (
+        <section className="section section--gray">
+          <div className="wrap wrap--narrow">
+            <SameDollar amount={budgetValue} />
+          </div>
+        </section>
+      )}
     </>
   );
 }

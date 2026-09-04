@@ -134,15 +134,6 @@ const ICONS = {
     </>
   ),
 
-  // A paint tin: the lid on, the wire bail up, a drip down the front.
-  paint: (
-    <>
-      <path d="M5 9V8a7 7 0 0 1 14 0v1" />
-      <path d="M3 9h18" />
-      <path d="M5 9h14v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z" />
-      <path d="M12 12v3.5" />
-    </>
-  ),
 };
 
 export const causeIconNames = Object.keys(ICONS);
