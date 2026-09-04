@@ -14,6 +14,12 @@ const VIEW = "0 0 240 190";
 
 /* Shared paint, keyed to the brand tokens so the set can never drift out of
    step with the palette again. `--ill-*` still lets one page retint the lot. */
+
+/* Any group that carries a rotate() must sit inside a plain <g>. The cause
+   hero animates each direct child of the svg with a CSS transform-origin, and
+   that origin composes with a rotate(a cx cy) attribute on the same element
+   so the rotation happens around a different point and the part lands away
+   from the rest of the picture. One level down, the attribute is left alone. */
 const ink = "var(--ill-ink, var(--navy))";
 const inkSoft = "var(--ill-ink-soft, #3a5a86)";
 const accent = "var(--ill-accent, var(--blue))";
@@ -45,10 +51,12 @@ function ChildNutrition() {
           behind it, which said vitamin D. The capsule is the same oval-with-a-
           tail the tile icon draws. */}
       <circle cx="120" cy="82" r="60" fill={wash} />
-      <g transform="rotate(-30 120 72)">
-        <rect x="86" y="58" width="64" height="28" rx="14" fill={accent} />
-        <path d="M150 72h12" stroke={accent} strokeWidth="7" strokeLinecap="round" />
-        <path d="M100 66c6-3 14-3 20 0" stroke={wash} strokeWidth="3" strokeLinecap="round" opacity=".7" />
+      <g>
+        <g transform="rotate(-30 120 72)">
+          <rect x="86" y="58" width="64" height="28" rx="14" fill={accent} />
+          <path d="M150 72h12" stroke={accent} strokeWidth="7" strokeLinecap="round" />
+          <path d="M100 66c6-3 14-3 20 0" stroke={wash} strokeWidth="3" strokeLinecap="round" opacity=".7" />
+        </g>
       </g>
       <path d="M64 118c8-10 22-14 34-10l30 10h26c9 0 16 7 16 16s-7 16-16 16H96c-14 0-26-6-34-16l-8-10 10-6Z" fill={ink} />
       <path d="M74 116c10-6 22-6 32-2" stroke={wash} strokeWidth="2.5" fill="none" opacity=".5" />
@@ -199,9 +207,107 @@ function LeadExposure() {
   );
 }
 
+function Vaccines() {
+  return (
+    <>
+      {/* A syringe at the angle a nurse holds it, the dose drawn in the accent. */}
+      <circle cx="120" cy="84" r="60" fill={wash} />
+      <g>
+      <g transform="rotate(-30 120 87)">
+        <rect x="34" y="70" width="10" height="34" rx="4" fill={inkSoft} />
+        <rect x="40" y="80" width="36" height="14" rx="7" fill={inkSoft} />
+        <rect x="70" y="72" width="100" height="30" rx="6" fill={ink} />
+        <rect x="80" y="80" width="80" height="14" rx="3" fill={wash} />
+        <rect x="80" y="80" width="48" height="14" rx="3" fill={accent} />
+        <path d="M100 72v-6M124 72v-6M148 72v-6" stroke={wash} strokeWidth="3" strokeLinecap="round" opacity=".7" />
+        <rect x="168" y="79" width="14" height="16" rx="3" fill={inkSoft} />
+        <path d="M182 87h30" stroke={ink} strokeWidth="4" strokeLinecap="round" />
+        <circle cx="216" cy="87" r="6" fill={accent} />
+      </g>
+      </g>
+    </>
+  );
+}
+
+function Malnutrition() {
+  return (
+    <>
+      {/* A bowl, a spoon, and the steam off it. */}
+      <circle cx="120" cy="84" r="60" fill={wash} />
+      <path d="M96 62c0-10 8-10 8-22M132 66c0-10 8-10 8-22" stroke={accent} strokeWidth="4" fill="none" strokeLinecap="round" />
+      <g>
+        <g transform="rotate(35 160 80)">
+          <rect x="154" y="30" width="12" height="76" rx="6" fill={inkSoft} />
+          <ellipse cx="160" cy="116" rx="15" ry="19" fill={inkSoft} />
+        </g>
+      </g>
+      <path d="M52 104h136c0 30-24 52-68 52S52 134 52 104Z" fill={ink} />
+      <rect x="46" y="98" width="148" height="12" rx="6" fill={inkSoft} />
+      <path d="M72 128c10 12 26 18 48 18s38-6 48-18" stroke={wash} strokeWidth="3" fill="none" strokeLinecap="round" opacity=".45" />
+      <rect x="92" y="156" width="56" height="8" rx="4" fill={ink} />
+    </>
+  );
+}
+
+function SafeWater() {
+  return (
+    <>
+      {/* A chlorine dispenser on its post, the valve open, a jerrycan under it. */}
+      <circle cx="120" cy="84" r="60" fill={wash} />
+      <rect x="74" y="30" width="76" height="52" rx="10" fill={ink} />
+      <rect x="86" y="42" width="52" height="22" rx="5" fill={wash} />
+      <rect x="104" y="82" width="16" height="16" rx="4" fill={inkSoft} />
+      <path d="M120 90h22" stroke={ink} strokeWidth="9" strokeLinecap="round" />
+      <path d="M142 96c-5 7-8 11-8 15a8 8 0 0 0 16 0c0-4-3-8-8-15Z" fill={accent} />
+      <rect x="106" y="98" width="8" height="34" fill={inkSoft} />
+      <path d="M62 132h116v10H62Z" fill={ink} />
+      <path d="M74 142h40v26a6 6 0 0 1-6 6H80a6 6 0 0 1-6-6Z" fill={inkSoft} />
+      <path d="M84 142v-8h20v8" stroke={ink} strokeWidth="4" fill="none" />
+    </>
+  );
+}
+
+function Micronutrients() {
+  return (
+    <>
+      {/* A sack of flour, open at the neck, with grain beside it. */}
+      <circle cx="120" cy="86" r="60" fill={wash} />
+      <path d="M92 42c0 12-9 13-9 24h74c0-11-9-12-9-24" fill={inkSoft} />
+      <path d="M83 66h74l11 68a20 20 0 0 1-20 23H92a20 20 0 0 1-20-23Z" fill={ink} />
+      <rect x="98" y="92" width="44" height="34" rx="6" fill={wash} />
+      <path d="M120 98v22M109 109h22" stroke={accent} strokeWidth="7" strokeLinecap="round" />
+      <g fill={accent}>
+        <ellipse cx="186" cy="126" rx="7" ry="12" />
+        <ellipse cx="198" cy="140" rx="7" ry="12" />
+      </g>
+      <path d="M186 114v-16M198 128v-16" stroke={inkSoft} strokeWidth="3" strokeLinecap="round" />
+    </>
+  );
+}
+
+function Syphilis() {
+  return (
+    <>
+      {/* A rapid test, read: the sample well above, two lines in the window. */}
+      <circle cx="120" cy="84" r="60" fill={wash} />
+      <rect x="82" y="18" width="76" height="140" rx="14" fill={ink} />
+      <circle cx="120" cy="48" r="12" fill={wash} />
+      <circle cx="120" cy="48" r="5" fill={accent} />
+      <rect x="98" y="74" width="44" height="62" rx="8" fill={wash} />
+      <path d="M108 92h24M108 112h24" stroke={accent} strokeWidth="7" strokeLinecap="round" />
+      <path d="M96 146h48" stroke={inkSoft} strokeWidth="4" strokeLinecap="round" opacity=".5" />
+    </>
+  );
+}
+
 const SET = {
   "malaria-nets": GlobalHealth,
   "malaria-medicine": DiseasePrevention,
+  "childhood-vaccines": Vaccines,
+  malnutrition: Malnutrition,
+  "safe-water": SafeWater,
+  micronutrients: Micronutrients,
+  "syphilis-in-pregnancy": Syphilis,
   "child-survival": ChildNutrition,
   "animal-welfare": AnimalWelfare,
   climate: Climate,

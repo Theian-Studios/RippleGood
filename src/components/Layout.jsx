@@ -82,6 +82,13 @@ function Footer() {
           >
             Giving Green
           </a>
+          <a
+            href="https://www.happierlivesinstitute.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Happier Lives Institute
+          </a>
           <a href="https://www.founderspledge.com/" target="_blank" rel="noopener noreferrer">
             Founders Pledge
           </a>

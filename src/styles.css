@@ -174,6 +174,26 @@
   --tile-bg: #dbeff7;
   --tile-fg: #0b5872;
 }
+[data-cause="childhood-vaccines"] {
+  --tile-bg: #dfeef0;
+  --tile-fg: #0f5560;
+}
+[data-cause="malnutrition"] {
+  --tile-bg: #eaeedc;
+  --tile-fg: #4a5a1c;
+}
+[data-cause="safe-water"] {
+  --tile-bg: #cfe6ef;
+  --tile-fg: #0a5566;
+}
+[data-cause="micronutrients"] {
+  --tile-bg: #ece7d5;
+  --tile-fg: #5c4a18;
+}
+[data-cause="syphilis-in-pregnancy"] {
+  --tile-bg: #f0e0e8;
+  --tile-fg: #7a2f4d;
+}
 [data-cause="animal-welfare"] {
   --tile-bg: #eae5f9;
   --tile-fg: #4a3499;
@@ -691,7 +711,9 @@ a.mark {
 
 .causeGrid {
   display: grid;
-  gap: var(--s-3);
+  /* 16 at every width. Stacked on a phone these were 12 apart, the one gap on
+     the site off the 16/24 rhythm. */
+  gap: var(--s-4);
   grid-template-columns: 1fr;
 }
 
@@ -701,16 +723,16 @@ a.mark {
   }
 }
 
-/* Four, not three. There are eight causes: three columns leaves a hole in the
-   last row, four divides them exactly. If a ninth cause is ever added, revisit
-   this rather than accepting the orphan. */
-@media (min-width: 900px) {
+/* Five. Thirteen is prime, so no column count divides the set and the rule is
+   the weaker one: keep the last row at least half full. Five gives rows of 5,
+   5 and 3. Four would give 4, 4, 4 and a single orphan, which looks like a
+   mistake rather than a short line. */
+@media (min-width: 1000px) {
   .causeGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     /* One row is taller than the other only because a single cause name wraps.
        Equal rows keep the block rectangular. */
     grid-auto-rows: 1fr;
-    gap: var(--s-4);
   }
 }
 
@@ -823,9 +845,14 @@ a.mark {
 .causeHero {
   position: relative;
   padding: var(--s-8) 0;
-  /* A flat band of the cause's own tint. It was a gradient fading into the
-     page, which is the one effect that most reliably says "generated". */
-  background: var(--tile-bg, var(--mist));
+  /* A wash of the cause's own tint, fading out before the giving panel, so the
+     band ends by softening rather than on a hard line. */
+  background: linear-gradient(
+    to bottom,
+    var(--tile-bg, var(--mist)) 0%,
+    color-mix(in srgb, var(--tile-bg, var(--mist)) 45%, var(--gray-50)) 55%,
+    var(--gray-50) 100%
+  );
 }
 
 /* The label spans exactly the tile's height: "GLOBAL HEALTH" sits on its top

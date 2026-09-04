@@ -3,7 +3,7 @@
 **Don't just donate. Make the biggest ripple.**
 
 An effective-giving directory: the most effective charity within the cause you
-already care about. Eight causes, one evidence-backed pick each, with the
+already care about. Ten causes, one evidence-backed pick each, with the
 arithmetic shown underneath.
 
 Built with React 18 + Vite, `react-router-dom` (HashRouter) and `lucide-react`.
@@ -206,7 +206,7 @@ real static page per cause:
 - **Nothing in the app links to these.** The "Share this cause" button was
   removed, so `/share/<id>` is an author-facing URL now: paste it when you want
   a per-cause preview, rather than the hash route, which previews identically
-  for all eight causes.
+  for all ten causes.
 - Set the domain at build time if it isn't ripple-good.org:
 
 ```bash

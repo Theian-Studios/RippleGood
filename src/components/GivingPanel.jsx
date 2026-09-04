@@ -2,7 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ArrowUpRight, Check, CircleAlert, Info } from "lucide-react";
 import { getDefaultLevel } from "../data/charities.js";
-import { causeUrl, everyOrgUrl, thanksUrl } from "../lib/donate.js";
+import {
+  causeUrl,
+  directCarriesAmount,
+  directDonateUrl,
+  everyOrgUrl,
+  thanksUrl,
+} from "../lib/donate.js";
 import { newDonationRef, rememberDonation } from "../lib/donationRef.js";
 import { approxOutcome, displayHost, money, unitsFor } from "../lib/format.js";
 import Pictogram from "./Pictogram.jsx";
@@ -39,7 +45,6 @@ export default function GivingPanel({ charity, onSelectionChange }) {
   );
   const [monthly, setMonthly] = useState(() => params.get("monthly") === "1");
 
-  const host = displayHost(charity.donateUrl);
   const inputId = `custom-amount-${charity.id}`;
 
   /**
@@ -90,6 +95,13 @@ export default function GivingPanel({ charity, onSelectionChange }) {
     () => newDonationRef(),
     [charity.id, amount, monthly],
   );
+
+  // The charity's own page, carrying the amount where its platform accepts
+  // one. The host is read off the resulting link rather than off donateUrl, so
+  // the button never names a destination it isn't sending you to.
+  const directUrl = directDonateUrl(charity, { amount, monthly });
+  const directPrefilled = directCarriesAmount(charity, { monthly });
+  const host = displayHost(directUrl);
 
   // Complete before any JS runs, and identical to what the click handler would
   // have produced — the handler now only records, it no longer rewrites.
@@ -295,8 +307,17 @@ export default function GivingPanel({ charity, onSelectionChange }) {
                   Goes straight to <strong>{host}</strong>.{" "}
                 </>
               )}
-              You enter the amount
-              {monthly ? " and set it to repeat" : ""} on their form.
+              {directPrefilled ? (
+                <>
+                  {priceLabel(amount)} is filled in for you
+                  {monthly ? ", and you set it to repeat" : ""} on their form.
+                </>
+              ) : (
+                <>
+                  You enter the amount
+                  {monthly ? " and set it to repeat" : ""} on their form.
+                </>
+              )}
             </span>
           </p>
         )}
@@ -314,7 +335,7 @@ export default function GivingPanel({ charity, onSelectionChange }) {
         <div className="routes">
           <a
             className="donate"
-            href={everyUrl || charity.donateUrl}
+            href={everyUrl || directUrl}
             rel="noreferrer"
             onClick={everyUrl ? openEveryOrg : undefined}
           >
@@ -325,7 +346,7 @@ export default function GivingPanel({ charity, onSelectionChange }) {
           {everyUrl && (
             <a
               className="donate donate--alt"
-              href={charity.donateUrl}
+              href={directUrl}
               target="_blank"
               rel="noreferrer"
             >
@@ -338,9 +359,12 @@ export default function GivingPanel({ charity, onSelectionChange }) {
         {everyUrl && (
           <p className="handoff">
             <span>
-              {priceLabel(amount)} is carried across for you. Giving on{" "}
-              {host} opens in a new tab and starts from an empty form.
-              Ripple Good never sees your money or your details either way.
+              {priceLabel(amount)} is carried across for you. Giving on {host}{" "}
+              opens in a new tab and{" "}
+              {directPrefilled
+                ? "arrives with the amount already filled in"
+                : "starts from an empty form"}
+              . Ripple Good never sees your money or your details either way.
             </span>
           </p>
         )}

@@ -110,7 +110,7 @@ const EvidenceCard = forwardRef(function EvidenceCard({ charity, open, onToggle 
               ))}
             </ul>
             <p className="compare__note">
-              Lower is cheaper per life saved. All three sit far inside
+              Lower is cheaper per life saved. All of them sit far inside
               GiveWell's funding bar; the spread between them is small next to
               the spread between any of them and an unevaluated charity.
             </p>

@@ -144,6 +144,74 @@ export function everyOrgUrl(
 
 
 /**
+ * The charity's own donation page, with the amount already in it where the
+ * charity's platform accepts one on the URL.
+ *
+ * Every rule below was verified by loading the real page and reading the
+ * rendered form back, not from documentation alone. Anything unverified is
+ * absent on purpose: a parameter a platform ignores is harmless, but one that
+ * lands the donor on a broken or wrong form is not, and this is the route we
+ * tell people has no intermediary.
+ *
+ *   fundraiseup   ?form=<id>&amount=N&recurring=once|monthly
+ *                 Verified on Helen Keller (form FUNUYQRJGHG) and Evidence
+ *                 Action (form dtwdonate, which also designates the gift to
+ *                 Deworm the World rather than to Evidence Action generally).
+ *   everyaction   ?am=N
+ *                 Verified on The Humane League. Amount only: passing it skips
+ *                 the frequency step, so we send it for one-time gifts and
+ *                 leave a monthly donor the bare form to choose on. No
+ *                 documented recurring parameter was confirmed.
+ *   donorbox      ?amount=N, plus default_interval=m for monthly
+ *                 Verified on LEEP.
+ *
+ * Deliberately NOT prefilled, having been tested and found not to take:
+ *   GiveDirectly (donate.givedirectly.org ignores amount and recurring),
+ *   Against Malaria Foundation (ASP.NET postback form, no query-string entry),
+ *   Giving Green (a Keela widget we could not confirm),
+ *   Malaria Consortium (its donate page refuses automated requests).
+ */
+export function directDonateUrl(charity, { amount, monthly } = {}) {
+  const prefill = charity.directPrefill;
+  if (!prefill || !amount || amount < 1) return charity.donateUrl;
+
+  // Some platforms only accept parameters on their own hosted page, not on
+  // the charity's embed of it. `prefill.url` is that page, and the button
+  // relabels itself to wherever it actually sends people.
+  let url;
+  try {
+    url = new URL(prefill.url || charity.donateUrl);
+  } catch {
+    return charity.donateUrl;
+  }
+
+  if (prefill.style === "fundraiseup") {
+    if (prefill.form) url.searchParams.set("form", prefill.form);
+    url.searchParams.set("amount", String(amount));
+    url.searchParams.set("recurring", monthly ? "monthly" : "once");
+  } else if (prefill.style === "everyaction") {
+    // One-time only. See the note above.
+    if (monthly) return charity.donateUrl;
+    url.searchParams.set("am", String(amount));
+  } else if (prefill.style === "donorbox") {
+    url.searchParams.set("amount", String(amount));
+    if (monthly) url.searchParams.set("default_interval", "m");
+  } else {
+    return charity.donateUrl;
+  }
+
+  return url.toString();
+}
+
+/** Whether the direct link will actually arrive with the amount in it. */
+export function directCarriesAmount(charity, { monthly } = {}) {
+  const prefill = charity.directPrefill;
+  if (!prefill) return false;
+  if (prefill.style === "everyaction" && monthly) return false;
+  return true;
+}
+
+/**
  * The absolute /thanks URL for this deployment, wherever it is hosted.
  *
  * Deliberately hashless — "/thanks?…", not "/#/thanks?…". Truncating a

@@ -83,6 +83,57 @@ const ICONS = {
     </>
   ),
 
+  // A syringe, upright: plunger, barrel with two marks, hub, needle.
+  syringe: (
+    <>
+      <path d="M9 3h6" />
+      <path d="M12 3v3" />
+      <path d="M8 6h8v9a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z" />
+      <path d="M10 9.5h2M10 12.5h2" />
+      <path d="M10.5 16v2h3v-2" />
+      <path d="M12 18v4" />
+    </>
+  ),
+
+  // A bowl of food, steaming.
+  bowl: (
+    <>
+      <path d="M3 11h18a9 9 0 0 1-18 0z" />
+      <path d="M8 21h8" />
+      <path d="M9.5 8c0-2 1.5-2 1.5-4" />
+      <path d="M13.5 8c0-2 1.5-2 1.5-4" />
+    </>
+  ),
+
+  // A chlorine dispenser: tank, spout, and the dose coming out.
+  dispenser: (
+    <>
+      <rect x="3" y="3" width="7" height="6" rx="1.5" />
+      <path d="M6.5 9v2" />
+      <path d="M10 6h4a2 2 0 0 1 2 2v2" />
+      <path d="M16 22a3 3 0 0 1-3-3c0-2 3-5.5 3-5.5S19 17 19 19a3 3 0 0 1-3 3Z" />
+    </>
+  ),
+
+  // A sack of flour, with the plus that says something was added to it.
+  grain: (
+    <>
+      <path d="M9 3c0 2-1.5 2.2-1.5 4h9C16.5 5.2 15 5 15 3" />
+      <path d="M7.5 7h9l1.4 9.6a3.5 3.5 0 0 1-3.5 4H9.6a3.5 3.5 0 0 1-3.5-4Z" />
+      <path d="M12 12v5M9.5 14.5h5" />
+    </>
+  ),
+
+  // A rapid test cassette: sample well above, two lines in the window.
+  test: (
+    <>
+      <rect x="7" y="2" width="10" height="20" rx="2" />
+      <circle cx="12" cy="6.5" r="1.5" />
+      <rect x="9.5" y="11" width="5" height="7" rx="1" />
+      <path d="M10.8 13.2h2.4M10.8 15.8h2.4" />
+    </>
+  ),
+
   // A paint tin: the lid on, the wire bail up, a drip down the front.
   paint: (
     <>

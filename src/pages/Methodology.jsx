@@ -99,9 +99,16 @@ export default function Methodology() {
             >
               "The Moral Imperative toward Cost-Effectiveness in Global Health"
             </a>{" "}
-            {/* VERIFY: re-read the essay and confirm this link and the "~100x vs
-                median" characterization before launch — don't let the summary
-                drift stronger than the source. */}
+            {/* Partly checked 2026-09-02. Confirmed: the link resolves, and the
+                essay is Toby Ord's "The Moral Imperative toward Cost-Effectiveness
+                in Global Health" (2013). Confirmed on the page: the least effective
+                HIV/AIDS intervention produces under 0.1% of the value of the most
+                effective, which is the order-of-magnitude spread cited above.
+                NOT confirmed from that page: the specific "best is ~100x the
+                median" framing, which comes from the DCP2 distribution rather
+                than a sentence on the landing page. Read the full essay and
+                either source that phrasing directly or soften it. This is the
+                biggest claim on the site and it is linked from three pages. */}
             is the classic treatment of that data, and it's where our framing comes
             from.
           </p>
@@ -161,8 +168,7 @@ export default function Methodology() {
             Cost-effectiveness estimates are also <strong>ranges with error bars</strong>,
             not settled facts. Where an evaluator publishes a range, we show the range.
             Where a figure is the charity's own estimate rather than an independent
-            one, as with The Humane League's hens-per-dollar number, we say so on the
-            page.
+            one, as with Taimaka's cost-per-life-saved range, we say so on the page.
           </p>
 
           <h2>How often we re-check</h2>
@@ -237,11 +243,12 @@ export default function Methodology() {
 
           <h3>Can I give monthly?</h3>
           <p>
-            Yes. Every cause page has a monthly toggle, and on the Every.org route
-            the cadence is carried across with the amount. Giving on the charity's
-            own site instead means setting the recurrence up there yourself.
-            {/* VERIFY: confirm every direct donate page offers a recurring
-                option before promising this. */}{" "}
+            Yes. Every cause page has a monthly toggle. On the Every.org route both
+            the amount and the cadence are carried across. On the charity's own page
+            it depends on their donation platform: several now arrive with the amount
+            already filled in, and the rest start from an empty form. The page says
+            which before you click, rather than promising something we haven't
+            checked.{" "}
             Steady monthly funding is worth more to these organizations than the same
             total in one-off spikes: it's what lets them sign contracts for next
             year's distributions.
@@ -278,10 +285,15 @@ export default function Methodology() {
             itself on top of your gift, <strong>which you can set to zero</strong>.
             Some employer matching schemes also decline gifts made through an
             intermediary. That's why every cause page keeps the charity's own donation
-            page as an equally visible second option, and why we've left our{" "}
-            <Link to="/cause/climate">climate pick</Link> as direct-only: the entity
-            listed on Every.org there is Giving Green's research organization, not the
-            regranting fund we actually recommend.
+            page as an equally visible second option, and why four causes skip
+            Every.org altogether. On <Link to="/cause/climate">climate</Link>, the
+            entity Every.org lists is Giving Green's research organization rather than
+            the regranting fund we recommend. On{" "}
+            <Link to="/cause/safe-water">safe water</Link> and{" "}
+            <Link to="/cause/syphilis-in-pregnancy">syphilis in pregnancy</Link>,
+            Every.org lists Evidence Action as a whole, and only the charity's own form
+            can send your gift to the particular program the page is about. Fortify
+            Health we could not find on Every.org at all.
           </p>
 
           <h2>Think we got one wrong?</h2>

@@ -19,8 +19,8 @@ export default function CauseCard({ charity }) {
   return (
     <Link to={`/cause/${charity.id}`} className="causeCard" data-cause={charity.id}>
       {/* The art was the best thing on the cause pages and invisible until you
-          opened one. On its cause's own tint, it also gives the grid eight
-          identities instead of eight copies of one component. */}
+          opened one. On its cause's own tint, it also gives the grid ten
+          identities instead of ten copies of one component. */}
       <span className="causeCard__art">
         <Illustration causeId={charity.id} />
       </span>
