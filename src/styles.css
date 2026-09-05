@@ -3491,14 +3491,3 @@ a.mark {
   border-bottom: 0;
 }
 
-.inside__caveats {
-  margin-top: var(--s-4);
-  padding-left: var(--s-5);
-  font-size: var(--t-sm);
-  line-height: 1.6;
-  color: var(--ink-soft);
-}
-
-.inside__caveats li + li {
-  margin-top: var(--s-3);
-}

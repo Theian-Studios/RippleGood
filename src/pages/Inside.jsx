@@ -180,33 +180,6 @@ export default function Inside() {
               </div>
             )}
 
-            {/* The caveats belong on the page, not in a message that scrolls
-                away. Every number above is a floor, and two of them are a
-                different kind of number from the third. */}
-            <h2>What these numbers are not</h2>
-            <ul className="inside__caveats">
-              <li>
-                <strong>Gifts and amounts are verified.</strong> They arrive on
-                Every.org's webhook with a charge id.
-              </li>
-              <li>
-                <strong>Arrivals are not.</strong> They're counted from the
-                browser through a function the public key may call, so they can
-                be inflated by anyone who reads the bundle. Read them as an
-                indicator, not evidence.
-              </li>
-              <li>
-                <strong>Everything here is a floor.</strong> Only donations
-                routed through Every.org report back. Safe water and syphilis in
-                pregnancy are direct-only, and every cause page also offers the
-                charity's own donation page — gifts made either way reach the
-                charity and never appear above.
-              </li>
-              <li>
-                An arrival is counted once per visit, not per page, so someone
-                reading four causes is one arrival.
-              </li>
-            </ul>
           </>
         )}
       </div>
