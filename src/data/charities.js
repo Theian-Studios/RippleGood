@@ -792,6 +792,14 @@ export const charities = [
       tooSmall: "Joins the pool equipping the next mill.",
       pictogram: { glyph: "child", label: "people, one year each" },
     },
+    // Not on Every.org, and not an oversight: Every.org lists US 501(c)(3)s,
+    // and Fortify Health has no US entity. Searching Every.org for its name on
+    // 2026-09-02 returned fifty unrelated US nonprofits. Its own donate page
+    // sends donors outside India to Giving What We Can and donors in India to
+    // give.do, so that page, not a guess about the reader's country, is where
+    // this button goes.
+    directOnlyReason:
+      "Fortify Health has no US listing, so this goes to its own donate page, which sends donors outside India to Giving What We Can.",
     donateUrl: "https://www.fortifyhealth.global/donate",
     lastVerified: "2026-09-02",
     learnMoreIntro:

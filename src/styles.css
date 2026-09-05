@@ -908,7 +908,7 @@ a.mark {
 }
 
 .give__label {
-  font-size: var(--t-xl);
+  font-size: var(--t-2xl);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--navy);
@@ -934,52 +934,6 @@ a.mark {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
-
-/* "Other" is a tier, sharing the skeleton of the three beside it: outcome on
-   top, amount at the foot. The amount is a plain field rather than a bordered
-   control, so the card reads as one of the four rather than as a form. */
-.level--other {
-  cursor: text;
-}
-
-.level__amount--input {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 1px;
-  /* Larger than the tiers' price: this one is a field you type in, and at the
-     price's 13px it read as a label rather than a control. */
-  font-size: var(--t-lg);
-  font-weight: 600;
-  color: var(--navy);
-}
-
-.level__amount--input input {
-  width: 5ch;
-  padding: 0;
-  border: 0;
-  outline: none;
-  background: none;
-  font: inherit;
-  color: inherit;
-  appearance: textfield;
-  -moz-appearance: textfield;
-}
-
-.level__amount--input input::placeholder {
-  color: var(--ink-faint);
-  opacity: 1;
-}
-
-.level__amount--input input::-webkit-outer-spin-button,
-.level__amount--input input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.level--other.is-selected .level__amount--input {
-  color: var(--blue-700);
-}
-
 
 
 .level {
@@ -1014,6 +968,57 @@ a.mark {
   font-size: var(--t-xs);
   font-weight: 500;
   color: var(--ink-faint);
+}
+
+/* Below .level__amount on purpose. These are single-class rules of equal
+   specificity to it, so the one that wins is simply the one that comes last —
+   sitting above it, the font-size here was silently losing to the tiers' 13px
+   and the field never grew. */
+/* "Other" is a tier, sharing the skeleton of the three beside it: outcome on
+   top, amount at the foot. The amount is a plain field rather than a bordered
+   control, so the card reads as one of the four rather than as a form. */
+.level--other {
+  cursor: text;
+}
+
+.level__amount--input {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  /* Much larger than the tiers' price: this one is a field you type in, and
+     anywhere near the price's 13px it read as a label rather than a control.
+     At 22px it is the biggest thing in the card, which is right — it is the
+     only number on the row the reader sets themselves. */
+  font-size: var(--t-2xl);
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.level__amount--input input {
+  width: 5ch;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.level__amount--input input::placeholder {
+  color: var(--ink-faint);
+  opacity: 1;
+}
+
+.level__amount--input input::-webkit-outer-spin-button,
+.level__amount--input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.level--other.is-selected .level__amount--input {
+  color: var(--blue-700);
 }
 
 /* Selection reads through the ring and the check, not a fill — every tier
@@ -2062,10 +2067,10 @@ a.mark {
 }
 
 /* Heading and checkbox share a line on a phone; the heading drops a type step
-   so "Choose a result" doesn't break after "Choose a". */
+   so "Choose your ripple" stays on one line. */
 @media (max-width: 639px) {
   .give__label {
-    font-size: var(--t-lg);
+    font-size: var(--t-xl);
   }
 }
 

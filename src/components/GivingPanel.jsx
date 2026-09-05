@@ -14,6 +14,13 @@ import { approxOutcome, displayHost, money, unitsFor } from "../lib/format.js";
 import Pictogram from "./Pictogram.jsx";
 
 /**
+ * What an empty "Other" field is worth. The greyed figure in the box and the
+ * amount on the button are the same number, so the placeholder is a promise
+ * the button keeps rather than a hint it ignores.
+ */
+const DEFAULT_CUSTOM = 25;
+
+/**
  * Giving levels phrased as outcomes, a free-amount field that translates any
  * number into the same language, and a one-time/monthly switch. The dollar
  * figure is the small second line on purpose — you are choosing a result, not
@@ -40,10 +47,13 @@ export default function GivingPanel({ charity }) {
 
   const [level, setLevel] = useState(() => restoredLevel ?? getDefaultLevel(charity));
   // A restored amount that isn't one of the tiers belongs in the custom field.
-  // Otherwise the field starts at $25, so clicking "Other" gives a real amount
-  // straight away rather than an empty box that quietly bills the last tier.
+  // Otherwise the field starts empty and shows $25 as a placeholder. A real
+  // "25" sitting in the box meant a typed figure joined onto it, so someone
+  // reaching for $3 ended up giving $325. Empty, the first keystroke starts
+  // the number — and the amount still falls back to DEFAULT_CUSTOM, so this
+  // is not the empty box that quietly bills the last tier either.
   const [customText, setCustomText] = useState(() =>
-    restoredAmount !== null && !restoredLevel ? String(restoredAmount) : "25",
+    restoredAmount !== null && !restoredLevel ? String(restoredAmount) : "",
   );
   const [monthly, setMonthly] = useState(() => params.get("monthly") === "1");
   // Which of the four cards is the live one. Without this, clicking into the
@@ -65,9 +75,16 @@ export default function GivingPanel({ charity }) {
 
   // Whole dollars only; anything unparseable or below the minimum falls back to
   // the selected level rather than producing a "Give $NaN" button.
+  const isBlank = customText.trim() === "";
   const parsed = Math.floor(Number(customText));
-  const typedAmount =
-    Number.isFinite(parsed) && parsed >= minAmount ? parsed : null;
+  // Blank is worth the placeholder: clicking "Other" and typing nothing still
+  // gives the amount the greyed $25 said it would. Floored at the minimum so
+  // an Every.org cause can never default to a figure it would silently drop.
+  const typedAmount = isBlank
+    ? Math.max(DEFAULT_CUSTOM, minAmount)
+    : Number.isFinite(parsed) && parsed >= minAmount
+      ? parsed
+      : null;
   // Only counts while the custom card is the live one; a tier click clears the
   // field anyway, but this makes the rule explicit rather than incidental.
   const customAmount = mode === "custom" ? typedAmount : null;
@@ -85,6 +102,15 @@ export default function GivingPanel({ charity }) {
     approxOutcome(monthly ? perGift * 12 : perGift, charity.custom);
 
   const priceLabel = (n) => (monthly ? `${money(n)}/month` : money(n));
+
+  /**
+   * Under monthly we show what a year of giving adds up to, and the reader
+   * needs telling that. But three of the outcome sentences already carry the
+   * year themselves — "Deworms ~454 children for a year" — and prefixing
+   * those produced "Each year: ... for a year." So the prefix goes on only
+   * where the sentence hasn't already said it.
+   */
+  const asAnnual = (text) => (/year/i.test(text) ? text : `Each year: ${text}`);
   const customOutcome = customAmount === null ? null : outcomeFor(customAmount);
 
   /**
@@ -158,7 +184,7 @@ export default function GivingPanel({ charity }) {
       )}
 
       <div className="give__head">
-        <p className="give__label">Choose a result</p>
+        <p className="give__label">Choose your ripple</p>
 
         {/* A checkbox, not a two-way switch: most gifts are one-off, and a
             toggle gave the rarer choice equal weight. */}
@@ -168,7 +194,7 @@ export default function GivingPanel({ charity }) {
             checked={monthly}
             onChange={(e) => setMonthly(e.target.checked)}
           />
-          Make it monthly
+          Monthly
         </label>
       </div>
 
@@ -225,7 +251,7 @@ export default function GivingPanel({ charity }) {
                 ? `The minimum is ${money(minAmount)}.`
                 : customOutcome
                   ? monthly
-                    ? `Each year: ${customOutcome}`
+                    ? asAnnual(customOutcome)
                     : customOutcome
                   : "Other amount"}
             </span>
@@ -238,7 +264,7 @@ export default function GivingPanel({ charity }) {
                   min={minAmount}
                   step="1"
                   inputMode="numeric"
-                  placeholder="25"
+                  placeholder={String(DEFAULT_CUSTOM)}
                   aria-label="Other amount"
                   value={customText}
                   onFocus={() => setMode("custom")}
@@ -265,7 +291,7 @@ export default function GivingPanel({ charity }) {
           rel="noreferrer"
           onClick={everyUrl ? openEveryOrg : undefined}
         >
-          Give {priceLabel(amount)} to {charity.name}
+          Give {priceLabel(amount)}
         </a>
 
         {/* One sentence for the plumbing: where the money goes, the tip, the
