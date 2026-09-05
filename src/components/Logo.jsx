@@ -3,7 +3,7 @@ import { useId } from "react";
 /**
  * The Ripple Good mark: a heart with two ripple bands swept across its lower
  * half, and the "Ripple Good" wordmark beside it — "Ripple" set in the sans,
- * "Good" in the brand script, as on the brand sheet, with a ™ after it.
+ * "Good" in the brand script, as on the brand sheet.
  *
  * The bands are cut with a mask rather than painted white, so the gaps are
  * genuinely transparent. Painted-white bands only look right on a white page —
@@ -79,18 +79,11 @@ export default function Logo({
         />
       </svg>
 
-      {/* The ™ rides the wordmark, which is the mark itself and so the one
-          place it belongs. It sits outside .logo__script deliberately: set in
-          the script face it would read as part of the word, and the subset of
-          Dancing Script we ship has three glyphs in it anyway.
-
-          The whole wordmark is already aria-hidden — .logo carries the
-          accessible name — so a screen reader never has to say "trade mark"
-          twice a page. */}
+      {/* No ™ here. It lives on the colophon line in the footer instead —
+          on the wordmark it competed with the mark it was attached to. */}
       <span className="logo__word" aria-hidden="true">
         <span className="logo__name">Ripple</span>
         <span className="logo__script">Good</span>
-        <span className="logo__tm">™</span>
       </span>
     </span>
   );

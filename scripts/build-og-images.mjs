@@ -138,18 +138,7 @@ function render(charity) {
   const rippleW = ctx.measureText("Ripple").width;
   ctx.font = "48px ScriptBold";
   ctx.fillStyle = SKY;
-  const goodX = 150 + rippleW + 10;
-  ctx.fillText("Good", goodX, 84);
-
-  // The ™ the site's wordmark carries, on the card that is the wordmark's most
-  // shared appearance. Measured off "Good" while the script font is still set,
-  // then drawn in the sans — the script face has no ™ worth using, and a ™ in
-  // a script reads as a fifth letter. Raised off the middle baseline so it
-  // rides the caps rather than sitting on them.
-  const goodW = ctx.measureText("Good").width;
-  ctx.font = "17px PoppinsSemi";
-  ctx.fillStyle = MUTED;
-  ctx.fillText("\u2122", goodX + goodW + 3, 70);
+  ctx.fillText("Good", 150 + rippleW + 10, 84);
 
   ctx.textBaseline = "alphabetic";
   ctx.fillStyle = SKY;
