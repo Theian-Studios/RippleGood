@@ -42,6 +42,8 @@ const CAUSE_LABELS: Record<string, string> = {
   deworming: "Intestinal Worms", // retired
   "lead-poisoning": "Lead Poisoning",
   "lead-exposure": "Lead Poisoning", // retired
+  climate: "Climate", // retired
+  micronutrients: "Micronutrients", // retired
 };
 
 export type DonationAlert = {
@@ -50,6 +52,8 @@ export type DonationAlert = {
   nonprofitSlug: string;
   frequency: string;
   donatedAt: string;
+  /** Source tag from a ?ref= link, when the donor arrived on one. */
+  referrer?: string | null;
 };
 
 const money = (cents: number) =>
@@ -66,6 +70,7 @@ function describe(a: DonationAlert) {
       `${money(a.amountCents)}${cadence} to ${cause}\n` +
       `Nonprofit: ${a.nonprofitSlug}\n` +
       `Frequency: ${a.frequency}\n` +
+      (a.referrer ? `Came from: ${a.referrer}\n` : "") +
       `Donated:   ${a.donatedAt}\n\n` +
       `No donor details are recorded, so there are none to show here.`,
   };

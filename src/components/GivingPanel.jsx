@@ -11,6 +11,7 @@ import {
   thanksUrl,
 } from "../lib/donate.js";
 import { newDonationRef, rememberDonation } from "../lib/donationRef.js";
+import { getReferral } from "../lib/referral.js";
 import { approxOutcome, displayHost, money, unitsFor } from "../lib/format.js";
 import Pictogram from "./Pictogram.jsx";
 
@@ -147,6 +148,7 @@ export default function GivingPanel({ charity, onSelectionChange }) {
     amount,
     monthly,
     ref,
+    referrer: getReferral(),
     returnUrl: thanksUrl({ causeId: charity.id, amount, monthly }),
     exitUrl: causeUrl(charity.id, { amount, monthly }),
   });

@@ -39,24 +39,6 @@ export const evaluators = [
     description:
       "ACE reviews animal advocacy organizations on programmatic effectiveness, cost-effectiveness, and organizational health, and publishes an annual set of recommended charities.",
   },
-  {
-    id: "founders-pledge",
-    short: "Founders Pledge",
-    name: "Founders Pledge",
-    url: "https://www.founderspledge.com/research",
-    focus: "Cross-cause research",
-    description:
-      "Founders Pledge publishes cost-effectiveness research across global health, climate, and policy, and has been an early backer of neglected interventions before larger funders reach them.",
-  },
-  {
-    id: "hli",
-    short: "HLI",
-    name: "Happier Lives Institute",
-    url: "https://www.happierlivesinstitute.org/",
-    focus: "Wellbeing",
-    description:
-      "HLI evaluates charities by their effect on how people feel about their own lives, measured in wellbeing-adjusted life years, and publishes the models behind every number.",
-  },
 ];
 
 const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));

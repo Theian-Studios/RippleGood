@@ -192,9 +192,9 @@ export default function Home() {
             }
           >
             <p>
-              We don't run the research. We translate it. GiveWell, Animal
-              Charity Evaluators and Founders Pledge spend years on questions we
-              could never answer alone, so every pick here names
+              We don't run the research. We translate it. GiveWell and Animal
+              Charity Evaluators spend years on questions we could never answer
+              alone, so every pick here names
               the evaluator behind it, shows the real cost figures, and says
               what could be wrong with them.
             </p>

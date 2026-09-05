@@ -89,10 +89,14 @@ function encodeMetadata(obj) {
  * `ref` is the partner donation id minted by donationRef.newDonationRef() — pass
  * it when you want this donation attributable to this site; omit it and the
  * link still works, just anonymously to us as well as to Every.org.
+ *
+ * `referrer` is the source tag from an inbound ?ref= link (see lib/referral),
+ * and rides along on the same metadata so a gift can be counted against the
+ * place that sent the donor.
  */
 export function everyOrgUrl(
   charity,
-  { amount, monthly, ref, returnUrl, exitUrl } = {},
+  { amount, monthly, ref, referrer, returnUrl, exitUrl } = {},
 ) {
   if (!charity.everyOrg) return null;
 
@@ -121,6 +125,10 @@ export function everyOrgUrl(
     const meta = encodeMetadata({
       cause: charity.id,
       t: import.meta.env.VITE_EVERYORG_LINK_TOKEN || undefined,
+      // Where this visit came from, when they arrived on a tagged link. Short
+      // key because partner_metadata is base64 in a URL a third party has to
+      // accept, and every byte here is three in the address bar.
+      r: referrer || undefined,
     });
     if (meta) params.set("partner_metadata", meta);
 

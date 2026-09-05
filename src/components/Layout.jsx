@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { captureReferral } from "../lib/referral.js";
 import { Lock } from "lucide-react";
 import Logo from "./Logo.jsx";
 
@@ -74,16 +76,6 @@ function Footer() {
           >
             Animal Charity Evaluators
           </a>
-          <a
-            href="https://www.happierlivesinstitute.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Happier Lives Institute
-          </a>
-          <a href="https://www.founderspledge.com/" target="_blank" rel="noopener noreferrer">
-            Founders Pledge
-          </a>
         </nav>
       </div>
 
@@ -97,10 +89,17 @@ function Footer() {
 }
 
 export default function Layout() {
-  // Keyed by pathname so each page replays its entrance. Deliberately not the
-  // full location: a hash-only change is a jump within the page you're already
-  // reading, and re-animating it would be motion for nothing.
-  const { pathname } = useLocation();
+  // `pathname` keys the page entrance below; `search` is read for the referral
+  // tag. One call, because two useLocation() destructurings in one component
+  // is one redeclared name away from a build error.
+  const { pathname, search } = useLocation();
+
+  // Reads ?ref= on arrival and on every route after it, so a tag set on the
+  // home page survives the walk to a cause page. Storing it is all this does;
+  // nothing leaves the browser until a donation link is built.
+  useEffect(() => {
+    captureReferral(search);
+  }, [search, pathname]);
 
   return (
     <div className="app">

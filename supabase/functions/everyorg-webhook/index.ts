@@ -148,6 +148,19 @@ Deno.serve(async (req) => {
         : new Date().toISOString(),
   };
 
+  // Where the donor came from, if they arrived on a tagged link. Re-validated
+  // here rather than trusted: it travelled through a URL a donor could edit,
+  // and it is about to become a column value. Same shape the site is capable
+  // of producing — a short lowercase slug — and null for anything else.
+  const referrer =
+    typeof metadata.r === "string" && /^[a-z0-9][a-z0-9_-]{0,31}$/.test(metadata.r)
+      ? metadata.r
+      : null;
+
+  // A second object rather than a mutated one, so `row` keeps the literal type
+  // the alert below reads its fields from.
+  const rowWithReferrer = referrer ? { ...row, referrer } : row;
+
   // Layer 3: idempotency. A repeat delivery of the same charge is a no-op.
   //
   // A plain insert, not an upsert, so that "was this the first delivery?" is
@@ -157,7 +170,16 @@ Deno.serve(async (req) => {
   // the alert on how PostgREST chooses to represent ON CONFLICT DO NOTHING,
   // and getting that wrong fails silently in both directions: no alerts ever,
   // or one alert per Every.org retry.
-  const { error } = await db.from("donation_events").insert(row);
+  let { error } = await db.from("donation_events").insert(rowWithReferrer);
+
+  // If this function is deployed before migration 0002, the referrer column
+  // does not exist yet and PostgREST rejects the whole row — which would turn
+  // a schema lag into lost donations. Retry without the attribution: losing
+  // which link sent someone is a footnote, losing the donation is not.
+  if (error && referrer && (error.code === "PGRST204" || error.code === "42703")) {
+    console.warn("referrer column missing; stored without attribution", { chargeId });
+    ({ error } = await db.from("donation_events").insert(row));
+  }
 
   const isDuplicate = error?.code === "23505";
 
@@ -179,6 +201,7 @@ Deno.serve(async (req) => {
       nonprofitSlug: row.nonprofit_slug,
       frequency: row.frequency,
       donatedAt: row.donated_at,
+      referrer,
     });
 
     // Acknowledge Every.org now and deliver the alert after the response.
