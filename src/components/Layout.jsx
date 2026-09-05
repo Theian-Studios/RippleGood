@@ -95,7 +95,7 @@ function Footer() {
       </div>
 
       <div className="wrap siteFooter__legal">
-        <span>© {new Date().getFullYear()} Ripple Good</span>
+        <span>© {new Date().getFullYear()} Ripple Good™</span>
         <span>We aggregate published research; we don't originate it.</span>
         <span>All figures are average program costs.</span>
       </div>
