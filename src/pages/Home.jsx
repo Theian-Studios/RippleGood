@@ -141,7 +141,7 @@ export default function Home() {
             of the world, and almost none of it reaches the person deciding
             where to send $50 at the end of the year. We pull the best
             evidence-backed picks together across every major cause: global
-            health, extreme poverty, climate, animal welfare.
+            health, extreme poverty, child nutrition, animal welfare.
           </p>
           <p>
             {/* The name, explained once. It was used as a noun and a verb

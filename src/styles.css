@@ -186,10 +186,6 @@
   --tile-bg: #cfe6ef;
   --tile-fg: #0a5566;
 }
-[data-cause="micronutrients"] {
-  --tile-bg: #ece7d5;
-  --tile-fg: #5c4a18;
-}
 [data-cause="syphilis-in-pregnancy"] {
   --tile-bg: #f0e0e8;
   --tile-fg: #7a2f4d;
@@ -197,10 +193,6 @@
 [data-cause="animal-welfare"] {
   --tile-bg: #eae5f9;
   --tile-fg: #4a3499;
-}
-[data-cause="climate"] {
-  --tile-bg: #e1f0e0;
-  --tile-fg: #216236;
 }
 [data-cause="extreme-poverty"] {
   --tile-bg: #e4e8f9;
@@ -759,15 +751,23 @@ a.mark {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-/* Four. Twelve causes divide into three full rows of four, and four columns
-   leave each card wide enough for its tagline to breathe. If the count
-   changes again, pick a column count that divides it. */
+/* Ten causes now, so the column count that divides them is five — but five
+   only works once there is width for it. At 920px five columns give a 163px
+   card and an eight-line tagline, which is a column of text, not a card. So
+   four from 900px, where the last row runs short, and five from 1120px, where
+   the cards are still ~200px and the grid closes into two clean rows. */
 @media (min-width: 900px) {
   .causeGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     /* One row is taller than the other only because a single cause name wraps.
        Equal rows keep the block rectangular. */
     grid-auto-rows: 1fr;
+  }
+}
+
+@media (min-width: 1120px) {
+  .causeGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 

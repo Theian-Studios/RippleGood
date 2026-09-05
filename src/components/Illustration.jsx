@@ -125,26 +125,6 @@ function AnimalWelfare() {
   );
 }
 
-function Climate() {
-  return (
-    <>
-      {/* A turbine, and an emissions curve bending down past it. */}
-      <circle cx="120" cy="84" r="60" fill={wash} />
-      <path d="M34 58c26 0 44 14 58 40s34 40 60 40h54" stroke={accent} strokeWidth="3.5" fill="none" strokeLinecap="round" />
-      <path d="M34 58c26 0 44 14 58 40" stroke={inkSoft} strokeWidth="3.5" fill="none" strokeLinecap="round" opacity=".35" />
-      <circle cx="206" cy="138" r="6" fill={accent} />
-      <path d="M114 150l6-72h4l6 72h-16Z" fill={ink} />
-      <g fill={ink}>
-        <path d="M122 74 108 24c-1-4 2-7 6-5l16 9c3 2 3 6 0 8l-8 38Z" />
-        <path d="M122 78 68 74c-4 0-6-4-3-7l12-13c3-3 7-2 8 2l37 22Z" />
-        <path d="M122 78l40 36c3 3 1 8-3 8l-18-1c-4 0-6-3-5-7l-14-36Z" />
-      </g>
-      <circle cx="122" cy="78" r="7" fill={accent} />
-      <rect x="96" y="150" width="52" height="7" rx="3.5" fill={ink} />
-    </>
-  );
-}
-
 function DirectCash() {
   return (
     <>
@@ -250,24 +230,6 @@ function SafeWater() {
   );
 }
 
-function Micronutrients() {
-  return (
-    <>
-      {/* A sack of flour, open at the neck, with grain beside it. */}
-      <circle cx="120" cy="86" r="60" fill={wash} />
-      <path d="M92 42c0 12-9 13-9 24h74c0-11-9-12-9-24" fill={inkSoft} />
-      <path d="M83 66h74l11 68a20 20 0 0 1-20 23H92a20 20 0 0 1-20-23Z" fill={ink} />
-      <rect x="98" y="92" width="44" height="34" rx="6" fill={wash} />
-      <path d="M120 98v22M109 109h22" stroke={accent} strokeWidth="7" strokeLinecap="round" />
-      <g fill={accent}>
-        <ellipse cx="186" cy="126" rx="7" ry="12" />
-        <ellipse cx="198" cy="140" rx="7" ry="12" />
-      </g>
-      <path d="M186 114v-16M198 128v-16" stroke={inkSoft} strokeWidth="3" strokeLinecap="round" />
-    </>
-  );
-}
-
 function Syphilis() {
   return (
     <>
@@ -289,11 +251,9 @@ const SET = {
   "childhood-vaccines": Vaccines,
   malnutrition: Malnutrition,
   "safe-water": SafeWater,
-  micronutrients: Micronutrients,
   "syphilis-in-pregnancy": Syphilis,
   "child-survival": ChildNutrition,
   "animal-welfare": AnimalWelfare,
-  climate: Climate,
   "extreme-poverty": DirectCash,
   "intestinal-worms": Deworming,
 };

@@ -117,7 +117,7 @@ export default function Methodology() {
             <em>interventions</em>, not charity ratings. We use it as evidence about
             how wide the distribution is, and rely on the evaluators to find the
             organizations at its top end. Second, the measurement is sharpest in
-            global health; for causes like animal welfare and climate, "the best is
+            global health; for a cause like animal welfare, "the best is
             roughly 100x the typical" is an extrapolation from thinner data, not a
             replicated result. We think the direction and rough scale hold, and that
             is why this site exists. But the number is an order-of-magnitude claim,
@@ -285,15 +285,12 @@ export default function Methodology() {
             itself on top of your gift, <strong>which you can set to zero</strong>.
             Some employer matching schemes also decline gifts made through an
             intermediary. That's why every cause page keeps the charity's own donation
-            page as an equally visible second option, and why four causes skip
-            Every.org altogether. On <Link to="/cause/climate">climate</Link>, the
-            entity Every.org lists is Giving Green's research organization rather than
-            the regranting fund we recommend. On{" "}
+            page as an equally visible second option, and why two causes skip
+            Every.org altogether. On{" "}
             <Link to="/cause/safe-water">safe water</Link> and{" "}
             <Link to="/cause/syphilis-in-pregnancy">syphilis in pregnancy</Link>,
             Every.org lists Evidence Action as a whole, and only the charity's own form
-            can send your gift to the particular program the page is about. Fortify
-            Health we could not find on Every.org at all.
+            can send your gift to the particular program the page is about.
           </p>
 
           <h2>Think we got one wrong?</h2>
