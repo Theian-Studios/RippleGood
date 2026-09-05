@@ -279,7 +279,11 @@ export const charities = [
     // the organization name. EIN 98-0627052 — Malaria Consortium.
     // VERIFY: re-check the slug still resolves to this exact entity before launch.
     everyOrg: { slug: "malaria-consortium", ein: "98-0627052" },
-    donateUrl: "https://www.malariaconsortium.org/pages/donate.htm",
+    // The old /pages/donate.htm still works, but only because Malaria
+    // Consortium keeps a redirect to this URL alive. Loaded 2026-09-05: a
+    // live donate page with its own form. Linking to the destination rather
+    // than the redirect means the button stops depending on them keeping it.
+    donateUrl: "https://www.malariaconsortium.org/donate-to-malaria-consortium",
     lastVerified: "2026-09-02",
     learnMoreIntro:
       "Across the Sahel, malaria transmission is concentrated in a few rainy months each year. Seasonal malaria chemoprevention gives children under five a full course of antimalarial medicine once a month through that season, so the parasite is cleared before it can take hold. In the trials that established it, the children who received it had about three quarters fewer cases of malaria.",
