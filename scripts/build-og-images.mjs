@@ -265,7 +265,7 @@ await writeFile(
     category: "Don't just donate",
     headline: "Make the biggest ripple.",
     name: "Ripple Good",
-    evaluator: "GiveWell · ACE · Giving Green · Founders Pledge",
+    evaluator: "GiveWell · ACE · Founders Pledge",
     costFigures: [],
   }),
 );

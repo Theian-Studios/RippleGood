@@ -57,15 +57,6 @@ export const evaluators = [
     description:
       "HLI evaluates charities by their effect on how people feel about their own lives, measured in wellbeing-adjusted life years, and publishes the models behind every number.",
   },
-  {
-    id: "giving-green",
-    short: "Giving Green",
-    name: "Giving Green",
-    url: "https://www.givinggreen.earth/",
-    focus: "Climate",
-    description:
-      "Giving Green evaluates climate nonprofits on expected tons of CO₂-equivalent averted per dollar, with an explicit preference for policy and systems change over retail offsets.",
-  },
 ];
 
 const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));

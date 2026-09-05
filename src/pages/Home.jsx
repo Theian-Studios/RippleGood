@@ -54,12 +54,9 @@ export default function Home() {
               impact.
             </p>
 
-            <div className="hero__actions">
-              <Link to="/#causes" className="btn btn--primary btn--lg">
-                Pick your cause
-                <ArrowRight size={19} aria-hidden="true" />
-              </Link>
-            </div>
+            {/* No CTA here. The grid it scrolled to now opens on the same
+                screen at every width, so the button's whole job was to skip
+                past three lines of copy the reader had already passed. */}
           </div>
         </div>
         <HeroCurve />
@@ -121,9 +118,9 @@ export default function Home() {
             <li>
               <strong>Impact</strong>
               What a dollar actually buys: lives saved, children protected,
-              years of schooling gained. This is what GiveWell, Animal Charity
-              Evaluators and Giving Green measure through randomized trials and
-              outcome research, and it is where the differences get enormous.
+              years of schooling gained. This is what GiveWell and Animal
+              Charity Evaluators measure through randomized trials and outcome
+              research, and it is where the differences get enormous.
             </li>
           </ol>
 
@@ -196,8 +193,8 @@ export default function Home() {
           >
             <p>
               We don't run the research. We translate it. GiveWell, Animal
-              Charity Evaluators, Giving Green and Founders Pledge spend years
-              on questions we could never answer alone, so every pick here names
+              Charity Evaluators and Founders Pledge spend years on questions we
+              could never answer alone, so every pick here names
               the evaluator behind it, shows the real cost figures, and says
               what could be wrong with them.
             </p>

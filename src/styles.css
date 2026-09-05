@@ -2720,6 +2720,8 @@ a.mark {
   color: rgba(255, 255, 255, 0.76);
 }
 
+/* The home hero has no buttons any more; this is the thank-you page's row,
+   which still uses the class. */
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -2728,36 +2730,41 @@ a.mark {
   margin-top: var(--s-8);
 }
 
-/* Below the rules it overrides, not above them. These are single-class
+/* Below the rules it overrides, not above them: these are single-class
    selectors of equal specificity to the base ones, so the media query wins on
-   source order alone — placed before .hero__actions, the display:none here
-   lost to its display:flex and the button stayed on screen. */
+   source order alone. */
 /* A phone gets roughly half the hero it used to. Two thirds of the first
    screen was navy and none of it was the product: the grid began at 705px,
    which is below the fold on every phone made, so the site's first impression
    was a slogan and a button whose only job was to scroll past the slogan.
 
-   What goes is the button, because what it scrolled to now starts on the same
-   screen. What stays is everything that says something: the eyebrow, the
-   headline, the sentence under it — with room around them, because a hero
-   squeezed to its minimum reads as an accident rather than a decision. The
-   grid still opens on the first screen, which was the point. */
+   The button is gone from the markup entirely now, at every width, because
+   what it scrolled to opens on the same screen. What stays is everything that
+   says something: the eyebrow, the headline, the sentence under it — with room
+   around them, because a hero squeezed to its minimum reads as an accident
+   rather than a decision. The grid still opens on the first screen, which was
+   the point. */
 @media (max-width: 639px) {
   .hero {
-    padding: var(--s-7) 0 72px;
+    padding: var(--s-9) 0 80px;
+  }
+
+  .hero .eyebrow {
+    margin-bottom: var(--s-6);
   }
 
   .hero h1 {
     font-size: var(--t-d2);
+    /* The display line-height is tuned for one or two lines at 62px. At 30px
+       across three, it closed the lines up until the headline read as a
+       block. */
+    line-height: 1.18;
   }
 
   .hero__sub {
-    margin-top: var(--s-4);
+    margin-top: var(--s-6);
     font-size: var(--t-base);
-  }
-
-  .hero__actions {
-    display: none;
+    line-height: 1.6;
   }
 }
 

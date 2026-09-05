@@ -75,13 +75,6 @@ function Footer() {
             Animal Charity Evaluators
           </a>
           <a
-            href="https://www.givinggreen.earth/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Giving Green
-          </a>
-          <a
             href="https://www.happierlivesinstitute.org/"
             target="_blank"
             rel="noopener noreferrer"
