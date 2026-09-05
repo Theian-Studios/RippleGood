@@ -6,37 +6,23 @@ import { usePageMeta } from "../lib/usePageMeta.js";
 /**
  * The private numbers page: what each referral link brought in.
  *
- * ── What the passcode is and isn't ──────────────────────────────────────────
- * It is a lock on a door in a glass wall. This is a static site, so the check
- * below runs in the reader's own browser and anyone willing to open devtools
- * is past it. Worse, it guards nothing that isn't already reachable: the
- * aggregates come from RPCs the anon key may call, and that key ships in the
- * bundle by design.
+ * ── The URL is the whole of the privacy ─────────────────────────────────────
+ * There was a passcode here. It was removed on purpose, because on a static
+ * site it was theatre: the check ran in the reader's own browser and devtools
+ * walked past it. What replaced it is an unguessable path — see App.jsx — which
+ * is at least honest about being obscurity rather than dressed up as a lock.
  *
- * So the passcode is here to stop the page being read by someone who wanders
- * onto the URL, and for no stronger purpose. It is written down as a hash
- * rather than as digits, which keeps it from being grep-able in the bundle —
- * though a seven-digit number falls to a laptop in seconds, so treat even that
- * as tidiness rather than defence.
+ * Neither one ever protected the numbers. The figures come from RPCs the anon
+ * key may call, and that key ships in the bundle by design, so anyone who reads
+ * the bundle can query them without ever finding this page. The path keeps the
+ * page from being stumbled onto. It does not keep the data private.
  *
- * Making this genuinely private means moving the read behind an edge function
- * holding a server-side secret and revoking the anon grants, at which point
- * the passcode becomes a real credential. That is a different piece of work,
- * and it is the one to do if these numbers ever stop being ones you'd shrug at
- * someone seeing.
+ * Making it genuinely private means moving the read behind an edge function
+ * holding a server-side secret and revoking the anon grants. That is the work
+ * to do if these numbers ever stop being ones you'd shrug at someone seeing.
  *
  * Nothing on this page identifies a donor. There is no column for it.
  */
-const PASS_HASH = "bcb800ff8cb7a3f9d25a44e3370151cc9e66e68e4455780618e896fb003eee49";
-const UNLOCKED = "ripple.inside.v1";
-
-async function sha256(text) {
-  const bytes = new TextEncoder().encode(text);
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
-  return [...new Uint8Array(digest)]
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
 
 const money = (cents) =>
   (cents / 100).toLocaleString("en-US", { style: "currency", currency: "USD" });
@@ -52,17 +38,8 @@ function causeLabel(id) {
 export default function Inside() {
   usePageMeta("Numbers", undefined);
 
-  const [unlocked, setUnlocked] = useState(() => {
-    try {
-      return window.sessionStorage.getItem(UNLOCKED) === "1";
-    } catch {
-      return false;
-    }
-  });
-  const [entry, setEntry] = useState("");
-  const [wrong, setWrong] = useState(false);
   const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Keeps the page out of any index that runs JavaScript. It is not in the
   // sitemap and nothing links to it, so this is the belt to that pair of
@@ -76,7 +53,6 @@ export default function Inside() {
   }, []);
 
   useEffect(() => {
-    if (!unlocked) return;
     let alive = true;
     setLoading(true);
     fetchInsideStats()
@@ -86,52 +62,7 @@ export default function Inside() {
     return () => {
       alive = false;
     };
-  }, [unlocked]);
-
-  async function submit(e) {
-    e.preventDefault();
-    const ok = (await sha256(entry.trim())) === PASS_HASH;
-    setWrong(!ok);
-    if (!ok) return;
-    try {
-      window.sessionStorage.setItem(UNLOCKED, "1");
-    } catch {
-      /* the page still unlocks for this render */
-    }
-    setUnlocked(true);
-  }
-
-  if (!unlocked) {
-    return (
-      <section className="section">
-        <div className="wrap wrap--narrow inside__gate">
-          <h1>Numbers</h1>
-          <form onSubmit={submit} className="inside__form">
-            <label htmlFor="inside-pass">Passcode</label>
-            <input
-              id="inside-pass"
-              type="password"
-              inputMode="numeric"
-              autoComplete="off"
-              value={entry}
-              onChange={(e) => {
-                setEntry(e.target.value);
-                setWrong(false);
-              }}
-            />
-            <button type="submit" className="btn btn--primary">
-              Show
-            </button>
-          </form>
-          {wrong && (
-            <p className="inside__wrong" role="alert">
-              That isn't it.
-            </p>
-          )}
-        </div>
-      </section>
-    );
-  }
+  }, []);
 
   const sources = stats?.sources ?? [];
   const causes = stats?.causes ?? [];

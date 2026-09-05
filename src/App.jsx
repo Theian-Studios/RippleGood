@@ -24,9 +24,13 @@ export function AppRoutes() {
         <Route path="thanks" element={<Thanks />} />
         <Route path="methodology" element={<Methodology />} />
         <Route path="about" element={<About />} />
-        {/* Not linked from anywhere, not prerendered, not in any sitemap.
-            See pages/Inside.jsx for what the passcode on it is worth. */}
-        <Route path="inside" element={<Inside />} />
+        {/* The private numbers page. The path is the whole of the privacy —
+            69 bits of it, from an alphabet with no look-alike characters — so
+            it is unguessable, unlinked, unprerendered and absent from any
+            sitemap. It is obscurity, and Inside.jsx is explicit that the
+            figures behind it are reachable without it. Change this string and
+            the old URL stops working, which is the way to revoke it. */}
+        <Route path="r/atespk34k5qrp2" element={<Inside />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

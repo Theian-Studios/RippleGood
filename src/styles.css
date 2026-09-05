@@ -3411,49 +3411,6 @@ a.mark {
 
 /* The private numbers page. Plain on purpose: it is a page for reading four
    figures off, not part of the site's argument. */
-.inside__gate {
-  max-width: 24rem;
-}
-
-.inside__form {
-  display: grid;
-  gap: var(--s-2);
-  margin-top: var(--s-5);
-}
-
-.inside__form label {
-  font-size: var(--t-sm);
-  font-weight: 600;
-  color: var(--navy);
-}
-
-.inside__form input {
-  padding: var(--s-3) var(--s-4);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  background: var(--white);
-  font: inherit;
-  font-size: var(--t-lg);
-  letter-spacing: 0.12em;
-  color: var(--navy);
-}
-
-.inside__form input:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 2px;
-}
-
-.inside__form .btn {
-  justify-self: start;
-  margin-top: var(--s-2);
-}
-
-.inside__wrong {
-  margin-top: var(--s-3);
-  font-size: var(--t-sm);
-  color: var(--blue-700);
-}
-
 .inside h2 {
   margin-top: var(--s-8);
   font-size: var(--t-xl);
