@@ -32,7 +32,7 @@ const DEFAULT_CUSTOM = 25;
  * involved in the transaction. We are not — the donor enters the amount, and
  * chooses one-time or monthly, on the charity's own page.
  */
-export default function GivingPanel({ charity }) {
+export default function GivingPanel({ charity, onSelectionChange }) {
   // Restored from the exit URL when someone cancelled out of Every.org, so the
   // panel they come back to is the one they left. Read once, at mount: this is
   // an initial value, not a binding, or typing in the custom field would fight
@@ -112,6 +112,12 @@ export default function GivingPanel({ charity }) {
    */
   const asAnnual = (text) => (/year/i.test(text) ? text : `Each year: ${text}`);
   const customOutcome = customAmount === null ? null : outcomeFor(customAmount);
+
+  // Reported up rather than lifted out: the widget still owns its state, and
+  // the page only needs to read the result to show the same figure elsewhere.
+  useEffect(() => {
+    onSelectionChange?.({ amount, monthly });
+  }, [amount, monthly, onSelectionChange]);
 
   /**
    * Minted during render, not on click, so the attribution is already in the

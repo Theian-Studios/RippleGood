@@ -4,6 +4,34 @@ import { approxOutcome, money } from "../lib/format.js";
 import { iconFor } from "../lib/icons.jsx";
 
 /**
+ * A sample rather than the whole list. Nine rows sitting under the gift turned
+ * the cause page into a comparison table, which is the opposite of what it is
+ * for — three is enough to show the figure means something different in each
+ * place without inviting a ranking out of it.
+ *
+ * The pick is derived from the cause you are on rather than from Math.random,
+ * for two reasons: it must not reshuffle under the reader while they type an
+ * amount, and it must not differ between the prerendered HTML and the render
+ * that replaces it. Striding through the list rather than taking the first
+ * three keeps the sample spread across cause areas.
+ */
+function sampleOf(rows, limit, seedId) {
+  if (!limit || rows.length <= limit) return rows;
+  // A multiply-accumulate hash rather than a sum of char codes: summing made
+  // ids of similar letters collide, and four causes ended up showing the
+  // identical three neighbours.
+  const seed = [...seedId].reduce((n, ch) => (n * 31 + ch.charCodeAt(0)) >>> 0, 7);
+  const start = seed % rows.length;
+  // floor(len/limit) >= 1 here, since len > limit, so the offsets stay inside
+  // one pass of the list and can't land on the same row twice.
+  const stride = Math.floor(rows.length / limit);
+  return Array.from(
+    { length: limit },
+    (_, i) => rows[(start + i * stride) % rows.length],
+  );
+}
+
+/**
  * The same amount, read across the other causes.
  *
  * Deliberately not a ranking and not an exchange rate. There is no ordering
@@ -14,7 +42,13 @@ import { iconFor } from "../lib/icons.jsx";
  *
  * Causes without a per-dollar figure are skipped rather than guessed at.
  */
-export default function SameDollar({ amount, monthly = false, currentId = null }) {
+
+export default function SameDollar({
+  amount,
+  monthly = false,
+  currentId = null,
+  limit = null,
+}) {
   const annual = monthly ? amount * 12 : amount;
 
   const rows = charities
@@ -24,6 +58,9 @@ export default function SameDollar({ amount, monthly = false, currentId = null }
 
   if (rows.length < 2) return null;
 
+  const shown = sampleOf(rows, limit, currentId ?? "");
+  const sampled = shown.length < rows.length;
+
   return (
     <section className="sameDollar" aria-labelledby="sameDollar-title">
       <h2 className="sameDollar__title" id="sameDollar-title">
@@ -32,13 +69,15 @@ export default function SameDollar({ amount, monthly = false, currentId = null }
       </h2>
       <p className="sameDollar__lead">
         {currentId
-          ? "The same gift, in each of the other causes."
+          ? sampled
+            ? "The same gift, in a few of the other causes."
+            : "The same gift, in each of the other causes."
           : "Your whole budget sent to a single cause, for comparison."}{" "}
         Not a ranking, just what it buys there.
       </p>
 
       <ul className="sameDollar__list" role="list">
-        {rows.map(({ charity, outcome }) => {
+        {shown.map(({ charity, outcome }) => {
           const Icon = iconFor(charity.icon);
           return (
             <li key={charity.id}>

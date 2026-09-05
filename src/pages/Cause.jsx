@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import NotFound from "./NotFound.jsx";
@@ -6,6 +6,7 @@ import EvidenceCard from "../components/EvidenceCard.jsx";
 import Illustration from "../components/Illustration.jsx";
 import GivingPanel from "../components/GivingPanel.jsx";
 import LearnMore from "../components/LearnMore.jsx";
+import SameDollar from "../components/SameDollar.jsx";
 import { getCharityById, resolveCauseId } from "../data/charities.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
 
@@ -18,9 +19,21 @@ export default function Cause() {
   // otherwise keep the last cause's panel open.
   const [whyOpen, setWhyOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+
+  // What the reader has currently chosen, reported up by GivingPanel so the
+  // strip below can show that same figure in other causes.
+  const [selection, setSelection] = useState(null);
+  // Stable identity, or the effect that reports it would fire every render.
+  const onSelectionChange = useCallback((next) => setSelection(next), []);
+
   useEffect(() => {
     setWhyOpen(false);
     setAboutOpen(false);
+    // Deliberately not clearing `selection` here. Child effects run before
+    // parent ones, so GivingPanel — which is keyed by charity.id and therefore
+    // remounts on every cause change — has already reported the new cause's
+    // default by the time this runs. Resetting it threw that away, and the
+    // strip only appeared once the reader touched a tier.
   }, [causeId]);
 
   usePageMeta(
@@ -59,7 +72,11 @@ export default function Cause() {
 
       <section className="section">
         <div className="wrap wrap--narrow">
-          <GivingPanel charity={charity} key={charity.id} />
+          <GivingPanel
+            charity={charity}
+            key={charity.id}
+            onSelectionChange={onSelectionChange}
+          />
 
           <div className="panels">
             <LearnMore
@@ -75,6 +92,23 @@ export default function Cause() {
           </div>
         </div>
       </section>
+
+      {/* The same figure, read across a few of the other causes. A sample
+          rather than all nine: enough to show the number means something
+          different in each place, not so many that the page becomes a
+          league table. */}
+      {selection && (
+        <section className="section section--gray">
+          <div className="wrap wrap--narrow">
+            <SameDollar
+              amount={selection.amount}
+              monthly={selection.monthly}
+              currentId={charity.id}
+              limit={3}
+            />
+          </div>
+        </section>
+      )}
     </>
   );
 }
