@@ -6,6 +6,11 @@
  * Grep before every launch and every quarterly refresh:
  *     grep -rn "VERIFY:" src/
  *
+ * All eight Every.org slugs were loaded in a real browser on 2026-09-05 and
+ * their organisation names and EINs read back against the values below. The
+ * per-entry "re-check before launch" notes are standing instructions for the
+ * next launch, not open items from this one.
+ *
  * House rules for the copy in here:
  *   1. Outcome first, dollars second. Write what happens, not what it costs.
  *   2. "provides" / "funds" / "delivers" — never "buys this exact pill." Every
@@ -364,11 +369,10 @@ export const charities = [
       pictogram: { glyph: "child", label: "infants vaccinated" },
     },
     // Slug taken from New Incentives' own donate page on 2026-09-02, which
-    // links to every.org/newincentives. The charity naming its own listing is
-    // the strongest confirmation available.
-    // VERIFY: Every.org sits behind a bot check, so the profile itself has not
-    // been loaded and the EIN not read back. Do that before launch.
-    everyOrg: { slug: "newincentives" },
+    // links to every.org/newincentives. Profile loaded in a real browser on
+    // 2026-09-05 and read back: "New Incentives", Covina CA, EIN 45-2368993.
+    // (Every.org's bot check blocks curl; it does not block a browser.)
+    everyOrg: { slug: "newincentives", ein: "45-2368993" },
     donateUrl: "https://www.newincentives.org/donate",
     lastVerified: "2026-09-02",
     learnMoreIntro:
@@ -591,9 +595,8 @@ export const charities = [
       tooSmall: "Joins the pool funding the next child's course of treatment.",
       pictogram: { glyph: "child", label: "children treated" },
     },
-    // Seen 2026-09-02 as "Taimaka | Every.org" at every.org/taimaka in search
-    // results; the org is Taimaka Project, EIN 84-3964208, per its own site.
-    // VERIFY: load the slug and read back the organization name before launch.
+    // Profile loaded in a real browser on 2026-09-05 and read back:
+    // "Taimaka", Gombe, Nigeria, EIN 84-3964208 — matching its own site.
     everyOrg: { slug: "taimaka", ein: "84-3964208" },
     donateUrl: "https://taimaka.org/donate",
     lastVerified: "2026-09-02",

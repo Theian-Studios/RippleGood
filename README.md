@@ -6,7 +6,8 @@ An effective-giving directory: the most effective charity within the cause you
 already care about. Twelve causes, one evidence-backed pick each, with the
 arithmetic shown underneath.
 
-Built with React 18 + Vite, `react-router-dom` (HashRouter) and `lucide-react`.
+Built with React 18 + Vite, `react-router-dom` (real paths, every route
+prerendered to a static file) and `lucide-react`.
 No payment processing — every donate button is a plain outbound link, either to
 the charity's own page or to Every.org.
 
@@ -37,7 +38,7 @@ Each cause object:
 
 | Field | What it is |
 | --- | --- |
-| `id` | URL slug — `/#/cause/<id>` |
+| `id` | URL slug — `/cause/<id>` |
 | `category` | The cause label shown to readers |
 | `icon` | A `lucide-react` icon name, mapped in [`src/lib/icons.js`](src/lib/icons.js) |
 | `tagline` | One line for the home-page card |
@@ -89,71 +90,49 @@ npm run build:og
 
 ## Deploying to GitHub Pages
 
-### 1. Set the base path
+Push to `main`. That's the deploy.
 
-[`vite.config.js`](vite.config.js) has a `BASE` constant at the top:
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds the site
+and publishes it to Pages on every push to `main` (or by hand from the Actions
+tab). It takes about two minutes. One deploy runs at a time and a superseded
+push waits its turn rather than cancelling — cancelling mid-deploy once left an
+orphaned deployment on Pages' side that blocked every later one.
 
-```js
-const BASE = "/ripple/"; // must match the GitHub repo name, or be "/" on ripple-good.org
-```
-
-- **Project page** (`https://<user>.github.io/ripple/`) → leave it as `/ripple/`,
-  renamed to match your repo if the repo isn't called `ripple`.
-- **Custom domain** (`ripple-good.org`) or a `<user>.github.io` repo → set it to `"/"`.
-  A subpath prefix on a custom domain breaks every asset.
-
-One-off override without editing the file:
+**Base path.** Worked out by the workflow, not pinned in a file: a repo named
+`<user>.github.io` or one with a `public/CNAME` is served from `/`; any other
+repo from `/<repo>/`. `vite.config.js` reads it from `SITE_BASE`, defaulting to
+`/` for local builds. For a one-off local build at a different base:
 
 ```bash
-SITE_BASE=/ npm run build
+SITE_BASE=/ripple/ npm run build
 ```
 
-### 2. Push the repo
+**Public site URL.** Also derived — from `public/CNAME` when present — so the
+absolute URLs in Open Graph tags and share cards match where the site lands.
 
-```bash
-git init && git add -A && git commit -m "Ripple Good" && git branch -M main
-```
+**Environment.** The three public `VITE_*` values are read from the repo's
+**Settings → Secrets and variables → Actions → Variables** (not Secrets: they
+ship in the bundle by design). Leave them unset and the site builds and runs
+with no verified totals and no referral counting.
 
-```bash
-git remote add origin https://github.com/<user>/ripple.git && git push -u origin main
-```
+**Custom domain.** `public/CNAME` holds `ripple-good.org`. Point the apex `A`
+records at GitHub Pages' IPs and add a `CNAME` for `www` → `<user>.github.io`
+(the Pages settings page shows the current IPs), then enable **Enforce HTTPS**
+once the certificate is issued. `public/.nojekyll` stops GitHub running Jekyll
+over the output.
 
-### 3. Deploy
+`npm run deploy` still exists — it pushes `dist/` to a `gh-pages` branch — but
+it is not how this site ships and the Pages source is not set to that branch.
 
-```bash
-npm run deploy
-```
+### Routing
 
-That runs `npm run build` (via `predeploy`) and pushes `dist/` to the
-`gh-pages` branch. Then in the repo on GitHub: **Settings → Pages → Source →
-Deploy from a branch → `gh-pages` / `(root)`**. First deploy takes a minute or
-two to appear.
-
-Redeploying later is just `npm run deploy` again.
-
-### 4. Custom domain (ripple-good.org)
-
-1. Set `BASE = "/"` in `vite.config.js`.
-2. Create `public/CNAME` containing one line: `ripple-good.org`
-3. At your DNS provider, point the apex `A` records at GitHub Pages'
-   IPs and add a `CNAME` for `www` → `<user>.github.io`. (GitHub's Pages
-   settings page shows the current IPs — use those, they change rarely but do
-   change.)
-4. `npm run deploy`, then enable **Enforce HTTPS** in Settings → Pages once the
-   certificate is issued.
-
-`public/.nojekyll` is already committed, which stops GitHub from running Jekyll
-over the build output.
-
-### Why HashRouter?
-
-GitHub Pages serves static files with no rewrite rule, so a hard refresh on
-`/cause/climate` would 404. The hash keeps every route on `index.html`. URLs
-look like `ripple-good.org/#/cause/climate`.
-
-`public/404.html` covers the remaining gap: if someone shares a hashless link
-(`ripple-good.org/cause/climate`), GitHub serves the 404 page, whose script forwards
-them to the matching `/#/` route — on both project pages and custom domains.
+The site uses real paths (`/cause/malaria-nets`), not a hash. GitHub Pages has
+no rewrite rule, so the build writes a real `index.html` for every route
+(`scripts/prerender.mjs`) — that's what makes per-page titles and Open Graph
+tags visible to crawlers that don't run JavaScript. For any path that isn't
+prerendered, Pages serves the build's `404.html`, which is the app shell:
+React boots and routes it, so unknown cause slugs get the not-found page and
+unlisted routes still work.
 
 ---
 
@@ -196,17 +175,18 @@ scripts/
 
 ## Sharing
 
-The site is a HashRouter SPA, so crawlers never see past the `#` and can't read
-per-route meta tags. `scripts/build-og-images.mjs` solves that by emitting a
-real static page per cause:
+Every cause page is prerendered with its own title, description and 1200×630
+card, so a pasted `/cause/<id>` link previews correctly on its own.
+`scripts/build-og-images.mjs` also emits a static page per cause under
+`/share/<id>` — an older mechanism from when the site used a hash router and
+crawlers couldn't see past the `#`:
 
-- **Share `ripple-good.org/share/global-health`** — a crawler reads that cause's own
-  title, description, and 1200×630 card; a person is forwarded straight to
-  `#/cause/global-health`.
-- **Nothing in the app links to these.** The "Share this cause" button was
-  removed, so `/share/<id>` is an author-facing URL now: paste it when you want
-  a per-cause preview, rather than the hash route, which previews identically
-  for all twelve causes.
+- **`ripple-good.org/share/global-health`** — a crawler reads that cause's
+  card; a person is forwarded to `/cause/global-health`. Retired slugs are kept
+  here so old shared links still resolve.
+- **Nothing in the app links to these.** They're author-facing now, and could
+  be deleted along with the share half of the build script if that stops being
+  worth keeping.
 - Set the domain at build time if it isn't ripple-good.org:
 
 ```bash
@@ -222,18 +202,17 @@ here:
    `every.org/<slug>/donate?amount=…&frequency=ONCE|MONTHLY`, so the amount the
    reader chose is already filled in. Money goes to Every.org, which grants it
    on to the charity and issues the receipt.
-2. **The charity's own page** (always shown) — no intermediary, but the amount
-   can't be carried across.
+2. **The charity's own page** (always shown) — no intermediary. The amount is
+   carried across where the charity's platform accepts it on the URL
+   (Fundraise Up, Donorbox, EveryAction, Classy — each verified against the
+   live form, see `lib/donate.js`), and typed by the donor otherwise.
 
-Three things to keep in mind if you change this:
+Two things to keep in mind if you change this:
 
 - **Every.org suggests a contribution to itself at checkout, defaulting to 15%
   on top of the gift.** It's optional and the donor can zero it, but there is
   no URL parameter to preset it — which is why the panel says so *before* the
   reader clicks. Don't remove that sentence.
-- **Climate is deliberately direct-only.** The entity on Every.org is "Giving
-  Green Research Group Inc", which funds their research; our pick is the Giving
-  Green *Fund*, which regrants to top climate nonprofits. Different products.
 - Adding a route changes site-wide claims. The footer, the Methodology "What we
   don't do" list, and the FAQ all describe how money flows. Keep them true.
 
@@ -253,8 +232,8 @@ on click:
 | Parameter | Purpose |
 | --- | --- |
 | `partner_donation_id` | A UUID minted per click, so the webhook can be tied to this site |
-| `partner_metadata` | Base64 `{cause}` — how a donation is attributed to a cause page |
-| `success_url` | Returns the donor to `/thanks` — hashless, so the redirect cannot be truncated at the `#`; 404.html restores the route |
+| `partner_metadata` | Base64 `{cause, r}` — the cause page, and the `?ref=` tag if the visit arrived on one |
+| `success_url` | Returns the donor to `/thanks`, carrying only the cause and amount |
 | `webhook_token` | Public correlator, only sent when `VITE_EVERYORG_LINK_TOKEN` is set |
 
 **We never set `require_share_info` and never send donor name or email.** Every.org
@@ -347,10 +326,18 @@ timestamp — and **no donor identity of any kind**: no name, no email, no addre
 no IP. The site never asks Every.org for those fields and the schema has no
 column to put them in. Nothing links a donation row to a person.
 
-The only thing the browser stores is a short-lived pending-donation record
-(`ripple.pending.v1`) — a random id, a cause slug and an amount — written when
-you click donate and consumed by `/thanks`. It never leaves the browser and is
-never joined to the database.
+The browser stores two things, both without identity. A short-lived
+pending-donation record (`ripple.pending.v1`) — a random id, a cause slug and
+an amount — written when you click donate and consumed by `/thanks`; it never
+leaves the browser. And, for the length of one visit only, the `?ref=` tag a
+visitor arrived on (`ripple.ref.v1`, in sessionStorage), so a gift can be
+counted against the link that brought them.
+
+That tag is the one addition to the backend since this section was written:
+`referral_visits` holds a per-tag, per-day arrival count, and `donation_events`
+gained a `referrer` column. A tag is a source label like `rice-run`, never a
+person. There is still no name, email, address, IP or session id anywhere in
+the schema.
 
 ## Brand
 
