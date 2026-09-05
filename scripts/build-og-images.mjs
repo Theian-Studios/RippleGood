@@ -136,9 +136,12 @@ function render(charity) {
   ctx.textBaseline = "middle";
   ctx.fillText("Ripple", 150, 84);
   const rippleW = ctx.measureText("Ripple").width;
-  ctx.font = "48px ScriptBold";
+  // Tracks the site's wordmark: "Good" came down from 48 to 45 (the CSS went
+  // 31 to 29) and moved a pixel right, so the card and the header are the
+  // same lockup rather than two near-misses.
+  ctx.font = "45px ScriptBold";
   ctx.fillStyle = SKY;
-  ctx.fillText("Good", 150 + rippleW + 10, 84);
+  ctx.fillText("Good", 150 + rippleW + 11, 84);
 
   ctx.textBaseline = "alphabetic";
   ctx.fillStyle = SKY;

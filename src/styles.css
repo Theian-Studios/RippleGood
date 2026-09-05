@@ -424,15 +424,22 @@ main {
   line-height: 1;
 }
 
-/* The script runs larger than the sans beside it because its x-height is much
-   smaller — matched by eye rather than by number, so the two words read as one
-   weight. The descender needs room the flex baseline won't give it. */
+/* The script still runs larger than the sans beside it because its x-height is
+   much smaller — matched by eye rather than by number, so the two words read as
+   one weight. Two points came off it: at 31px "Good" was carrying the lockup
+   rather than balancing "Ripple". The descender needs room the flex baseline
+   won't give it.
+
+   The extra pixel of left margin sits on top of the flex gap. The script's
+   own left sidebearing is tighter than the sans's, so an equal gap measured
+   in CSS looked short to the eye — this pays that back. */
 .logo__script {
   font-family: var(--script);
-  font-size: 31px;
+  font-size: 29px;
   font-weight: 700;
   color: var(--blue);
   line-height: 1;
+  margin-left: 1px;
   padding-right: 2px;
   padding-bottom: 3px;
   margin-bottom: -3px;
@@ -451,7 +458,7 @@ main {
 }
 
 .logo--sm .logo__script {
-  font-size: 25px;
+  font-size: 23px;
 }
 
 .logo--lg .logo__name {
@@ -459,7 +466,7 @@ main {
 }
 
 .logo--lg .logo__script {
-  font-size: 43px;
+  font-size: 40px;
 }
 
 /* A word lifted into the accent, with the brand's short blue rule beneath. */
