@@ -2708,20 +2708,19 @@ a.mark {
    selectors of equal specificity to the base ones, so the media query wins on
    source order alone — placed before .hero__actions, the display:none here
    lost to its display:flex and the button stayed on screen. */
-/* A phone gets a third of the hero it used to. Two thirds of the first screen
-   was navy and none of it was the product: the grid began at 705px, which is
-   below the fold on every phone made, so the site's first impression was a
-   slogan and a button whose only job was to scroll past the slogan. The
-   headline stays — it is the argument — and everything sized around it comes
-   down: less padding above, a shallower curve below, no eyebrow, and no
-   button, because what it scrolled to now starts on the same screen. */
+/* A phone gets roughly half the hero it used to. Two thirds of the first
+   screen was navy and none of it was the product: the grid began at 705px,
+   which is below the fold on every phone made, so the site's first impression
+   was a slogan and a button whose only job was to scroll past the slogan.
+
+   What goes is the button, because what it scrolled to now starts on the same
+   screen. What stays is everything that says something: the eyebrow, the
+   headline, the sentence under it — with room around them, because a hero
+   squeezed to its minimum reads as an accident rather than a decision. The
+   grid still opens on the first screen, which was the point. */
 @media (max-width: 639px) {
   .hero {
-    padding: var(--s-5) 0 56px;
-  }
-
-  .hero .eyebrow {
-    display: none;
+    padding: var(--s-7) 0 72px;
   }
 
   .hero h1 {
@@ -2729,7 +2728,7 @@ a.mark {
   }
 
   .hero__sub {
-    margin-top: var(--s-3);
+    margin-top: var(--s-4);
     font-size: var(--t-base);
   }
 
@@ -2751,7 +2750,7 @@ a.mark {
 
 @media (max-width: 639px) {
   .heroCurve {
-    height: 56px;
+    height: 72px;
   }
 }
 
