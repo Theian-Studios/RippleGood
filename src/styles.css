@@ -430,16 +430,20 @@ main {
    rather than balancing "Ripple". The descender needs room the flex baseline
    won't give it.
 
-   The extra pixel of left margin sits on top of the flex gap. The script's
-   own left sidebearing is tighter than the sans's, so an equal gap measured
-   in CSS looked short to the eye — this pays that back. */
+   The last two values are optical, not structural. The flex gap alone left
+   "Good" sitting a shade low and wide of "Ripple" — the script's baseline
+   runs under the sans's and its left sidebearing is looser than it measures,
+   so equal numbers don't look equal here. Nudged with position rather than
+   margin so nothing around it reflows. */
 .logo__script {
+  position: relative;
+  top: -1px;
+  left: -1px;
   font-family: var(--script);
   font-size: 29px;
   font-weight: 700;
   color: var(--blue);
   line-height: 1;
-  margin-left: 1px;
   padding-right: 2px;
   padding-bottom: 3px;
   margin-bottom: -3px;
