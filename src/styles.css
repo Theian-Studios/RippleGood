@@ -587,10 +587,9 @@ a.mark {
      which needed a three-column grid and a second row on a phone; without it a
      wrapping flex row does the whole job. */
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--s-hair) var(--s-4);
+  gap: var(--s-3);
   padding-block: var(--s-2);
 }
 
@@ -629,15 +628,25 @@ a.mark {
   font-weight: 600;
 }
 
-@media (min-width: 640px) {
+/* One row at every width. The links tighten on a phone rather than wrapping
+   under the logo: two words fit beside a 160px wordmark with room to spare
+   once their padding and type come down a step. */
+/* On a phone the header is the wordmark alone, centred. About and Methodology
+   live in the footer, which every page ends with. */
+@media (max-width: 639px) {
   .siteHeader__inner {
-    flex-wrap: nowrap;
-    min-height: 68px;
-    padding-block: 0;
+    justify-content: center;
   }
 
   .siteNav {
-    margin-left: 0;
+    display: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .siteHeader__inner {
+    min-height: 68px;
+    padding-block: 0;
   }
 
   .siteNav__link {
@@ -823,7 +832,7 @@ a.mark {
 
 .causeHero {
   position: relative;
-  padding: var(--s-6) 0 var(--s-5);
+  padding: var(--s-6) 0 var(--s-4);
   /* A wash of the cause's own tint, fading out before the giving panel, so the
      band ends by softening rather than on a hard line. */
   background: linear-gradient(
@@ -885,9 +894,9 @@ a.mark {
 
 /* The hero's own bottom padding does the separating, so the section under it
    opens tighter than the 40 a section normally has. 24 + 24 = 48 from the
-   subhead to "Choose a result"; it was 80. */
+   subhead to "Choose a result". It was 80 when this page was built. */
 .causeHero + .section {
-  padding-top: var(--s-4);
+  padding-top: var(--s-3);
 }
 
 /* A ruled section of the page rather than a card. It was a shadowed white
@@ -903,12 +912,6 @@ a.mark {
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--navy);
-}
-
-/* ---------------------------------------------------------- amounts -- */
-
-.give__label {
-  margin-bottom: var(--s-3);
 }
 
 .levels {
@@ -943,6 +946,10 @@ a.mark {
   display: inline-flex;
   align-items: baseline;
   gap: 1px;
+  /* Larger than the tiers' price: this one is a field you type in, and at the
+     price's 13px it read as a label rather than a control. */
+  font-size: var(--t-lg);
+  font-weight: 600;
   color: var(--navy);
 }
 
@@ -2023,65 +2030,46 @@ a.mark {
   color: var(--amber-ink);
 }
 
-/* ------------------------------------------------------------- cadence -- */
+/* --------------------------------------------------------- frequency -- */
 
+/* The heading and the frequency checkbox share one line at every width. */
 .give__head {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-4);
+  gap: var(--s-3);
   align-items: center;
   justify-content: space-between;
 }
 
-.cadence {
-  position: relative;
+/* A checkbox, not a two-way pill switch: most gifts are one-off, and a toggle
+   gave the rarer choice equal weight and twice the width. */
+.give__monthly {
   display: inline-flex;
-  padding: 3px;
-  border-radius: var(--r-pill);
-  background: var(--gray);
-  border: 1px solid var(--border);
-}
-
-/* The white pill slides between the two options instead of blinking from one
-   to the other. Both buttons are equal width so 50% is exactly right. */
-.cadence::before {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: calc(50% - 3px);
-  height: calc(100% - 6px);
-  border-radius: var(--r-pill);
-  background: var(--white);
-  border: 1px solid var(--border);
-  transition: transform var(--dur-3) var(--ease-spring);
-}
-
-.cadence[data-cadence="monthly"]::before {
-  transform: translateX(100%);
-}
-
-.cadence__opt {
-  position: relative;
-  z-index: 1;
-  flex: 1;
-  min-width: 96px;
-  white-space: nowrap; /* "One-time" was breaking across two lines */
-  padding: var(--s-2) var(--s-4);
-  border: 0;
-  border-radius: var(--r-pill);
-  background: none;
+  align-items: center;
+  gap: var(--s-2);
+  flex: none;
   font-size: var(--t-sm);
-  font-weight: 600;
-  color: var(--ink-soft);
-  transition: color var(--dur-2) ease;
+  font-weight: 500;
+  color: var(--ink-mid);
+  cursor: pointer;
 }
 
-.cadence__opt.is-on {
-  color: var(--navy);
+.give__monthly input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--blue);
+  cursor: pointer;
 }
 
-.cadence__note {
+/* Heading and checkbox share a line on a phone; the heading drops a type step
+   so "Choose a result" doesn't break after "Choose a". */
+@media (max-width: 639px) {
+  .give__label {
+    font-size: var(--t-lg);
+  }
+}
+
+.give__monthlyNote {
   margin-top: var(--s-4);
   font-size: var(--t-sm);
   color: var(--ink-soft);
@@ -2805,14 +2793,10 @@ a.mark {
   transform: scale(1.09) rotate(-4deg);
 }
 
-.donate svg,
 .btn svg {
   transition: transform var(--dur-2) var(--ease);
 }
 
-.donate:hover svg {
-  transform: translate(3px, -3px);
-}
 
 .btn--primary:hover svg {
   transform: translateX(3px);
@@ -3107,7 +3091,6 @@ a.mark {
   .siteFooter,
   .skip-link,
   .verifiedTotal,
-  .cadence,
   .wrap,
   .wrap--narrow {
     max-width: none;

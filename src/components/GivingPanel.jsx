@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ArrowUpRight, Check, CircleAlert } from "lucide-react";
+import { Check, CircleAlert } from "lucide-react";
 import { getDefaultLevel } from "../data/charities.js";
 import {
   causeUrl,
@@ -40,8 +40,10 @@ export default function GivingPanel({ charity }) {
 
   const [level, setLevel] = useState(() => restoredLevel ?? getDefaultLevel(charity));
   // A restored amount that isn't one of the tiers belongs in the custom field.
+  // Otherwise the field starts at $25, so clicking "Other" gives a real amount
+  // straight away rather than an empty box that quietly bills the last tier.
   const [customText, setCustomText] = useState(() =>
-    restoredAmount !== null && !restoredLevel ? String(restoredAmount) : "",
+    restoredAmount !== null && !restoredLevel ? String(restoredAmount) : "25",
   );
   const [monthly, setMonthly] = useState(() => params.get("monthly") === "1");
   // Which of the four cards is the live one. Without this, clicking into the
@@ -124,14 +126,22 @@ export default function GivingPanel({ charity }) {
 
   function pickLevel(next) {
     setLevel(next);
+    // `mode` alone decides which card is live, so the typed figure can stay
+    // put: come back to "Other" and it is still there.
     setMode("tier");
-    setCustomText(""); // a card click is a decision — clear the free field
   }
 
   const units = unitsFor(monthly ? amount * 12 : amount, charity.custom);
   // Drawn at any count. Past Pictogram's own cap it switches to a multiplier
   // beside one glyph, so a large number never becomes a wall of icons.
-  const showPictogram = Boolean(charity.custom?.pictogram) && units >= 1;
+  //
+  // Hidden while "Other" is live but empty: `amount` falls back to the last
+  // tier so the button can never read "Give $NaN", and drawing that tier's
+  // count under an empty field would be counting something nobody chose.
+  const showPictogram =
+    Boolean(charity.custom?.pictogram) &&
+    units >= 1 &&
+    !(mode === "custom" && customAmount === null);
 
   return (
     <div className="give">
@@ -150,33 +160,20 @@ export default function GivingPanel({ charity }) {
       <div className="give__head">
         <p className="give__label">Choose a result</p>
 
-        <div
-          className="cadence"
-          data-cadence={monthly ? "monthly" : "once"}
-          role="group"
-          aria-label="Giving frequency"
-        >
-          <button
-            type="button"
-            className={`cadence__opt${monthly ? "" : " is-on"}`}
-            aria-pressed={!monthly}
-            onClick={() => setMonthly(false)}
-          >
-            One-time
-          </button>
-          <button
-            type="button"
-            className={`cadence__opt${monthly ? " is-on" : ""}`}
-            aria-pressed={monthly}
-            onClick={() => setMonthly(true)}
-          >
-            Monthly
-          </button>
-        </div>
+        {/* A checkbox, not a two-way switch: most gifts are one-off, and a
+            toggle gave the rarer choice equal weight. */}
+        <label className="give__monthly">
+          <input
+            type="checkbox"
+            checked={monthly}
+            onChange={(e) => setMonthly(e.target.checked)}
+          />
+          Make it monthly
+        </label>
       </div>
 
       {monthly && (
-        <p className="cadence__note">
+        <p className="give__monthlyNote">
           Monthly gifts let these organizations plan next year's work. Outcomes
           below show a year of giving.
         </p>
@@ -269,7 +266,6 @@ export default function GivingPanel({ charity }) {
           onClick={everyUrl ? openEveryOrg : undefined}
         >
           Give {priceLabel(amount)} to {charity.name}
-          <ArrowUpRight size={20} aria-hidden="true" />
         </a>
 
         {/* One sentence for the plumbing: where the money goes, the tip, the
