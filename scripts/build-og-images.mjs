@@ -136,12 +136,20 @@ function render(charity) {
   ctx.textBaseline = "middle";
   ctx.fillText("Ripple", 150, 84);
   const rippleW = ctx.measureText("Ripple").width;
-  // Tracks the site's wordmark: 48 down to 45, since the CSS went 31 to 29.
-  // The card runs at 45/29 of the site's scale, so the 1px optical nudge
-  // there is ~1.5px here — up and left, same as the stylesheet.
-  ctx.font = "45px ScriptBold";
+  // Tracks the site's wordmark, which is now 27px: this runs at the same
+  // ratio to "Ripple" as the stylesheet does, and carries the same optical
+  // nudge up and left, scaled.
+  //
+  // The stylesheet also strokes the script to thicken it, since Dancing
+  // Script has nothing above 700. Canvas does the same with strokeText over
+  // the fill rather than a CSS property.
+  ctx.font = "42px ScriptBold";
   ctx.fillStyle = SKY;
-  ctx.fillText("Good", 150 + rippleW + 8.5, 82.5);
+  const goodX = 150 + rippleW + 8;
+  ctx.fillText("Good", goodX, 82);
+  ctx.strokeStyle = SKY;
+  ctx.lineWidth = 0.7;
+  ctx.strokeText("Good", goodX, 82);
 
   ctx.textBaseline = "alphabetic";
   ctx.fillStyle = SKY;

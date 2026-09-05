@@ -434,14 +434,23 @@ main {
    "Good" sitting a shade low and wide of "Ripple" — the script's baseline
    runs under the sans's and its left sidebearing is looser than it measures,
    so equal numbers don't look equal here. Nudged with position rather than
-   margin so nothing around it reflows. */
+   margin so nothing around it reflows.
+
+   The stroke is how it gets bolder. Dancing Script's weight axis stops at 700
+   and the wordmark was already sitting there, so there is no heavier face to
+   ask for — a font-weight above 700 changes nothing, and a browser won't
+   synthesize a bold over a face that already is one. A fraction of a pixel of
+   stroke in the text's own colour thickens the strokes without touching the
+   letterforms. Keep it under ~0.6px: the counters in a script this size are
+   small, and a heavier stroke starts closing them. */
 .logo__script {
   position: relative;
   top: -1px;
   left: -1px;
   font-family: var(--script);
-  font-size: 29px;
+  font-size: 27px;
   font-weight: 700;
+  -webkit-text-stroke: 0.4px currentColor;
   color: var(--blue);
   line-height: 1;
   padding-right: 2px;
@@ -462,7 +471,10 @@ main {
 }
 
 .logo--sm .logo__script {
-  font-size: 23px;
+  font-size: 21px;
+  /* A lighter stroke at the small size: 0.4px is a bigger share of a 21px
+     glyph than of a 27px one, and read as heavy rather than as bold. */
+  -webkit-text-stroke-width: 0.3px;
 }
 
 .logo--lg .logo__name {
@@ -470,7 +482,8 @@ main {
 }
 
 .logo--lg .logo__script {
-  font-size: 40px;
+  font-size: 37px;
+  -webkit-text-stroke-width: 0.5px;
 }
 
 /* A word lifted into the accent, with the brand's short blue rule beneath. */
