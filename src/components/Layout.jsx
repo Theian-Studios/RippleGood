@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { captureReferral } from "../lib/referral.js";
+import { captureReferral, reportReferralVisit } from "../lib/referral.js";
 import { Lock } from "lucide-react";
 import Logo from "./Logo.jsx";
 
@@ -99,6 +99,7 @@ export default function Layout() {
   // nothing leaves the browser until a donation link is built.
   useEffect(() => {
     captureReferral(search);
+    reportReferralVisit();
   }, [search, pathname]);
 
   return (
