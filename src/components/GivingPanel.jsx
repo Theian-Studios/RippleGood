@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useSearchParams } from "react-router-dom";
 import { Check, CircleAlert } from "lucide-react";
 import { getDefaultLevel } from "../data/charities.js";
@@ -150,6 +151,44 @@ export default function GivingPanel({ charity, onSelectionChange }) {
     exitUrl: causeUrl(charity.id, { amount, monthly }),
   });
 
+  /**
+   * On a phone the real Give button starts below the fold — three tiers, the
+   * custom field and the pictogram sit above it — and goes back out of view
+   * the moment anyone opens "Why this charity". The bar is the same link,
+   * pinned to the bottom, shown only while the real one isn't on screen.
+   *
+   * Driven by an observer on the button rather than by a scroll position, so
+   * it stays correct however tall the panel gets: change the number of tiers
+   * or the length of a caveat and nothing here needs a new threshold.
+   */
+  const donateRef = useRef(null);
+  const [barVisible, setBarVisible] = useState(false);
+  // The bar is portalled to <body>, which can only happen once there is a
+  // document. Server-rendered markup therefore has no bar, and neither does
+  // the client's first render, so the two still match.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    const el = donateRef.current;
+    // No observer means no bar, rather than a bar that never hides.
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => setBarVisible(!entry.isIntersecting),
+      { threshold: 0 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Reserves room at the foot of the page so the bar never covers the last
+  // line of the footer. On the body rather than on this component, because the
+  // bar is fixed to the viewport and the thing it overlaps is far below.
+  useEffect(() => {
+    document.body.classList.toggle("has-giveBar", barVisible);
+    return () => document.body.classList.remove("has-giveBar");
+  }, [barVisible]);
+
   /** The one thing that genuinely belongs in the gesture: the local record. */
   function openEveryOrg() {
     rememberDonation({ id: ref, causeId: charity.id, amount, monthly });
@@ -176,6 +215,7 @@ export default function GivingPanel({ charity, onSelectionChange }) {
     !(mode === "custom" && customAmount === null);
 
   return (
+    <>
     <div className="give">
       {charity.provisional && (
         <p className="give__provisional">
@@ -293,6 +333,7 @@ export default function GivingPanel({ charity, onSelectionChange }) {
       <div className="give__foot">
         <a
           className="donate"
+          ref={donateRef}
           href={everyUrl || directUrl}
           rel="noreferrer"
           onClick={everyUrl ? openEveryOrg : undefined}
@@ -325,5 +366,30 @@ export default function GivingPanel({ charity, onSelectionChange }) {
         </p>
       </div>
     </div>
+
+    {/* Portalled to <body> rather than left here, because position:fixed is
+        relative to the nearest ancestor carrying a transform — and the page
+        transition wrapper this panel sits inside has one for the length of
+        its animation and keeps it afterwards. Left in place, the bar was
+        pinned to the bottom of the page instead of the bottom of the screen.
+
+        Hidden with visibility, not just moved off-screen, so a screen reader
+        isn't offered two identical "Give" links while the real one is in
+        view. Display:none above 640px keeps it off desktop entirely. */}
+    {mounted &&
+      createPortal(
+        <div className={`giveBar${barVisible ? " is-visible" : ""}`}>
+          <a
+            className="donate donate--bar"
+            href={everyUrl || directUrl}
+            rel="noreferrer"
+            onClick={everyUrl ? openEveryOrg : undefined}
+          >
+            Give {priceLabel(amount)}
+          </a>
+        </div>,
+        document.body,
+      )}
+    </>
   );
 }

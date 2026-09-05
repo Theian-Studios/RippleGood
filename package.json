@@ -6,7 +6,7 @@
   "description": "Ripple Good \u2014 the most effective charity within the cause you already care about.",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/build-og-images.mjs",
+    "prebuild": "node scripts/build-og-images.mjs && node scripts/build-icons.mjs",
     "build": "vite build && npm run build:ssr && node scripts/prerender.mjs",
     "build:og": "node scripts/build-og-images.mjs",
     "check:links": "node scripts/check-links.mjs",
@@ -17,7 +17,8 @@
     "db:push": "supabase db push",
     "fn:deploy": "supabase functions deploy everyorg-webhook --no-verify-jwt",
     "fn:logs": "echo 'The Supabase CLI has no logs subcommand. Dashboard -> Edge Functions -> everyorg-webhook -> Logs'",
-    "build:ssr": "vite build --ssr src/entry-server.jsx --outDir dist-ssr"
+    "build:ssr": "vite build --ssr src/entry-server.jsx --outDir dist-ssr",
+    "build:icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.460.0",

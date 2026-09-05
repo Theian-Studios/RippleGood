@@ -703,13 +703,11 @@ a.mark {
   /* 16 at every width. Stacked on a phone these were 12 apart, the one gap on
      the site off the 16/24 rhythm. */
   gap: var(--s-4);
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 640px) {
-  .causeGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  /* Two from the narrowest phone up. One card per row meant twelve cards at
+     roughly 330px each — the single biggest reason the page felt long. Two
+     columns halve the scroll and put the whole grid within about two screens,
+     which is what makes it browsable rather than a list to endure. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 /* Four. Twelve causes divide into three full rows of four, and four columns
@@ -811,6 +809,45 @@ a.mark {
   margin: 0 var(--s-1) 0 3px;
   color: var(--tile-fg, var(--blue-700));
   font-weight: 700;
+}
+
+/* Under 480px there is no room for a tagline as well, so the card drops to
+   the three things that decide a tap: the art, the cause, and what a gift
+   buys. The tagline is on the cause page a tap away. */
+@media (max-width: 479px) {
+  .causeGrid {
+    gap: var(--s-3);
+  }
+
+  .causeCard__art {
+    padding: var(--s-3) var(--s-3) var(--s-1);
+  }
+
+  .causeCard__art .illustration {
+    max-width: 92px;
+  }
+
+  .causeCard__body {
+    gap: var(--s-1);
+    padding: var(--s-3);
+  }
+
+  .causeCard__name {
+    font-size: var(--t-base);
+  }
+
+  .causeCard__tagline {
+    display: none;
+  }
+
+  .causeCard__outcome {
+    /* The tagline was what pushed this to the foot of a stretched card. With
+       it gone, the margin has to do that job, or the outcome lines sit at a
+       different height in every card of a row. */
+    margin-top: auto;
+    padding-top: var(--s-2);
+    font-size: var(--t-xs);
+  }
 }
 
 /* --------------------------------------------------------- cause page -- */
@@ -1197,6 +1234,48 @@ a.mark {
 
 .donate:hover {
   background: var(--blue-600);
+}
+
+/* The phone-only bar carrying a second copy of the Give button. Off entirely
+   above 640px, where the real button is never far from the thumb. */
+.giveBar {
+  display: none;
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 40;
+  padding: var(--s-3) var(--s-4);
+  /* Clears the home indicator on a notched phone; 0 everywhere else. */
+  padding-bottom: calc(var(--s-3) + env(safe-area-inset-bottom, 0px));
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  transform: translateY(100%);
+  visibility: hidden;
+  transition: transform var(--dur-2) var(--ease),
+    visibility 0s linear var(--dur-2);
+}
+
+.giveBar.is-visible {
+  transform: translateY(0);
+  visibility: visible;
+  /* Visible immediately on the way in, held to the end of the slide on the
+     way out — one property, two timings. */
+  transition: transform var(--dur-2) var(--ease), visibility 0s;
+}
+
+/* Shorter than the real button: this one is a shortcut, not the page's
+   climax, and full height eats a phone's screen. */
+.donate--bar {
+  padding: var(--s-4) var(--s-5);
+}
+
+@media (max-width: 639px) {
+  .giveBar {
+    display: block;
+  }
+
+  body.has-giveBar {
+    padding-bottom: 84px;
+  }
 }
 
 .donate:active {

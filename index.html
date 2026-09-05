@@ -3,8 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <!-- Root-absolute, not "./": these pages are prerendered to real files at
+         nested paths, so a relative href resolved against /cause/<id>/ and
+         404'd on every page but the home page. Vite prepends `base` to these
+         at build time, so they survive a move to a project-page URL. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#0A1B33" />
+
+    <!-- iOS ignores SVG icons for "Add to Home Screen" and screenshots the page
+         instead. The manifest covers Android; the two PNG sizes it names are
+         built by scripts/build-icons.mjs.
+
+         Absolute paths inside site.webmanifest are correct only while the site
+         is served from a domain root, which public/CNAME makes true. -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Ripple Good" />
 
     <title>Ripple Good: make the biggest ripple.</title>
     <meta
