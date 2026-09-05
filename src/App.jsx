@@ -4,6 +4,7 @@ import ScrollToTop from "./components/ScrollToTop.jsx";
 import About from "./pages/About.jsx";
 import Cause from "./pages/Cause.jsx";
 import Home from "./pages/Home.jsx";
+import Inside from "./pages/Inside.jsx";
 import Methodology from "./pages/Methodology.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Split from "./pages/Split.jsx";
@@ -23,6 +24,9 @@ export function AppRoutes() {
         <Route path="thanks" element={<Thanks />} />
         <Route path="methodology" element={<Methodology />} />
         <Route path="about" element={<About />} />
+        {/* Not linked from anywhere, not prerendered, not in any sitemap.
+            See pages/Inside.jsx for what the passcode on it is worth. */}
+        <Route path="inside" element={<Inside />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

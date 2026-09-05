@@ -3406,3 +3406,142 @@ a.mark {
     text-decoration: underline;
   }
 }
+
+/* ------------------------------------------------------------- inside -- */
+
+/* The private numbers page. Plain on purpose: it is a page for reading four
+   figures off, not part of the site's argument. */
+.inside__gate {
+  max-width: 24rem;
+}
+
+.inside__form {
+  display: grid;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+
+.inside__form label {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.inside__form input {
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--white);
+  font: inherit;
+  font-size: var(--t-lg);
+  letter-spacing: 0.12em;
+  color: var(--navy);
+}
+
+.inside__form input:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.inside__form .btn {
+  justify-self: start;
+  margin-top: var(--s-2);
+}
+
+.inside__wrong {
+  margin-top: var(--s-3);
+  font-size: var(--t-sm);
+  color: var(--blue-700);
+}
+
+.inside h2 {
+  margin-top: var(--s-8);
+  font-size: var(--t-xl);
+  color: var(--navy);
+}
+
+.inside__note {
+  margin-top: var(--s-3);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.inside__summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+  padding: var(--s-5);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--white);
+}
+
+.inside__big {
+  display: block;
+  font-size: var(--t-2xl);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--navy);
+}
+
+.inside__cap {
+  display: block;
+  margin-top: var(--s-1);
+  font-size: var(--t-xs);
+  color: var(--ink-soft);
+}
+
+/* Tables scroll inside their own box rather than pushing the page sideways. */
+.inside__scroll {
+  overflow-x: auto;
+  margin-top: var(--s-4);
+}
+
+.inside__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.inside__table th,
+.inside__table td {
+  padding: var(--s-3) var(--s-3) var(--s-3) 0;
+  text-align: right;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+
+.inside__table th:first-child,
+.inside__table td:first-child {
+  text-align: left;
+}
+
+.inside__table thead th {
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.inside__table tbody td {
+  color: var(--navy);
+}
+
+.inside__table tfoot td {
+  font-weight: 700;
+  color: var(--navy);
+  border-bottom: 0;
+}
+
+.inside__caveats {
+  margin-top: var(--s-4);
+  padding-left: var(--s-5);
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.inside__caveats li + li {
+  margin-top: var(--s-3);
+}
