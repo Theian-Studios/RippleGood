@@ -12,7 +12,8 @@ function Header() {
           <Logo size="sm" animate />
         </Link>
 
-        {/* Wraps to its own row under the logo on a phone. */}
+        {/* One row at every width: the wordmark on the left, the links on
+            the right, with the second one dropping out on a phone. */}
         <nav className="siteNav" aria-label="Main">
           <NavLink
             to="/about"
@@ -22,10 +23,13 @@ function Header() {
           >
             About
           </NavLink>
+          {/* Hidden on a phone, where the header is the wordmark and one
+              link. Methodology is in the footer, which every page ends
+              with, and on the About page it links to. */}
           <NavLink
             to="/methodology"
             className={({ isActive }) =>
-              `siteNav__link${isActive ? " is-active" : ""}`
+              `siteNav__link siteNav__link--secondary${isActive ? " is-active" : ""}`
             }
           >
             Methodology

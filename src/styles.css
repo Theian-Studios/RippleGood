@@ -542,9 +542,11 @@ a.mark {
   color: var(--white);
 }
 
-.btn--primary:hover {
-  background: var(--blue-600);
-  border-color: var(--blue-600);
+@media (hover: hover) {
+  .btn--primary:hover {
+    background: var(--blue-600);
+    border-color: var(--blue-600);
+  }
 }
 
 .btn--outline {
@@ -553,8 +555,10 @@ a.mark {
   color: var(--navy);
 }
 
-.btn--outline:hover {
-  border-color: var(--navy);
+@media (hover: hover) {
+  .btn--outline:hover {
+    border-color: var(--navy);
+  }
 }
 
 .onDark .btn--outline {
@@ -563,8 +567,10 @@ a.mark {
   color: var(--white);
 }
 
-.onDark .btn--outline:hover {
-  border-color: var(--white);
+@media (hover: hover) {
+  .onDark .btn--outline:hover {
+    border-color: var(--white);
+  }
 }
 
 .btn--lg {
@@ -618,9 +624,11 @@ a.mark {
   transition: color var(--dur-1) ease, background-color var(--dur-1) ease;
 }
 
-.siteNav__link:hover {
-  color: var(--navy);
-  background: var(--gray);
+@media (hover: hover) {
+  .siteNav__link:hover {
+    color: var(--navy);
+    background: var(--gray);
+  }
 }
 
 .siteNav__link.is-active {
@@ -631,15 +639,19 @@ a.mark {
 /* One row at every width. The links tighten on a phone rather than wrapping
    under the logo: two words fit beside a 160px wordmark with room to spare
    once their padding and type come down a step. */
-/* On a phone the header is the wordmark alone, centred. About and Methodology
-   live in the footer, which every page ends with. */
+/* On a phone the wordmark stays left, where the eye starts, with a single
+   link opposite it. Centring it and dropping the nav entirely made the header
+   read as a splash screen and put About two scrolls away in the footer.
+   Methodology stays in the footer, which every page ends with. */
 @media (max-width: 639px) {
-  .siteHeader__inner {
-    justify-content: center;
+  .siteNav__link--secondary {
+    display: none;
   }
 
   .siteNav {
-    display: none;
+    /* The negative pull exists to align a nav that wrapped under the logo.
+       On one row it just drags the link back toward the wordmark. */
+    margin-left: 0;
   }
 }
 
@@ -678,6 +690,19 @@ a.mark {
 .sectionHead {
   max-width: 640px;
   margin-bottom: var(--s-7);
+}
+
+/* On a phone the causes section runs tight to the hero above it: the point of
+   shortening the hero is that the grid begins on the first screen, and a full
+   section's padding plus a full head's margin would spend that back. */
+@media (max-width: 639px) {
+  #causes {
+    padding-top: var(--s-5);
+  }
+
+  #causes .sectionHead {
+    margin-bottom: var(--s-4);
+  }
 }
 
 /* Centres the block as well as the text — max-width alone would leave it
@@ -734,10 +759,20 @@ a.mark {
     border-color var(--dur-2) ease;
 }
 
-.causeCard:hover {
-  transform: translateY(-3px);
-  border-color: var(--mist-deep);
-  box-shadow: var(--shadow-lift);
+/* Two selectors for one rule, because of the entrance animation. A revealed
+   card carries .reveal.is-in, which sets transform:none to land that
+   animation — and at 0,2,0 it ties with .causeCard:hover and wins on source
+   order, being 1,800 lines further down. So the lift silently did nothing on
+   the only cards that have it, while the border and shadow (which nothing
+   else sets) worked, making it look like a deliberate flat hover rather than
+   a broken one. Naming .is-in here takes the rule to 0,3,0 and settles it. */
+@media (hover: hover) {
+  .causeCard:hover,
+  .causeCard.is-in:hover {
+    transform: translateY(-3px);
+    border-color: var(--mist-deep);
+    box-shadow: var(--shadow-lift);
+  }
 }
 
 /* The cause's own art on the cause's own tint. This is where the per-cause
@@ -756,8 +791,10 @@ a.mark {
   transition: transform var(--dur-3) var(--ease);
 }
 
-.causeCard:hover .illustration {
-  transform: scale(1.04);
+@media (hover: hover) {
+  .causeCard:hover .illustration {
+    transform: scale(1.04);
+  }
 }
 
 .causeCard__body {
@@ -879,8 +916,10 @@ a.mark {
   text-decoration: none;
 }
 
-.crumb:hover {
-  color: var(--navy);
+@media (hover: hover) {
+  .crumb:hover {
+    color: var(--navy);
+  }
 }
 
 .causeHero {
@@ -929,8 +968,10 @@ a.mark {
   color: var(--navy);
 }
 
-.evaluatorChip:hover strong {
-  color: var(--blue-700);
+@media (hover: hover) {
+  .evaluatorChip:hover strong {
+    color: var(--blue-700);
+  }
 }
 
 .evaluatorChip svg {
@@ -1003,9 +1044,11 @@ a.mark {
     box-shadow var(--dur-1) ease, transform var(--dur-1) ease;
 }
 
-.level:hover {
-  border-color: var(--mist-deep);
-  background: var(--gray-50);
+@media (hover: hover) {
+  .level:hover {
+    border-color: var(--mist-deep);
+    background: var(--gray-50);
+  }
 }
 
 /* The outcome leads; the dollar figure is deliberately the smaller line. */
@@ -1248,8 +1291,10 @@ a.mark {
   transition: background-color var(--dur-1) ease, transform var(--dur-1) ease;
 }
 
-.donate:hover {
-  background: var(--blue-600);
+@media (hover: hover) {
+  .donate:hover {
+    background: var(--blue-600);
+  }
 }
 
 /* The phone-only bar carrying a second copy of the Give button. Off entirely
@@ -1539,8 +1584,10 @@ a.mark {
   text-align: left;
 }
 
-.evidence__toggle:hover .evidence__title {
-  color: var(--blue-700);
+@media (hover: hover) {
+  .evidence__toggle:hover .evidence__title {
+    color: var(--blue-700);
+  }
 }
 
 .evidence__title {
@@ -2065,10 +2112,12 @@ a.mark {
   width: fit-content;
 }
 
-.footerNav a:hover {
-  color: var(--white);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+@media (hover: hover) {
+  .footerNav a:hover {
+    color: var(--white);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 }
 
 .siteFooter__legal {
@@ -2292,15 +2341,29 @@ a.mark {
   border: 3px solid var(--blue);
 }
 
-.slider input[type="range"]:hover::-webkit-slider-thumb,
+/* Focus is deliberately not inside the hover query below. Gating it behind a
+   hover-capable pointer would take the focus ring away from someone using a
+   keyboard with a touchscreen. Only the hover half is conditional. */
 .slider input[type="range"]:focus-visible::-webkit-slider-thumb {
   transform: scale(1.12);
   box-shadow: 0 0 0 5px rgba(36, 114, 236, 0.18);
 }
 
-.slider input[type="range"]:hover::-moz-range-thumb,
+@media (hover: hover) {
+  .slider input[type="range"]:hover::-webkit-slider-thumb {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 5px rgba(36, 114, 236, 0.18);
+  }
+}
+
 .slider input[type="range"]:focus-visible::-moz-range-thumb {
   box-shadow: 0 0 0 5px rgba(36, 114, 236, 0.18);
+}
+
+@media (hover: hover) {
+  .slider input[type="range"]:hover::-moz-range-thumb {
+    box-shadow: 0 0 0 5px rgba(36, 114, 236, 0.18);
+  }
 }
 
 /* A weight of zero is a real state — grey the row so it reads as "out". */
@@ -2584,6 +2647,7 @@ a.mark {
   text-align: center;
 }
 
+
 @media (min-width: 640px) {
   .hero {
     padding: var(--s-11) 0 150px;
@@ -2640,6 +2704,40 @@ a.mark {
   margin-top: var(--s-8);
 }
 
+/* Below the rules it overrides, not above them. These are single-class
+   selectors of equal specificity to the base ones, so the media query wins on
+   source order alone — placed before .hero__actions, the display:none here
+   lost to its display:flex and the button stayed on screen. */
+/* A phone gets a third of the hero it used to. Two thirds of the first screen
+   was navy and none of it was the product: the grid began at 705px, which is
+   below the fold on every phone made, so the site's first impression was a
+   slogan and a button whose only job was to scroll past the slogan. The
+   headline stays — it is the argument — and everything sized around it comes
+   down: less padding above, a shallower curve below, no eyebrow, and no
+   button, because what it scrolled to now starts on the same screen. */
+@media (max-width: 639px) {
+  .hero {
+    padding: var(--s-5) 0 56px;
+  }
+
+  .hero .eyebrow {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: var(--t-d2);
+  }
+
+  .hero__sub {
+    margin-top: var(--s-3);
+    font-size: var(--t-base);
+  }
+
+  .hero__actions {
+    display: none;
+  }
+}
+
 /* The arc where the water meets the page. */
 .heroCurve {
   position: absolute;
@@ -2649,6 +2747,12 @@ a.mark {
   width: 100%;
   height: 110px;
   display: block;
+}
+
+@media (max-width: 639px) {
+  .heroCurve {
+    height: 56px;
+  }
 }
 
 @media (min-width: 640px) {
@@ -2726,9 +2830,11 @@ a.mark {
   color: var(--white);
 }
 
-.btn--navy:hover {
-  background: var(--navy-800);
-  border-color: var(--navy-800);
+@media (hover: hover) {
+  .btn--navy:hover {
+    background: var(--navy-800);
+    border-color: var(--navy-800);
+  }
 }
 
 .prose a.btn--navy {
@@ -2894,8 +3000,10 @@ a.mark {
     background-color var(--dur-2) ease;
 }
 
-.causeCard:hover .tile {
-  transform: scale(1.09) rotate(-4deg);
+@media (hover: hover) {
+  .causeCard:hover .tile {
+    transform: scale(1.09) rotate(-4deg);
+  }
 }
 
 .btn svg {
@@ -2903,8 +3011,10 @@ a.mark {
 }
 
 
-.btn--primary:hover svg {
-  transform: translateX(3px);
+@media (hover: hover) {
+  .btn--primary:hover svg {
+    transform: translateX(3px);
+  }
 }
 
 .level__check {
@@ -2920,8 +3030,10 @@ a.mark {
   transition: transform var(--dur-3) var(--ease-spring);
 }
 
-.evidence__toggle:hover .evidence__title svg {
-  transform: rotate(-12deg) scale(1.08);
+@media (hover: hover) {
+  .evidence__toggle:hover .evidence__title svg {
+    transform: rotate(-12deg) scale(1.08);
+  }
 }
 
 /* Centered variants, for the thank-you page. */
@@ -3049,8 +3161,10 @@ a.mark {
   transition: background-color var(--dur-1) ease;
 }
 
-.sameDollar__row:hover {
-  background: var(--gray-50);
+@media (hover: hover) {
+  .sameDollar__row:hover {
+    background: var(--gray-50);
+  }
 }
 
 .sameDollar__cause {
@@ -3100,10 +3214,12 @@ a.mark {
   transition: background-color var(--dur-1) ease;
 }
 
-.learnMore__row:hover .learnMore__name {
-  color: var(--blue-700);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+@media (hover: hover) {
+  .learnMore__row:hover .learnMore__name {
+    color: var(--blue-700);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 }
 
 .learnMore__head {
