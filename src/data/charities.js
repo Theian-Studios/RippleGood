@@ -258,10 +258,19 @@ export const charities = [
       "$7 shields a child through the entire malaria season.",
       "$70 shields ten children.",
     ],
+    // A seasonal course costs about $7, so every tier here is a whole number
+    // of them. The old first tier was $10 for "one child", which set the
+    // reader's mental price at $10 and then broke it one card later: $35 for
+    // five only works at $7 each. Two children for $14 keeps all three tiers
+    // on the same arithmetic, and on the same arithmetic as the custom field,
+    // which has always divided by $7.
+    //
+    // $7 would be the honest floor, but Every.org silently drops a prefilled
+    // amount under $10, so a $7 tier would arrive at their form empty.
     givingLevels: [
-      { amount: 10, outcomeText: "Shields one child through the entire malaria season." },
-      { amount: 35, outcomeText: "Shields five children through the season." },
-      { amount: 70, outcomeText: "Shields ten children through the season." },
+      { amount: 14, outcomeText: "Shields two children through the malaria season." },
+      { amount: 35, outcomeText: "Shields five children through the malaria season." },
+      { amount: 70, outcomeText: "Shields ten children through the malaria season." },
     ],
     evidenceNotes: {
       whatTheyDo:
