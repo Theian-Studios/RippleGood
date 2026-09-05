@@ -51,6 +51,24 @@ export default function SameDollar({
 }) {
   const annual = monthly ? amount * 12 : amount;
 
+  /**
+   * The row you click opens the next cause on the figure you were just
+   * reading, not on that cause's own default — otherwise the number the row
+   * promised is gone by the time you arrive.
+   *
+   * GivingPanel already knows how to receive this: it reads the amount at
+   * mount and selects the matching tier if there is one, or drops it into the
+   * custom field if there isn't. So $50 lands on a $50 tier where the cause
+   * has one, and in the "Other" box where it doesn't.
+   */
+  const linkTo = (id) => {
+    const q = new URLSearchParams({
+      amount: String(amount),
+      ...(monthly ? { monthly: "1" } : {}),
+    });
+    return `/cause/${id}?${q.toString()}`;
+  };
+
   const rows = charities
     .filter((c) => c.id !== currentId && c.custom)
     .map((c) => ({ charity: c, outcome: approxOutcome(annual, c.custom) }))
@@ -72,8 +90,7 @@ export default function SameDollar({
           ? sampled
             ? "The same gift, in a few of the other causes."
             : "The same gift, in each of the other causes."
-          : "Your whole budget sent to a single cause, for comparison."}{" "}
-        Not a ranking, just what it buys there.
+          : "Your whole budget sent to a single cause, for comparison."}
       </p>
 
       <ul className="sameDollar__list" role="list">
@@ -81,7 +98,7 @@ export default function SameDollar({
           const Icon = iconFor(charity.icon);
           return (
             <li key={charity.id}>
-              <Link to={`/cause/${charity.id}`} className="sameDollar__row">
+              <Link to={linkTo(charity.id)} className="sameDollar__row">
                 <span className="tile tile--xs" data-cause={charity.id}>
                   <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
                 </span>

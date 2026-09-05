@@ -461,16 +461,17 @@ export const charities = [
     ],
     outcomeFramings: [
       "$2 protects one child for a full year.",
-      "$10 delivers ten vitamin A supplements.",
+      "$10 protects five children, both doses each.",
     ],
     givingLevels: [
-      // At ~$1 a supplement and two doses a child a year, these are 10, 20 and
-      // 50 supplements. The old $2 tier was a year for one child and was this
-      // cause's default — and, being under $10, the one Every.org dropped most
-      // often. Same arithmetic, starting where the amount survives.
+      // At ~$1 a supplement and two doses a child a year, a year of protection
+      // costs ~$2, so these are 5, 10 and 25 children. The old $2 tier was one
+      // child and was this cause's default — and, being under $10, the one
+      // Every.org dropped most often. Same arithmetic, starting where the
+      // amount survives.
       { amount: 10, outcomeText: "Protects five children for a full year, both doses." },
-      { amount: 20, outcomeText: "Protects ten children for a full year." },
-      { amount: 50, outcomeText: "Funds a year of protection for roughly 25 children." },
+      { amount: 20, outcomeText: "Protects ten children for a full year, both doses." },
+      { amount: 50, outcomeText: "Protects twenty-five children for a full year, both doses." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -484,12 +485,18 @@ export const charities = [
       ],
     },
     custom: {
-      // Derived from the ~$1-per-supplement figure above. Keep the two in sync.
-      perDollar: 1,
-      one: "Delivers one vitamin A supplement.",
-      many: "Delivers ~{n} vitamin A supplements.",
+      // Derived from the ~$2-per-child-year figure above. Keep the two in sync.
+      // Counted in children, not supplements. A supplement costs ~$1 and a
+      // child needs two a year, so the tiers ($10 = five children) and this
+      // block ($10 = ten supplements) were describing the same gift in two
+      // different units — and the pictogram drew the larger one. Halving the
+      // rate puts every number on the page on children, which is the unit
+      // the tiers already used and the one the other causes use too.
+      perDollar: 0.5,
+      one: "Protects one child for a full year, both doses.",
+      many: "Protects ~{n} children for a full year, both doses.",
       tooSmall: "Joins the pooled fund behind the next campaign.",
-      pictogram: { glyph: "capsule", label: "supplements" },
+      pictogram: { glyph: "child", label: "children, a year each" },
     },
     // Verified 2026-08-17 by loading every.org/hki and reading back
     // the organization name. EIN 13-5562162 — Helen Keller International.
@@ -681,7 +688,7 @@ export const charities = [
     givingLevels: [
       { amount: 5, outcomeText: "Two people on chlorinated water for a year." },
       { amount: 25, outcomeText: "Ten people on chlorinated water for a year." },
-      { amount: 75, outcomeText: "About thirty people on chlorinated water for a year." },
+      { amount: 75, outcomeText: "About thirty-two people on chlorinated water for a year." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -776,9 +783,9 @@ export const charities = [
       "$100 covers about 450 people for a year.",
     ],
     givingLevels: [
-      { amount: 5, outcomeText: "A year of fortified flour for about twenty people." },
-      { amount: 25, outcomeText: "A year of fortified flour for over a hundred people." },
-      { amount: 50, outcomeText: "A year of fortified flour for about 225 people." },
+      { amount: 5, outcomeText: "A year of fortified flour for about 22 people." },
+      { amount: 25, outcomeText: "A year of fortified flour for about 113 people." },
+      { amount: 50, outcomeText: "A year of fortified flour for about 227 people." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -1249,7 +1256,7 @@ export const charities = [
     givingLevels: [
       { amount: 10, outcomeText: "Deworms about fifteen children for a year." },
       { amount: 50, outcomeText: "Deworms about seventy-five children for a year, more than a classroom." },
-      { amount: 100, outcomeText: "Deworms about 150 children for a year." },
+      { amount: 100, outcomeText: "Deworms about 151 children for a year." },
     ],
     custom: {
       // 1 / $0.66, GiveWell's Kenya cost: the more expensive of the two figures
