@@ -29,12 +29,20 @@ export default function CauseCard({ charity }) {
         <h3 className="causeCard__name">{charity.category}</h3>
         <p className="causeCard__tagline">{charity.tagline}</p>
 
+        {/* Both forms ship, and CSS picks one. A viewport check in JS would
+            have to guess during the prerender and then correct itself on
+            hydration, which is a flash of the wrong line on every card.
+            display:none also keeps the unused one out of the accessibility
+            tree, so a screen reader hears the phrase once. */}
         <span className="causeCard__outcome">
           <strong>{money(charity.defaultAmount)}</strong>
           <span className="causeCard__arrow" aria-hidden="true">
             →
           </span>
-          {charity.cardOutcome}
+          <span className="causeCard__long">{charity.cardOutcome}</span>
+          <span className="causeCard__short">
+            {charity.cardOutcomeShort ?? charity.cardOutcome}
+          </span>
         </span>
       </span>
     </Link>

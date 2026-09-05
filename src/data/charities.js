@@ -121,6 +121,11 @@ const evaluatorById = Object.fromEntries(evaluators.map((e) => [e.id, e]));
 export const charities = [
   {
     id: "malaria-nets",
+    // What a default gift buys, on the home grid. The short form is what a
+    // phone shows: two columns leave ~135px of card, and the qualifier that
+    // reads well at 253px ("five children through the season") wraps to
+    // three lines there. Omitted where the long form is already short —
+    // the card falls back to cardOutcome.
     cardOutcome: "five nets",
     seoTitle: "The most effective malaria charity",
     defaultAmount: 30,
@@ -220,6 +225,7 @@ export const charities = [
   {
     id: "malaria-medicine",
     cardOutcome: "five children through the season",
+    cardOutcomeShort: "five children",
     seoTitle: "The best charity for seasonal malaria prevention",
     defaultAmount: 35,
     category: "Malaria Medicine",
@@ -324,6 +330,7 @@ export const charities = [
   {
     id: "childhood-vaccines",
     cardOutcome: "half an infant's vaccinations",
+    cardOutcomeShort: "half a course",
     seoTitle: "The most effective vaccination charity",
     defaultAmount: 75,
     category: "Childhood Vaccines",
@@ -418,6 +425,7 @@ export const charities = [
   {
     id: "child-survival",
     cardOutcome: "ten children, a year each",
+    cardOutcomeShort: "ten children",
     seoTitle: "The most effective child survival charity",
     defaultAmount: 20,
     category: "Child Survival",
@@ -534,6 +542,7 @@ export const charities = [
   {
     id: "malnutrition",
     cardOutcome: "one child treated",
+    cardOutcomeShort: "one child",
     seoTitle: "The most effective malnutrition charity",
     estimateNote:
       "Cost per child is GiveWell's figure. The cost-per-life range in the evidence panel is Taimaka's own model.",
@@ -645,6 +654,7 @@ export const charities = [
     // REACH down, which raises the real cost per person actually served.
     id: "safe-water",
     cardOutcome: "ten people, a year of safe water",
+    cardOutcomeShort: "ten people",
     seoTitle: "The most effective safe water charity",
     estimateNote:
       "GiveWell's 2022 cost was $1.22 to $1.87 per person per year. Its 2025 review cut estimated reach by about 20%, and our figures apply that cut, so they understate.",
@@ -750,6 +760,7 @@ export const charities = [
     // Cost checked against GiveWell's iron fortification pages on 2026-09-02.
     id: "micronutrients",
     cardOutcome: "a hundred people, a year of fortified flour",
+    cardOutcomeShort: "113 people",
     seoTitle: "The most effective food fortification charity",
     defaultAmount: 25,
     category: "Micronutrients",
@@ -846,6 +857,7 @@ export const charities = [
     // Checked against GiveWell's July 2022 grant page on 2026-09-02.
     id: "syphilis-in-pregnancy",
     cardOutcome: "the test that catches it",
+    cardOutcomeShort: "the test",
     seoTitle: "The most effective charity for syphilis in pregnancy",
     estimateNote:
       "No published cost per woman screened, so the tiers describe the work rather than a price per test.",
@@ -936,6 +948,7 @@ export const charities = [
   {
     id: "animal-welfare",
     cardOutcome: "550 hens out of cages",
+    cardOutcomeShort: "550 hens",
     seoTitle: "The most effective animal welfare charity",
     estimateNote:
       "Hens per dollar is ACE's central estimate. Its published range runs from a fifth of this figure to four times it.",
@@ -1030,6 +1043,7 @@ export const charities = [
   {
     id: "climate",
     cardOutcome: "the whole climate portfolio",
+    cardOutcomeShort: "the portfolio",
     seoTitle: "The most effective climate charity",
     directOnlyReason:
       "Direct only: Every.org lists Giving Green's research arm, not the fund we recommend.",
@@ -1126,6 +1140,7 @@ export const charities = [
   {
     id: "extreme-poverty",
     cardOutcome: "$43 straight to a family",
+    cardOutcomeShort: "$43 in cash",
     seoTitle: "The best charity for extreme poverty",
     defaultAmount: 50,
     category: "Extreme Poverty",
@@ -1211,6 +1226,7 @@ export const charities = [
     // about that rather than pretending to a freshness it doesn't have.
     id: "intestinal-worms",
     cardOutcome: "75 children dewormed",
+    cardOutcomeShort: "75 children",
     seoTitle: "The most effective deworming charity",
     // Cost per child is country-dependent and GiveWell publishes no average, so
     // every figure here uses the more expensive of its two published costs.

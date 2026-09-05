@@ -811,6 +811,11 @@ a.mark {
   font-weight: 700;
 }
 
+/* The long phrase is the default; the phone swaps to the short one below. */
+.causeCard__short {
+  display: none;
+}
+
 /* Under 480px there is no room for a tagline as well, so the card drops to
    the three things that decide a tap: the art, the cause, and what a gift
    buys. The tagline is on the cause page a tap away. */
@@ -847,6 +852,17 @@ a.mark {
     margin-top: auto;
     padding-top: var(--s-2);
     font-size: var(--t-xs);
+  }
+
+  /* At ~135px of card the qualifier is what costs the extra lines, not the
+     outcome itself: "five children through the season" is three lines where
+     "five children" is one. */
+  .causeCard__long {
+    display: none;
+  }
+
+  .causeCard__short {
+    display: inline;
   }
 }
 
