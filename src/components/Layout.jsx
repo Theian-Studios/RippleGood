@@ -12,12 +12,7 @@ function Header() {
           <Logo size="sm" animate />
         </Link>
 
-        {/* Beside the logo at every width — never hidden to save room. */}
-        <Link to="/#causes" className="btn btn--navy siteNav__cta">
-          Pick your cause
-        </Link>
-
-        {/* Drops to its own row under the logo on a phone. */}
+        {/* Wraps to its own row under the logo on a phone. */}
         <nav className="siteNav" aria-label="Main">
           <NavLink
             to="/about"

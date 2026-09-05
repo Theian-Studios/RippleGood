@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import NotFound from "./NotFound.jsx";
 import EvidenceCard from "../components/EvidenceCard.jsx";
 import Illustration from "../components/Illustration.jsx";
 import GivingPanel from "../components/GivingPanel.jsx";
@@ -27,7 +28,11 @@ export default function Cause() {
     charity ? `${charity.headline} ${charity.subhead}` : undefined,
   );
 
-  if (!charity) return <Navigate to="/" replace />;
+  // A retired or mistyped slug gets the not-found page, not a silent bounce
+  // to the home page. GitHub Pages serves the 404 shell for any unknown path,
+  // React boots, and this is what it lands on: a page that says what happened
+  // and points back at the grid.
+  if (!charity) return <NotFound />;
   if (charity.id !== causeId) {
     return <Navigate to={`/cause/${resolveCauseId(causeId)}`} replace />;
   }

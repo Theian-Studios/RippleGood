@@ -219,9 +219,9 @@ export const charities = [
 
   {
     id: "malaria-medicine",
-    cardOutcome: "ten children through the season",
+    cardOutcome: "five children through the season",
     seoTitle: "The best charity for seasonal malaria prevention",
-    defaultAmount: 70,
+    defaultAmount: 35,
     category: "Malaria Medicine",
     icon: "medicine",
     tagline:
@@ -259,11 +259,9 @@ export const charities = [
       "$70 shields ten children.",
     ],
     givingLevels: [
-      // Two courses rather than one, at ~$7 each: the single-child tier fell
-      // under Every.org's $10 floor and arrived with no amount filled in.
-      { amount: 14, outcomeText: "Shields two children through the entire malaria season." },
+      { amount: 10, outcomeText: "Shields one child through the entire malaria season." },
+      { amount: 35, outcomeText: "Shields five children through the season." },
       { amount: 70, outcomeText: "Shields ten children through the season." },
-      { amount: 210, outcomeText: "Shields thirty children, most of a village's under-fives." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -316,9 +314,9 @@ export const charities = [
 
   {
     id: "childhood-vaccines",
-    cardOutcome: "one infant fully vaccinated",
+    cardOutcome: "half an infant's vaccinations",
     seoTitle: "The most effective vaccination charity",
-    defaultAmount: 150,
+    defaultAmount: 75,
     category: "Childhood Vaccines",
     icon: "syringe",
     tagline:
@@ -352,9 +350,9 @@ export const charities = [
       "$4,500 saves a life, on GiveWell's estimate.",
     ],
     givingLevels: [
-      { amount: 50, outcomeText: "Covers a third of one infant's full vaccination course." },
-      { amount: 150, outcomeText: "Gets one infant every vaccine on the schedule." },
-      { amount: 450, outcomeText: "Gets three infants fully vaccinated." },
+      { amount: 25, outcomeText: "About a sixth of one infant's full vaccination course." },
+      { amount: 75, outcomeText: "About half of one infant's full vaccination course." },
+      { amount: 146, outcomeText: "Gets one infant every vaccine on the schedule." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -573,7 +571,7 @@ export const charities = [
     givingLevels: [
       { amount: 25, outcomeText: "A quarter of one child's full course of treatment." },
       { amount: 105, outcomeText: "Treats one severely malnourished child through to recovery." },
-      { amount: 525, outcomeText: "Treats five children through to recovery." },
+      { amount: 210, outcomeText: "Treats two children through to recovery." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -672,7 +670,7 @@ export const charities = [
       "$75 covers about thirty people for a year.",
     ],
     givingLevels: [
-      { amount: 10, outcomeText: "Four people on chlorinated water for a year." },
+      { amount: 5, outcomeText: "Two people on chlorinated water for a year." },
       { amount: 25, outcomeText: "Ten people on chlorinated water for a year." },
       { amount: 75, outcomeText: "About thirty people on chlorinated water for a year." },
     ],
@@ -771,7 +769,7 @@ export const charities = [
     givingLevels: [
       { amount: 5, outcomeText: "A year of fortified flour for about twenty people." },
       { amount: 25, outcomeText: "A year of fortified flour for over a hundred people." },
-      { amount: 100, outcomeText: "A year of fortified flour for about 450 people." },
+      { amount: 50, outcomeText: "A year of fortified flour for about 225 people." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -827,7 +825,7 @@ export const charities = [
     seoTitle: "The most effective charity for syphilis in pregnancy",
     estimateNote:
       "No published cost per woman screened, so the tiers describe the work rather than a price per test.",
-    defaultAmount: 100,
+    defaultAmount: 25,
     category: "Syphilis in Pregnancy",
     icon: "test",
     tagline:
@@ -864,9 +862,9 @@ export const charities = [
       "GiveWell puts this at 29 times the value of cash.",
     ],
     givingLevels: [
-      { amount: 25, outcomeText: "Supports the switch to dual testing in routine antenatal care." },
-      { amount: 100, outcomeText: "Supports the training and supply work behind that switch." },
-      { amount: 500, outcomeText: "Supports a clinic network through the change and the follow-up." },
+      { amount: 10, outcomeText: "Supports the switch to dual testing in routine antenatal care." },
+      { amount: 25, outcomeText: "Supports the training and supply work behind that switch." },
+      { amount: 100, outcomeText: "Supports a clinic network through the change and the follow-up." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -949,7 +947,7 @@ export const charities = [
     givingLevels: [
       { amount: 10, outcomeText: "Spares roughly 110 hens from battery cages." },
       { amount: 50, outcomeText: "Spares roughly 550 hens from battery cages." },
-      { amount: 150, outcomeText: "Spares roughly 1,650 hens from battery cages." },
+      { amount: 100, outcomeText: "Spares roughly 1,100 hens from battery cages." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -1013,7 +1011,7 @@ export const charities = [
       "Direct only: Every.org lists Giving Green's research arm, not the fund we recommend.",
     estimateNote:
       "Giving Green publishes no cost per tonne for this fund, so the tiers describe what a gift joins, not a tonnage.",
-    defaultAmount: 50,
+    defaultAmount: 25,
     category: "Climate",
     icon: "turbine",
     tagline:
@@ -1046,9 +1044,9 @@ export const charities = [
       "The fund follows their research as it updates, rather than one organisation.",
     ],
     givingLevels: [
-      { amount: 25, outcomeText: "Joins the fund behind Giving Green's current top climate nonprofits." },
-      { amount: 50, outcomeText: "Backs the whole portfolio rather than a single bet." },
-      { amount: 250, outcomeText: "Funds policy and advocacy that pays off over years, not months." },
+      { amount: 10, outcomeText: "Joins the fund behind Giving Green's current top climate nonprofits." },
+      { amount: 25, outcomeText: "Backs the whole portfolio rather than a single bet." },
+      { amount: 100, outcomeText: "Funds policy and advocacy that pays off over years, not months." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -1103,9 +1101,9 @@ export const charities = [
 
   {
     id: "extreme-poverty",
-    cardOutcome: "$21 straight to a family",
+    cardOutcome: "$43 straight to a family",
     seoTitle: "The best charity for extreme poverty",
-    defaultAmount: 25,
+    defaultAmount: 50,
     category: "Extreme Poverty",
     icon: "banknote",
     tagline: "Hundreds of millions of people live on under $2 a day. They know what they need.",
@@ -1130,9 +1128,9 @@ export const charities = [
       "$1,000 is roughly a household's full transfer.",
     ],
     givingLevels: [
-      { amount: 25, outcomeText: "About $21 lands directly with a family." },
-      { amount: 100, outcomeText: "About $87 lands directly with a family." },
-      { amount: 500, outcomeText: "About $435, roughly half a household's full transfer." },
+      { amount: 10, outcomeText: "About $8 lands directly with a family." },
+      { amount: 50, outcomeText: "About $43 lands directly with a family." },
+      { amount: 250, outcomeText: "About $217, a fifth of a household's full transfer." },
     ],
     evidenceNotes: {
       whatTheyDo:
@@ -1234,7 +1232,7 @@ export const charities = [
     givingLevels: [
       { amount: 10, outcomeText: "Deworms about fifteen children for a year." },
       { amount: 50, outcomeText: "Deworms about seventy-five children for a year, more than a classroom." },
-      { amount: 150, outcomeText: "Deworms about 225 children, a small school, for a year." },
+      { amount: 100, outcomeText: "Deworms about 150 children for a year." },
     ],
     custom: {
       // 1 / $0.66, GiveWell's Kenya cost: the more expensive of the two figures

@@ -583,38 +583,29 @@ a.mark {
 }
 
 .siteHeader__inner {
-  /* Two rows on a phone, one from 640px up. Nothing is ever hidden: the CTA
-     keeps its place beside the logo and the links move under them. This used
-     to be a single flex row with display:none on everything that would not
-     fit, which deleted the primary action on the devices most people arrive
-     on. */
-  display: grid;
-  grid-template-columns: 1fr auto;
+  /* Brand left, links right. It used to carry a "Pick your cause" button too,
+     which needed a three-column grid and a second row on a phone; without it a
+     wrapping flex row does the whole job. */
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   gap: var(--s-hair) var(--s-4);
   padding-block: var(--s-2);
 }
 
 .siteHeader__brand {
-  grid-area: 1 / 1;
   display: inline-flex;
   min-width: 0;
   text-decoration: none;
 }
 
-.siteNav__cta {
-  grid-area: 1 / 2;
-  padding: var(--s-2) var(--s-4);
-  font-size: var(--t-sm);
-  white-space: nowrap;
-}
-
 .siteNav {
-  grid-area: 2 / 1 / 2 / -1;
   display: flex;
   align-items: center;
   gap: var(--s-1);
-  /* Pulls the first link's padding back to the logo's optical left edge. */
+  /* Pulls the first link's padding back to the logo's optical left edge, for
+     the phone layout where the nav wraps under the logo. */
   margin-left: calc(var(--s-3) * -1);
 }
 
@@ -640,25 +631,17 @@ a.mark {
 
 @media (min-width: 640px) {
   .siteHeader__inner {
-    grid-template-columns: 1fr auto auto;
+    flex-wrap: nowrap;
     min-height: 68px;
     padding-block: 0;
   }
 
   .siteNav {
-    grid-area: 1 / 2;
     margin-left: 0;
   }
 
   .siteNav__link {
     padding: var(--s-2) var(--s-3);
-  }
-
-  .siteNav__cta {
-    grid-area: 1 / 3;
-    margin-left: var(--s-2);
-    padding: var(--s-3) var(--s-5);
-    font-size: var(--t-md);
   }
 }
 
