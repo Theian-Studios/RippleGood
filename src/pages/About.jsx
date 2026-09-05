@@ -66,14 +66,15 @@ export default function About() {
             there, and the research behind them would still be public. That's by design.
           </p>
 
-          {/* VERIFY: replace this section with your real name, affiliation, funding
-              situation, and a contact address before launch. A site asking people to
-              redirect their giving should say plainly who is behind it — the "who runs
-              this" question is the first thing a skeptical reader looks for. */}
+          {/* A site asking people to redirect their giving should say plainly
+              who is behind it: "who runs this" is the first thing a sceptical
+              reader looks for, and a name answers it where "an independent
+              project" only restates the question. */}
           <h2>Who's behind this</h2>
           <p>
-            Ripple Good is an independent project. We take no money from the charities listed
-            here, and no recommendation on this site can be bought or sponsored.
+            Ripple Good is made by Ian Sorensen. It's an independent project: no money
+            from the charities listed here, and no recommendation on this site can be
+            bought or sponsored.
           </p>
           <p>
             Questions, corrections, or a cause you think we should cover:{" "}
