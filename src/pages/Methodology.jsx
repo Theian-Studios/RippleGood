@@ -298,7 +298,6 @@ export default function Methodology() {
             Good. Tell us. The point of naming a single pick and showing the arithmetic
             is that both can be challenged. Email{" "}
             <a href="mailto:ian.sorensen@ripple-good.org">ian.sorensen@ripple-good.org</a>{" "}
-            {/* VERIFY: set up this mailbox, or swap in a real contact address, before launch. */}
             with the cause and what you think we've missed.
           </p>
           <p className="u-mt-6">
