@@ -77,7 +77,6 @@ export default function SameDollar({
   if (rows.length < 2) return null;
 
   const shown = sampleOf(rows, limit, currentId ?? "");
-  const sampled = shown.length < rows.length;
 
   return (
     <section className="sameDollar" aria-labelledby="sameDollar-title">
@@ -85,13 +84,15 @@ export default function SameDollar({
         {money(amount)}
         {monthly ? " a month" : ""} {currentId ? "somewhere else" : "in one cause"}
       </h2>
-      <p className="sameDollar__lead">
-        {currentId
-          ? sampled
-            ? "The same gift, in a few of the other causes."
-            : "The same gift, in each of the other causes."
-          : "Your whole budget sent to a single cause, for comparison."}
-      </p>
+      {/* No lead on a cause page: the heading above already says "the same
+          gift, somewhere else", and the sentence under it only said it again
+          in longer words. The split view keeps one, because there the heading
+          alone doesn't explain what is being compared. */}
+      {!currentId && (
+        <p className="sameDollar__lead">
+          Your whole budget sent to a single cause, for comparison.
+        </p>
+      )}
 
       <ul className="sameDollar__list" role="list">
         {shown.map(({ charity, outcome }) => {

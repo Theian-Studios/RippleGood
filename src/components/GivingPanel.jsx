@@ -353,16 +353,14 @@ export default function GivingPanel({ charity, onSelectionChange }) {
               <a href={directUrl} target="_blank" rel="noreferrer">
                 give on {host}
               </a>
-              {directPrefilled ? " with the amount filled in" : ""}. We never
-              see your money or your details.
+              {directPrefilled ? " with the amount filled in" : ""}.
             </>
           ) : (
             <>
               {charity.directOnlyReason ?? `Goes straight to ${host}.`}{" "}
               {directPrefilled
                 ? `${priceLabel(amount)} is filled in.`
-                : "You enter the amount on their form."}{" "}
-              We never see your money or your details.
+                : "You enter the amount on their form."}
             </>
           )}
         </p>

@@ -8,26 +8,6 @@ import { charities } from "../data/charities.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
 import { useReveal } from "../lib/useReveal.js";
 
-/**
- * Step one is written for someone who has already scrolled past the grid,
- * because they have: the causes come first now, and being told to "choose your
- * cause" after choosing one reads as a page that isn't watching.
- */
-const STEPS = [
-  {
-    title: "Start from the cause you already care about",
-    body: "The twelve above. Effective giving shouldn't ask you to swap your values for someone else's.",
-  },
-  {
-    title: "See what your gift does",
-    body: "Nets, medicine, vitamin A, cash, each with its cost figure and the evaluator behind it.",
-  },
-  {
-    title: "Give, and keep going",
-    body: "The money moves on the charity's own site, or through Every.org. We never touch it.",
-  },
-];
-
 export default function Home() {
   const gridRef = useReveal();
 
@@ -101,8 +81,10 @@ export default function Home() {
           <ol className="factors" role="list">
             <li>
               <strong>Amount</strong>
-              How much you give. This one is obvious, and it's the only one most
-              people think about.
+              <span>
+                How much you give. This one is obvious, and it's the only one
+                most people think about.
+              </span>
             </li>
             <li>
               {/* Named Efficiency, not Effectiveness. Every other page on this
@@ -110,17 +92,21 @@ export default function Home() {
                   impact, so using it here for the overhead ratio we're telling
                   people to stop trusting inverted the word twice on one site. */}
               <strong>Efficiency</strong>
-              How tightly the organization runs: program spending versus
-              overhead, the cost to raise $100. This is what Charity Navigator
-              and CharityWatch largely measure. It answers a real question, but
-              says nothing about whether the programs work.
+              <span>
+                How tightly the organization runs: program spending versus
+                overhead, the cost to raise $100. This is what Charity Navigator
+                and CharityWatch largely measure. It answers a real question,
+                but says nothing about whether the programs work.
+              </span>
             </li>
             <li>
               <strong>Impact</strong>
-              What a dollar actually buys: lives saved, children protected,
-              years of schooling gained. This is what GiveWell and Animal
-              Charity Evaluators measure through randomized trials and outcome
-              research, and it is where the differences get enormous.
+              <span>
+                What a dollar actually buys: lives saved, children protected,
+                years of schooling gained. This is what GiveWell and Animal
+                Charity Evaluators measure through randomized trials and
+                outcome research, and it is where the differences get enormous.
+              </span>
             </li>
           </ol>
 
@@ -154,28 +140,6 @@ export default function Home() {
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </p>
-        </div>
-      </section>
-
-      <section className="section section--steps">
-        <div className="wrap wrap--narrow">
-          <div className="sectionHead sectionHead--centered">
-            <h2>How it works</h2>
-          </div>
-
-          <ol className="steps steps--numbered">
-            {STEPS.map(({ title, body }, i) => (
-              <li className="stepRow" key={title}>
-                <span className="stepRow__num" aria-hidden="true">
-                  {i + 1}
-                </span>
-                <span>
-                  <span className="stepRow__title">{title}</span>
-                  <span className="stepRow__body">{body}</span>
-                </span>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 

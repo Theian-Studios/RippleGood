@@ -833,7 +833,7 @@ a.mark {
 }
 
 .causeCard__name {
-  font-size: var(--t-xl);
+  font-size: var(--t-2xl);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--navy);
@@ -899,7 +899,7 @@ a.mark {
   }
 
   .causeCard__name {
-    font-size: var(--t-base);
+    font-size: var(--t-lg);
   }
 
   .causeCard__tagline {
@@ -1553,8 +1553,15 @@ a.mark {
   }
 }
 
+/* Two columns: the numeral and the name share the first row, and the body
+   drops beneath both. The numeral used to sit on a line of its own with the
+   name under it, which read as a heading orphaned from its own number. */
 .factors li {
   counter-increment: factor;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--s-3);
   color: var(--ink-mid);
   font-size: var(--t-md);
   line-height: 1.65;
@@ -1564,14 +1571,23 @@ a.mark {
    factors by number. */
 .factors li::before {
   content: counter(factor);
-  margin-bottom: var(--s-3);
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .factors strong {
-  display: block;
-  margin-bottom: var(--s-nudge);
+  grid-column: 2;
+  grid-row: 1;
   color: var(--navy);
   font-size: var(--t-base);
+}
+
+/* Full width under the badge, not indented to the name: at three columns on a
+   wide screen the indent cost the body a third of its measure. */
+.factors li > span {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: var(--s-3);
 }
 
 /* The CTA sits in its own paragraph, so that paragraph's own margins are the
@@ -2754,11 +2770,14 @@ a.mark {
   }
 
   .hero h1 {
-    font-size: var(--t-d2);
-    /* The display line-height is tuned for one or two lines at 62px. At 30px
-       across three, it closed the lines up until the headline read as a
-       block. */
-    line-height: 1.18;
+    /* Deliberately larger than --t-d2, so "Make the biggest ripple." takes two
+       lines on a phone instead of one squeezed one. The headline is the first
+       thing on the site and was reading as body copy at 30px. */
+    font-size: clamp(2.125rem, 9.5vw, 2.75rem);
+    /* The display line-height is tuned for one or two lines at 62px. Across
+       three or four short ones, it closed the lines up until the headline read
+       as a block. */
+    line-height: 1.15;
   }
 
   .hero__sub {
@@ -2793,31 +2812,11 @@ a.mark {
 
 /* ------------------------------------------------------------- steps -- */
 
-.section--steps {
-  background: var(--white);
-}
-
-.steps--numbered {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--s-6);
-  counter-reset: none;
-}
-
-.stepRow {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--s-5);
-}
-
 /* ---- the numbered badge ----------------------------------------------
-   One badge for every numbered list on the site: the home "How it works"
-   rows, the methodology steps, and the three factors above the cause grid.
-   These were three treatments — a 54px blue circle, a 30px navy one, and a
-   bare 12px numeral — which read as three components rather than one. */
-.stepRow__num,
+   One badge for both numbered lists on the site: the methodology steps and
+   the three factors above the cause grid. These were separate treatments — a
+   54px blue circle, a 30px navy one, and a bare 12px numeral — which read as
+   three components rather than one. */
 .step::before,
 .factors li::before {
   display: grid;
@@ -2832,22 +2831,6 @@ a.mark {
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0;
-}
-
-.stepRow__title {
-  display: block;
-  font-size: var(--t-xl);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--navy);
-}
-
-.stepRow__body {
-  display: block;
-  margin-top: var(--s-1);
-  font-size: var(--t-md);
-  color: var(--ink-soft);
-  max-width: 54ch;
 }
 
 /* ------------------------------------------------------- navy button -- */
