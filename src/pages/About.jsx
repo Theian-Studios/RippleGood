@@ -78,7 +78,7 @@ export default function About() {
           </p>
           <p>
             Questions, corrections, or a cause you think we should cover:{" "}
-            <a href="mailto:hello@ripple-good.org">hello@ripple-good.org</a>.
+            <a href="mailto:ian.sorensen@ripple-good.org">ian.sorensen@ripple-good.org</a>.
           </p>
 
           <p className="u-mt-6">
