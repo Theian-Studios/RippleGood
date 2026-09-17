@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Root-absolute, not "./": these pages are prerendered to real files at
+         nested paths, so a relative href resolved against /cause/<id>/ and
+         404'd on every page but the home page. Vite prepends `base` to these
+         at build time, so they survive a move to a project-page URL. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0A1B33" />
+
+    <!-- iOS ignores SVG icons for "Add to Home Screen" and screenshots the page
+         instead. The manifest covers Android; the two PNG sizes it names are
+         built by scripts/build-icons.mjs.
+
+         Absolute paths inside site.webmanifest are correct only while the site
+         is served from a domain root, which public/CNAME makes true. -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Ripple Good" />
+
+    <!-- VERIFY: absolute URL, so it must match the site's real home. Built by
+         scripts/build-og-images.mjs; per-cause previews live at /share/<id>. -->
+    <script>
+      // Legacy links. This site used a HashRouter, so URLs already in the wild
+      // look like /#/cause/climate. Real paths are served now, so translate on
+      // arrival — before React mounts, and with replace() so the old form never
+      // enters history. Anything that isn't a "#/" route is left alone.
+      (function () {
+        function migrate() {
+          var h = window.location.hash;
+          if (h.indexOf("#/") !== 0) return;
+          window.location.replace(
+            window.location.pathname.replace(/\/$/, "") +
+              h.slice(1) +
+              window.location.search,
+          );
+        }
+        migrate();
+        // A hash-only change is a same-document navigation: nothing reloads and
+        // this file never runs again. An in-page legacy link would otherwise
+        // sit there doing nothing at all.
+        window.addEventListener("hashchange", migrate);
+      })();
+    </script>
+
+    <!-- Self-hosted. A site that tells people "we never see your details"
+         shouldn't hand Google a request, and an IP address, on every load.
+         Subset to Latin and woff2: five faces, ~76KB, no third-party origin.
+         Regenerate with scripts/fonts/README.md. -->
+    <link
+      rel="preload"
+      href="/fonts/poppins-600.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/poppins-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- VERIFY: the urls below assume the final home is https://ripple-good.org/ —
+         update them if the site ships on a github.io address instead. -->
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Ripple Good",
+          "url": "https://ripple-good.org/",
+          "logo": "https://ripple-good.org/favicon.svg",
+          "founder": { "@type": "Person", "name": "Ian Sorensen" },
+          "slogan": "One goal: the most good for every dollar.",
+          "description": "An effective-giving directory: the best-evidenced charity within each cause, translating the research of GiveWell and Animal Charity Evaluators."
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Ripple Good",
+          "url": "https://ripple-good.org/"
+        }
+      ]
+    </script>
+    <script type="module" crossorigin src="/assets/index-Dim9-xSJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-CBpDgBCE.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-DIrnaMqZ.css">
+    <title>Thank you · Ripple Good</title>
+    <link rel="canonical" href="https://ripple-good.org/thanks/" />
+    <meta name="description" content="Where Every.org returns a donor after a completed gift." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ripple Good" />
+    <meta property="og:title" content="Thank you · Ripple Good" />
+    <meta property="og:description" content="Where Every.org returns a donor after a completed gift." />
+    <meta property="og:url" content="https://ripple-good.org/thanks/" />
+    <meta property="og:image" content="https://ripple-good.org/og/default.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ripple-good.org/og/default.png" />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <div id="root"><div class="app"><a class="skip-link" href="#main">Skip to content</a><header class="siteHeader"><div class="wrap siteHeader__inner"><a class="siteHeader__brand" aria-label="Ripple Good, home" href="/"><span role="img" aria-label="Ripple Good" class="logo logo--sm logo--animate"><svg class="logo__mark" width="36" height="36" viewBox="0 0 100 100" fill="none" aria-hidden="true" focusable="false"><defs><linearGradient id="rip-grad-Ra" x1="8" y1="10" x2="92" y2="86" gradientUnits="userSpaceOnUse"><stop offset="0" class="logo__stop-a"></stop><stop offset="1" class="logo__stop-b"></stop></linearGradient><mask id="rip-mask-Ra"><rect x="0" y="0" width="100" height="100" fill="white"></rect><path d="M2 60 C 28 42, 72 42, 98 62" stroke="black" stroke-width="9" fill="none" stroke-linecap="round"></path><path d="M18 77 C 36 63, 64 63, 84 78" stroke="black" stroke-width="9" fill="none" stroke-linecap="round"></path></mask></defs><path class="logo__heart" d="M50 90 C 50 90 6 62 6 34 C 6 17 19 6 33 6 C 42 6 49 11 50 19 C 51 11 58 6 67 6 C 81 6 94 17 94 34 C 94 62 50 90 50 90 Z" fill="url(#rip-grad-Ra)" mask="url(#rip-mask-Ra)"></path></svg><span class="logo__word" aria-hidden="true"><span class="logo__name">Ripple</span><span class="logo__script">Good</span></span></span></a><nav class="siteNav" aria-label="Main"><a class="siteNav__link" href="/about">About</a><a class="siteNav__link siteNav__link--secondary" href="/methodology">Methodology</a></nav></div></header><main id="main" class="pageEnter"><section class="pageHead"><div class="wrap wrap--narrow u-centered"><svg viewBox="0 0 140 140" class="ripple ripple--live thanks__ripple" role="presentation" aria-hidden="true" focusable="false"><circle cx="70" cy="70" r="18" fill="none" stroke-width="3" style="animation-delay:0ms"></circle><circle cx="70" cy="70" r="32" fill="none" stroke-width="2" style="animation-delay:140ms"></circle><circle cx="70" cy="70" r="46" fill="none" stroke-width="2" style="animation-delay:280ms"></circle><circle cx="70" cy="70" r="60" fill="none" stroke-width="2" style="animation-delay:420ms"></circle><circle class="ripple__drop" cx="70" cy="70" r="7"></circle></svg><p class="eyebrow">Thank you</p><h1>That&#x27;s a <span class="mark">ripple.</span></h1><p class="u-mt-5 u-lead">If you just gave, thank you. Your receipt comes by email from wherever you gave. If you landed here by accident, the causes are still below.</p><div class="hero__actions hero__actions--centered u-mt-7"><a class="btn btn--outline" href="/#causes">Pick another cause</a></div></div></section></main><footer class="siteFooter onDark"><div class="wrap siteFooter__main"><div><span role="img" aria-label="Ripple Good" class="logo logo--md logo--onDark"><svg class="logo__mark" width="44" height="44" viewBox="0 0 100 100" fill="none" aria-hidden="true" focusable="false"><defs><linearGradient id="rip-grad-R5c" x1="8" y1="10" x2="92" y2="86" gradientUnits="userSpaceOnUse"><stop offset="0" class="logo__stop-a"></stop><stop offset="1" class="logo__stop-b"></stop></linearGradient><mask id="rip-mask-R5c"><rect x="0" y="0" width="100" height="100" fill="white"></rect><path d="M2 60 C 28 42, 72 42, 98 62" stroke="black" stroke-width="9" fill="none" stroke-linecap="round"></path><path d="M18 77 C 36 63, 64 63, 84 78" stroke="black" stroke-width="9" fill="none" stroke-linecap="round"></path></mask></defs><path class="logo__heart" d="M50 90 C 50 90 6 62 6 34 C 6 17 19 6 33 6 C 42 6 49 11 50 19 C 51 11 58 6 67 6 C 81 6 94 17 94 34 C 94 62 50 90 50 90 Z" fill="url(#rip-grad-R5c)" mask="url(#rip-mask-R5c)"></path></svg><span class="logo__word" aria-hidden="true"><span class="logo__name">Ripple</span><span class="logo__script">Good</span></span></span><p class="siteFooter__tagline">Don&#x27;t just donate.<!-- --> <span class="mark mark--onDark">Make the biggest ripple.</span></p><p class="siteFooter__money"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span>We never handle your money, and take no cut of any gift. Giving happens on the charity&#x27;s own site or through Every.org.</span></p></div><nav class="footerNav" aria-label="Footer"><h4>The site</h4><a href="/#causes">Pick your cause</a><a href="/methodology">Methodology</a><a href="/about">About Ripple Good</a><a href="https://www.givewell.org/" target="_blank" rel="noopener noreferrer">GiveWell</a><a href="https://animalcharityevaluators.org/" target="_blank" rel="noopener noreferrer">Animal Charity Evaluators</a></nav></div><div class="wrap siteFooter__legal"><span>© <!-- -->2026<!-- --> Ripple Good™</span><span>We aggregate published research; we don&#x27;t originate it.</span><span>All figures are average program costs.</span></div></footer></div></div>
+  </body>
+</html>

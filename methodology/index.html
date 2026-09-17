@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Root-absolute, not "./": these pages are prerendered to real files at
+         nested paths, so a relative href resolved against /cause/<id>/ and
+         404'd on every page but the home page. Vite prepends `base` to these
+         at build time, so they survive a move to a project-page URL. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0A1B33" />
+
+    <!-- iOS ignores SVG icons for "Add to Home Screen" and screenshots the page
+         instead. The manifest covers Android; the two PNG sizes it names are
+         built by scripts/build-icons.mjs.
+
+         Absolute paths inside site.webmanifest are correct only while the site
+         is served from a domain root, which public/CNAME makes true. -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Ripple Good" />
+
+    <!-- VERIFY: absolute URL, so it must match the site's real home. Built by
+         scripts/build-og-images.mjs; per-cause previews live at /share/<id>. -->
+    <script>
+      // Legacy links. This site used a HashRouter, so URLs already in the wild
+      // look like /#/cause/climate. Real paths are served now, so translate on
+      // arrival — before React mounts, and with replace() so the old form never
+      // enters history. Anything that isn't a "#/" route is left alone.
+      (function () {
+        function migrate() {
+          var h = window.location.hash;
+          if (h.indexOf("#/") !== 0) return;
+          window.location.replace(
+            window.location.pathname.replace(/\/$/, "") +
+              h.slice(1) +
+              window.location.search,
+          );
+        }
+        migrate();
+        // A hash-only change is a same-document navigation: nothing reloads and
+        // this file never runs again. An in-page legacy link would otherwise
+        // sit there doing nothing at all.
+        window.addEventListener("hashchange", migrate);
+      })();
+    </script>
+
+    <!-- Self-hosted. A site that tells people "we never see your details"
+         shouldn't hand Google a request, and an IP address, on every load.
+         Subset to Latin and woff2: five faces, ~76KB, no third-party origin.
+         Regenerate with scripts/fonts/README.md. -->
+    <link
+      rel="preload"
+      href="/fonts/poppins-600.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/poppins-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- VERIFY: the urls below assume the final home is https://ripple-good.org/ —
+         update them if the site ships on a github.io address instead. -->
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Ripple Good",
+          "url": "https://ripple-good.org/",
+          "logo": "https://ripple-good.org/favicon.svg",
+          "founder": { "@type": "Person", "name": "Ian Sorensen" },
+          "slogan": "One goal: the most good for every dollar.",
+          "description": "An effective-giving directory: the best-evidenced charity within each cause, translating the research of GiveWell and Animal Charity Evaluators."
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Ripple Good",
+          "url": "https://ripple-good.org/"
+        }
+      ]
+    </script>
+    <script type="module" crossorigin src="/assets/index-Dim9-xSJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-CBpDgBCE.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-DIrnaMqZ.css">
+    <title>How we pick, and what we don't do · Ripple Good</title>
+    <link rel="canonical" href="https://ripple-good.org/methodology/" />
+    <meta name="description" content="How Ripple Good picks one charity per cause, which evaluators we rely on, what our dollar figures do and don't mean, and how often we re-check them." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ripple Good" />
+    <meta property="og:title" content="How we pick, and what we don't do · Ripple Good" />
+    <meta property="og:description" content="How Ripple Good picks one charity per cause, which evaluators we rely on, what our dollar figures do and don't mean, and how often we re-check them." />
+    <meta property="og:url" content="https://ripple-good.org/methodology/" />
+    <meta property="og:image" content="https://ripple-good.org/og/default.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ripple-good.org/og/default.png" />
+  </head>
+  <body>
+    <div id="root"><div class="app"><a class="skip-link" href="#main">Skip to content</a><header class="siteHeader"><div class="wrap siteHeader__inner"><a class="siteHeader__brand" aria-label="Ripple Good, home" href="/"><span role="img" aria-label="Ripple Good" class="logo logo--sm logo--animate"><svg class="logo__mark" width="36" height="36" viewBox="0 0 100 100" fill="none" aria-hidden="true" focusable="false"><defs><linearGradient id="rip-grad-Ra" x1="8" y1="10" x2="92" y2="86" gradientUnits="userSpaceOnUse"><stop offset="0" class="logo__stop-a"></stop><stop offset="1" class="logo__stop-b"></stop></linearGradient><mask id="rip-mask-Ra"><rect x="0" y="0" width="100" height="100" fill="white"></rect><path d="M2 60 C 28 42, 72 42, 98 62" stroke="black" stroke-width="9" fill="none" stroke-linecap="round"></path><path d="M18 77 C 36 63, 64 63, 84 78" stroke="black" stroke-width="9" fill="none" stroke-linecap="round"></path></mask></defs><path class="logo__heart" d="M50 90 C 50 90 6 62 6 34 C 6 17 19 6 33 6 C 42 6 49 11 50 19 C 51 11 58 6 67 6 C 81 6 94 17 94 34 C 94 62 50 90 50 90 Z" fill="url(#rip-grad-Ra)" mask="url(#rip-mask-Ra)"></path></svg><span class="logo__word" aria-hidden="true"><span class="logo__name">Ripple</span><span class="logo__script">Good</span></span></span></a><nav class="siteNav" aria-label="Main"><a class="siteNav__link" href="/about">About</a><a aria-current="page" class="siteNav__link siteNav__link--secondary is-active" href="/methodology">Methodology</a></nav></div></header><main id="main" class="pageEnter"><section class="pageHead"><div class="wrap wrap--narrow"><p class="eyebrow">Methodology</p><h1>How we pick, and <span class="mark">what we don&#x27;t do.</span></h1><p>Ripple Good is a translation layer, not a research institute. Everything below is meant to let you check us, or skip us entirely and go straight to the people whose work this rests on.</p></div></section><section class="section"><div class="wrap wrap--narrow prose"><h2>How a pick gets made</h2><div class="steps"><div class="step"><h3>Start from the cause, not the charity</h3><p>Most effective-giving sites ask you to reorder your values, then hand you a global health charity. We don&#x27;t. You already care about something. The question we answer is which organization inside<!-- --> <em>that</em> cause has the strongest evidence behind it.</p></div><div class="step"><h3>Defer to the specialist evaluator</h3><p>For each cause we identify the organization doing the most rigorous public cost-effectiveness research in that domain, and we take their current recommendation. We do not run our own charity evaluations, and we would be worse at it than they are.</p></div><div class="step"><h3>Name one, not a shortlist</h3><p>A list of twelve options is a way of avoiding the decision. We publish a single pick per cause, with the evaluator&#x27;s name attached, so the recommendation can be argued with. If we&#x27;re wrong, we&#x27;re wrong specifically.</p></div><div class="step"><h3>Translate the number into an outcome</h3><p>We take the evaluator&#x27;s published cost figures and phrase them as what actually happens: nets hung, seasons covered, hens out of cages. The dollar amount stays on the page, in smaller type, next to the source it came from.</p></div></div><h2 id="the-100x-claim">The &quot;100x the median&quot; claim</h2><p>It&#x27;s the biggest claim on this site, so it gets a source like every other one. The best evidence comes from global health, where cost-effectiveness has been measured across hundreds of interventions: in the Disease Control Priorities data, the spread between the least and most effective interventions covered roughly <strong>four orders of magnitude</strong>, and the best interventions were on the order of<!-- --> <strong>100x more cost-effective than the median</strong>. Toby Ord&#x27;s essay<!-- --> <a href="https://www.cgdev.org/publication/moral-imperative-toward-cost-effectiveness-global-health" target="_blank" rel="noopener noreferrer">&quot;The Moral Imperative toward Cost-Effectiveness in Global Health&quot;</a> <!-- -->is the classic treatment of that data, and it&#x27;s where our framing comes from.</p><p>Two limits. First, that spread is measured across<!-- --> <em>interventions</em>, not charity ratings. We use it as evidence about how wide the distribution is, and rely on the evaluators to find the organizations at its top end. Second, the measurement is sharpest in global health; for a cause like animal welfare, &quot;the best is roughly 100x the typical&quot; is an extrapolation from thinner data, not a replicated result. We think the direction and rough scale hold, and that is why this site exists. But the number is an order-of-magnitude claim, not a constant of nature.</p><h2>Who we rely on</h2><p>These organizations do the work. We aggregate it, credit it, and link straight to it. If you only take one thing from this site, take their names.</p><div class="evaluatorList"><div class="evaluatorCard"><div class="evaluatorCard__top"><span class="evaluatorCard__name">GiveWell</span><span class="evaluatorCard__focus">Global health and poverty</span></div><p>The most rigorous cost-effectiveness research in philanthropy. GiveWell publishes its full spreadsheets and its mistakes, and moves hundreds of millions of dollars a year on the strength of them.</p><a href="https://www.givewell.org/" target="_blank" rel="noopener noreferrer">Visit <!-- -->GiveWell<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg></a></div><div class="evaluatorCard"><div class="evaluatorCard__top"><span class="evaluatorCard__name">Animal Charity Evaluators</span><span class="evaluatorCard__focus">Animal welfare</span></div><p>ACE reviews animal advocacy organizations on programmatic effectiveness, cost-effectiveness, and organizational health, and publishes an annual set of recommended charities.</p><a href="https://animalcharityevaluators.org/" target="_blank" rel="noopener noreferrer">Visit <!-- -->Animal Charity Evaluators<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg></a></div></div><h2 id="language">What our dollar figures mean</h2><div class="note"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scale" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg><span><strong>These are average program costs, not price tags.</strong> <!-- -->Your gift joins a pool that funds an entire operation (supplies, delivery, staff, monitoring), and the figures we quote are what that whole operation costs per unit of good, divided out. No single donation is tracked to a single item, and honest charities don&#x27;t claim otherwise.</span></div><p class="u-mt-5">That&#x27;s why the language on this site is careful in a specific way. We write<!-- --> <strong>&quot;provides&quot;</strong>, <strong>&quot;funds&quot;</strong>, and<!-- --> <strong>&quot;delivers&quot;</strong>. We never write &quot;buys this exact pill&quot; or &quot;your $6 sent this net to this child,&quot; because no accounting can trace one donation to one item. Charities that talk that way are describing a feeling, not a transaction.</p><p>Cost-effectiveness estimates are also <strong>ranges with error bars</strong>, not settled facts. Where an evaluator publishes a range, we show the range. Where a figure is the charity&#x27;s own estimate rather than an independent one, as with Taimaka&#x27;s cost-per-life-saved range, we say so on the page.</p><h2>How often we re-check</h2><p>Every figure on this site carries the date it was last checked against its source, shown inside each cause&#x27;s &quot;How we know&quot; panel. Our commitment:</p><ul><li><strong>Quarterly:</strong> we re-check every cost figure and every recommendation against the evaluator&#x27;s current published research.</li><li><strong>Within 30 days:</strong> if an evaluator drops or replaces a recommendation, we change the pick or take the cause down.</li><li><strong>Immediately:</strong> if a figure turns out to be wrong, we correct it and note that we did, rather than quietly editing the page.</li></ul><p class="handoff u-mt-5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock" aria-hidden="true"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"></path><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h5"></path><path d="M17.5 17.5 16 16.3V14"></path><circle cx="16" cy="16" r="6"></circle></svg><span>Figures across the site last reviewed <!-- -->September 2, 2026<!-- -->.</span></p><h2>What we don&#x27;t do</h2><ul class="xlist"><li><strong>We never handle your money.</strong> No payment is processed on this site. Every donate button is an outbound link, either to the charity&#x27;s own donation page or to<!-- --> <a href="https://www.every.org/" target="_blank" rel="noopener noreferrer">Every.org</a>, a nonprofit that receives the donation and grants it on to the charity. Every cause page offers both routes, and says which is which. We take no cut from either, and we never see the transaction.</li><li><strong>We don&#x27;t originate research.</strong> Every claim here traces to a published evaluation by someone else, linked on the page.</li><li><strong>We don&#x27;t take money from the charities we list.</strong> A recommendation cannot be bought here.</li><li><strong>We don&#x27;t pretend the hard comparisons are easy.</strong> Weighing a hen against a child, or a policy campaign against a bed net, requires value judgments that no spreadsheet settles. We show our reasoning and let you disagree with it.</li></ul><h2>Common questions</h2><h3>Is my donation tax-deductible?</h3><p>Often, but it depends on the charity and on where you pay tax. Several of these organizations are registered charities in multiple countries, with different entities for different donors. The charity&#x27;s own donation page is the authoritative answer. If you give on the charity&#x27;s own site, nothing about using Ripple Good changes your tax situation in either direction. Through Every.org the receipt comes from Every.org instead, which is a US 501(c)(3). That is worth checking if you file outside the US, or if your employer&#x27;s matching scheme excludes intermediaries.</p><h3>Can I give monthly?</h3><p>Yes. Every cause page has a monthly toggle. On the Every.org route both the amount and the cadence are carried across. On the charity&#x27;s own page it depends on their donation platform: several now arrive with the amount already filled in, and the rest start from an empty form. The page says which before you click, rather than promising something we haven&#x27;t checked.<!-- --> <!-- -->Steady monthly funding is worth more to these organizations than the same total in one-off spikes: it&#x27;s what lets them sign contracts for next year&#x27;s distributions.</p><h3>Why isn&#x27;t my favorite charity here?</h3><p>One of two reasons: either no rigorous public evaluation of it exists, or its evaluator&#x27;s numbers put another organization ahead within the same cause. Neither means your charity does no good. This site ranks by measured cost-effectiveness, which is a narrower question than whether an organization is worthwhile. If you think we&#x27;ve missed an evaluation that should change a pick, tell us below.</p><h3>Do you earn anything when I give?</h3><p>No. No referral fees, no affiliate links, no payments from the charities, no cut of any donation. The donate buttons are plain links. Nobody can pay to be listed here, and nobody pays us when you give.</p><h3>What is Every.org, and why is it an option?</h3><p>Every.org is a US nonprofit that processes donations for other nonprofits free of charge. Sending you there lets us carry the amount you picked across, so you don&#x27;t have to retype it, and it accepts bank transfer, PayPal, Apple Pay and donor-advised funds as well as cards.</p><p>The trade-offs, plainly: the money goes to Every.org first and is granted on to the charity, your tax receipt comes from Every.org rather than the charity, and at checkout Every.org suggests an optional contribution to itself on top of your gift, <strong>which you can set to zero</strong>. Some employer matching schemes also decline gifts made through an intermediary. That&#x27;s why every cause page keeps the charity&#x27;s own donation page as an equally visible second option, and why two causes skip Every.org altogether. On<!-- --> <a href="/cause/safe-water">safe water</a> and<!-- --> <a href="/cause/syphilis-in-pregnancy">syphilis in pregnancy</a>, Every.org lists Evidence Action as a whole, and only the charity&#x27;s own form can send your gift to the particular program the page is about.</p><h2>Think we got one wrong?</h2><p>Good. Tell us. The point of naming a single pick and showing the arithmetic is that both can be challenged. Email<!-- --> <a href="mailto:ian.sorensen@ripple-good.org">ian.sorensen@ripple-good.org</a> <!-- -->with the cause and what you think we&#x27;ve missed.</p><p class="u-mt-6"><a class="btn btn--primary" href="/#causes">Pick your cause</a></p></div></section></main><footer class="siteFooter onDark"><div class="wrap siteFooter__main"><div><span role="img" aria-label="Ripple Good" class="logo logo--md logo--onDark"><svg class="logo__mark" width="44" height="44" viewBox="0 0 100 100" fill="none" aria-hidden="true" focusable="false"><defs><linearGradient id="rip-grad-R5c" x1="8" y1="10" x2="92" y2="86" gradientUnits="userSpaceOnUse"><stop offset="0" class="logo__stop-a"></stop><stop offset="1" class="logo__stop-b"></stop></linearGradient><mask id="rip-mask-R5c"><rect x="0" y="0" width="100" height="100" fill="white"></rect><path d="M2 60 C 28 42, 72 42, 98 62" stroke="black" stroke-width="9" fill="none" stroke-linecap="round"></path><path d="M18 77 C 36 63, 64 63, 84 78" stroke="black" stroke-width="9" fill="none" stroke-linecap="round"></path></mask></defs><path class="logo__heart" d="M50 90 C 50 90 6 62 6 34 C 6 17 19 6 33 6 C 42 6 49 11 50 19 C 51 11 58 6 67 6 C 81 6 94 17 94 34 C 94 62 50 90 50 90 Z" fill="url(#rip-grad-R5c)" mask="url(#rip-mask-R5c)"></path></svg><span class="logo__word" aria-hidden="true"><span class="logo__name">Ripple</span><span class="logo__script">Good</span></span></span><p class="siteFooter__tagline">Don&#x27;t just donate.<!-- --> <span class="mark mark--onDark">Make the biggest ripple.</span></p><p class="siteFooter__money"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span>We never handle your money, and take no cut of any gift. Giving happens on the charity&#x27;s own site or through Every.org.</span></p></div><nav class="footerNav" aria-label="Footer"><h4>The site</h4><a href="/#causes">Pick your cause</a><a href="/methodology">Methodology</a><a href="/about">About Ripple Good</a><a href="https://www.givewell.org/" target="_blank" rel="noopener noreferrer">GiveWell</a><a href="https://animalcharityevaluators.org/" target="_blank" rel="noopener noreferrer">Animal Charity Evaluators</a></nav></div><div class="wrap siteFooter__legal"><span>© <!-- -->2026<!-- --> Ripple Good™</span><span>We aggregate published research; we don&#x27;t originate it.</span><span>All figures are average program costs.</span></div></footer></div></div>
+  </body>
+</html>
