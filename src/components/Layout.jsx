@@ -1,12 +1,45 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { captureReferral, reportReferralVisit } from "../lib/referral.js";
 import { Lock } from "lucide-react";
 import Logo from "./Logo.jsx";
 
+/**
+ * True once the page's navy hero has scrolled up under the header. Pages
+ * without a hero never flip. Re-checked per route, since the header mounts
+ * once and the hero comes and goes with the home page.
+ */
+function usePastHero(headerRef, pathname) {
+  const [past, setPast] = useState(false);
+
+  useEffect(() => {
+    const hero = document.querySelector(".hero");
+    const header = headerRef.current;
+    if (!hero || !header || !("IntersectionObserver" in window)) {
+      setPast(false);
+      return undefined;
+    }
+
+    // The root's top edge is pulled down to the header's bottom, so the hero
+    // stops "intersecting" exactly as its last pixel passes under the header.
+    const io = new IntersectionObserver(
+      ([entry]) => setPast(!entry.isIntersecting && entry.boundingClientRect.top < 0),
+      { rootMargin: `-${header.offsetHeight}px 0px 0px 0px` },
+    );
+    io.observe(hero);
+    return () => io.disconnect();
+  }, [headerRef, pathname]);
+
+  return past;
+}
+
 function Header() {
+  const ref = useRef(null);
+  const { pathname } = useLocation();
+  const pastHero = usePastHero(ref, pathname);
+
   return (
-    <header className="siteHeader">
+    <header ref={ref} className={`siteHeader${pastHero ? " is-pastHero" : ""}`}>
       <div className="wrap siteHeader__inner">
         <Link to="/" className="siteHeader__brand" aria-label="Ripple Good, home">
           {/* The header mounts once per page load, so the heart eases in on

@@ -336,7 +336,11 @@ button {
 
 .app {
   display: flex;
+  /* dvh, not vh: in a WebView and in mobile Safari 100vh is the *largest*
+     viewport — the one with the toolbars collapsed — so the footer sat a
+     toolbar's height below the fold. vh first, for anything without dvh. */
   min-height: 100vh;
+  min-height: 100dvh;
   flex-direction: column;
 }
 
@@ -348,7 +352,11 @@ main {
   width: 100%;
   max-width: var(--wrap);
   margin: 0 auto;
-  padding: 0 var(--s-5);
+  /* The insets are 0 in portrait and on the website. They earn their keep in
+     landscape on a notched phone, where the notch eats into one side and 20px
+     of padding is not enough to clear it. */
+  padding: 0 calc(var(--s-5) + env(safe-area-inset-right, 0px)) 0
+    calc(var(--s-5) + env(safe-area-inset-left, 0px));
 }
 
 .wrap--narrow {
@@ -602,6 +610,44 @@ a.mark {
   z-index: 40;
   background: var(--gray-50);
   border-bottom: 1px solid var(--border);
+  transition: background-color var(--dur-3) ease, border-color var(--dur-3) ease;
+  /* Sticky pins to the viewport, not to the document, so the inset has to ride
+     along with the header rather than being applied once at the top of the
+     page — otherwise the row scrolls up under the Dynamic Island and stays
+     there. A pad on the header, not a margin above it, so the header's own
+     background (which turns navy below) fills the strip. */
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Once the home hero has scrolled away, the header takes over its navy, so
+   the dark band carries on at the top of the screen over the cause grid. */
+.siteHeader.is-pastHero {
+  background: var(--navy);
+  border-bottom-color: var(--navy-700);
+}
+
+.siteHeader .logo__name,
+.siteHeader .siteNav__link {
+  transition: color var(--dur-3) ease, background-color var(--dur-1) ease;
+}
+
+.siteHeader.is-pastHero .logo__name {
+  color: var(--white);
+}
+
+.siteHeader.is-pastHero .siteNav__link {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.siteHeader.is-pastHero .siteNav__link.is-active {
+  color: var(--white);
+}
+
+@media (hover: hover) {
+  .siteHeader.is-pastHero .siteNav__link:hover {
+    color: var(--white);
+    background: var(--navy-800);
+  }
 }
 
 .siteHeader__inner {
@@ -631,6 +677,12 @@ a.mark {
 }
 
 .siteNav__link {
+  /* 44px is the floor for a touch target. Four pixels of padding on 15px type
+     made these 26 tall, which is a miss waiting to happen on a phone. The
+     flex centring keeps the label optically where it was. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   padding: var(--s-1) var(--s-3);
   border-radius: var(--r-pill);
   font-size: var(--t-md);
@@ -1372,7 +1424,10 @@ a.mark {
   }
 
   body.has-giveBar {
-    padding-bottom: 84px;
+    /* The bar is ~84px of button and padding *plus* whatever the home
+       indicator needs (see .giveBar's own padding-bottom). A flat 84 left the
+       last of the page underneath it on every notched phone. */
+    padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
   }
 }
 
@@ -2770,6 +2825,93 @@ a.mark {
 .hero__logo .logo__mark {
   width: 102px;
   height: 102px;
+  animation: heart-float var(--heart-beat) ease-in-out infinite;
+}
+
+/* One beat for the heart and the background, so the two stay in step. */
+.hero {
+  --heart-beat: 4.8s;
+}
+
+/* A slow bob. On the svg rather than the wrapper, which already runs the
+   hero's rise-in animation. The heart is at its lowest at the start and end
+   of each cycle. */
+@keyframes heart-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* As the heart comes down, the navy behind it lifts a shade toward blue and
+   settles again as it rises. A wide, soft wash rather than a shape, so it
+   reads as the background changing, not as something drawn on it. Under the
+   content and the curve, which both come later in the hero. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 75% 70% at 50% 65%,
+    #173463 0%,
+    rgba(23, 52, 99, 0) 100%
+  );
+  opacity: 0;
+  animation: hero-swell var(--heart-beat) ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* A faint, wide glow behind the heart that swells as it dips. It starts at
+   the heart and spreads downward, toward the headline, the way light would
+   fall from it. Low-contrast so it reads as light, not as a shape. */
+.hero__logo .logo {
+  position: relative;
+}
+
+.hero__logo .logo__mark {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__logo .logo::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  width: 380%;
+  height: 300%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 30%,
+    rgba(90, 150, 245, 0.09) 0%,
+    rgba(60, 130, 240, 0.04) 45%,
+    rgba(36, 114, 236, 0) 100%
+  );
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: hero-swell var(--heart-beat) ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes hero-swell {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__logo .logo__mark,
+  .hero__logo .logo::after,
+  .hero::before {
+    animation: none;
+  }
 }
 
 @media (min-width: 640px) {
@@ -2788,6 +2930,17 @@ a.mark {
   max-width: 56ch;
   font-size: var(--t-lead);
   color: rgba(255, 255, 255, 0.76);
+  text-wrap: balance;
+}
+
+.hero__subBreak {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .hero__subBreak {
+    display: inline;
+  }
 }
 
 /* The home hero has no buttons any more; this is the thank-you page's row,

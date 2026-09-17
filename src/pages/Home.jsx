@@ -34,9 +34,12 @@ export default function Home() {
             </h1>
             {/* One plain sentence. The argument about other sites belongs on
                 the methodology page, where it is made properly. */}
+            {/* Broken after "charities" on wider screens, so each line is a
+                whole thought. On a phone text-wrap: balance evens it out. */}
             <p className="hero__sub">
-              We connect your generosity to charities proven to make the most
-              impact.
+              We connect your generosity to charities{" "}
+              <br className="hero__subBreak" />
+              proven to make the most impact.
             </p>
 
             {/* No CTA here. The grid it scrolled to now opens on the same
