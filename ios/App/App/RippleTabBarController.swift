@@ -1,18 +1,21 @@
 import UIKit
 
-/// The three top-level destinations, each one a route the web app already
-/// serves. Methodology is deliberately absent: it hangs off the About page and
-/// the footer, and a fourth tab for it would crowd the bar for a page most
-/// readers visit once.
+/// The top-level destinations, each one a route the web app already serves.
+/// Methodology is deliberately absent: it hangs off the About page and the
+/// footer, and a tab for it would crowd the bar for a page most readers visit
+/// once. You is the app's own: the gift history and reminders kept on the phone,
+/// which the website has no equivalent of.
 enum RippleTab: Int, CaseIterable {
     case causes
     case plan
+    case you
     case about
 
     var path: String {
         switch self {
         case .causes: return "/"
         case .plan: return "/plan"
+        case .you: return "/you"
         case .about: return "/about"
         }
     }
@@ -21,6 +24,7 @@ enum RippleTab: Int, CaseIterable {
         switch self {
         case .causes: return "Causes"
         case .plan: return "Plan"
+        case .you: return "You"
         case .about: return "About"
         }
     }
@@ -29,6 +33,7 @@ enum RippleTab: Int, CaseIterable {
         switch self {
         case .causes: return "heart"
         case .plan: return "chart.pie"
+        case .you: return "person.crop.circle"
         case .about: return "info.circle"
         }
     }
@@ -37,14 +42,19 @@ enum RippleTab: Int, CaseIterable {
         symbolName + ".fill"
     }
 
-    /// Which tab owns a given path. A cause page belongs to Causes, the
-    /// thank-you page to Plan, and Methodology to About — so walking into any
-    /// of them leaves the bar pointing at where the reader came from rather
-    /// than clearing the selection. An unrecognised path returns nil, which
-    /// leaves the current tab alone.
+    /// Which tab owns a given path. A cause page belongs to Causes and
+    /// Methodology to About, so walking into either leaves the bar pointing at
+    /// where the reader came from rather than clearing the selection.
+    ///
+    /// `/thanks` deliberately belongs to nobody. It is reached from a cause
+    /// page as often as from the plan, so claiming it for either moved the
+    /// selection to a tab the donor had never opened — and then moved it back
+    /// when they tapped "Pick another cause". nil leaves the bar where it was,
+    /// which is always where they came from.
     static func owning(path: String) -> RippleTab? {
         if path == "/" || path.hasPrefix("/cause") { return .causes }
-        if path.hasPrefix("/plan") || path.hasPrefix("/thanks") { return .plan }
+        if path.hasPrefix("/plan") { return .plan }
+        if path.hasPrefix("/you") { return .you }
         if path.hasPrefix("/about") || path.hasPrefix("/methodology") { return .about }
         return nil
     }
@@ -52,8 +62,8 @@ enum RippleTab: Int, CaseIterable {
 
 /// A Liquid Glass tab bar over a single WebView.
 ///
-/// Capacitor runs one bridge, and so one WebView, per app — the three tabs are
-/// therefore not three view controllers with three copies of the site inside
+/// Capacitor runs one bridge, and so one WebView, per app — the tabs are
+/// therefore not separate view controllers with copies of the site inside
 /// them. They are empty placeholders that exist to give the bar its items, and
 /// the WebView spans the whole screen above them. Selecting a tab routes the
 /// web app rather than swapping the content view.
@@ -81,10 +91,10 @@ final class RippleTabBarController: UITabBarController {
         delegate = self
         viewControllers = RippleTab.allCases.map(makePlaceholder)
 
-        // Shows in the status bar strip above the WebView, so it matches the
-        // site header that sits directly under it (--gray-50, #f8fafc) rather
-        // than flashing a system colour between the two.
-        view.backgroundColor = UIColor(red: 0.973, green: 0.980, blue: 0.988, alpha: 1)
+        // Only visible in the moment before the WebView first paints, so it
+        // matches capacitor.config.json's backgroundColor and the launch
+        // screen rather than flashing a system colour between them.
+        view.backgroundColor = UIColor(red: 0.039, green: 0.106, blue: 0.200, alpha: 1)
 
         if #available(iOS 26.0, *) {
             // The bar gets out of the way on the long scroll down a cause page
@@ -107,7 +117,11 @@ final class RippleTabBarController: UITabBarController {
 
         guard clearance > tabBarClearance else { return }
         tabBarClearance = clearance
+        // Insets the scrollable content, so the end of a page clears the bar.
         bridgeViewController.additionalSafeAreaInsets.bottom = clearance
+        // And tells the stylesheet the same number, for the give bar, which is
+        // `position: fixed` and so sees none of the above.
+        bridgeViewController.publishTabBarHeight(tabBar.frame.height)
     }
 
     /// Keeps the glass on top of the page.
@@ -153,14 +167,13 @@ final class RippleTabBarController: UITabBarController {
         // swallow, and below the bar, so the glass has something to refract.
         view.insertSubview(webHost, belowSubview: tabBar)
         NSLayoutConstraint.activate([
-            // The page stops at the safe area rather than running under the
-            // status bar. Edge to edge is the better look and it is the web
-            // app's call to make: its header is `position: sticky; top: 0`,
-            // which pins to the viewport and would sit under the Dynamic
-            // Island however the WebView is inset. That wants `viewport-fit=
-            // cover` and an `env(safe-area-inset-top)` pad in the site's CSS.
-            webHost.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            // The bottom stays full bleed, so the page scrolls under the glass.
+            // Edge to edge, top and bottom: the hero's navy runs up under the
+            // status bar and the page scrolls away under the glass. The site's
+            // sticky header pads itself by env(safe-area-inset-top), which is
+            // the only place that can work — sticky pins to the viewport, so
+            // insetting the WebView would not have saved it from the Dynamic
+            // Island. viewport-fit=cover in index.html is what feeds it.
+            webHost.topAnchor.constraint(equalTo: view.topAnchor),
             webHost.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             webHost.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webHost.trailingAnchor.constraint(equalTo: view.trailingAnchor)

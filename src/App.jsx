@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout.jsx";
+import NativeBridge from "./components/NativeBridge.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import About from "./pages/About.jsx";
 import Cause from "./pages/Cause.jsx";
@@ -9,6 +10,7 @@ import Methodology from "./pages/Methodology.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Split from "./pages/Split.jsx";
 import Thanks from "./pages/Thanks.jsx";
+import You from "./pages/You.jsx";
 
 /**
  * The route table, with no router around it, so the same tree can be mounted
@@ -24,6 +26,9 @@ export function AppRoutes() {
         <Route path="thanks" element={<Thanks />} />
         <Route path="methodology" element={<Methodology />} />
         <Route path="about" element={<About />} />
+        {/* The iOS app's "You" tab. Reads only what's on the phone, so on the
+            website it renders the 404, and it is never prerendered. */}
+        <Route path="you" element={<You />} />
         {/* The private numbers page. The path is the whole of the privacy —
             69 bits of it, from an alphabet with no look-alike characters — so
             it is unguessable, unlinked, unprerendered and absent from any
@@ -55,6 +60,7 @@ export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
+      <NativeBridge />
       <AppRoutes />
     </BrowserRouter>
   );

@@ -13,6 +13,7 @@ import {
 import { newDonationRef, rememberDonation } from "../lib/donationRef.js";
 import { getReferral } from "../lib/referral.js";
 import { approxOutcome, displayHost, money, unitsFor } from "../lib/format.js";
+import { isNative, openCheckout, tapImpact, tapSelection } from "../lib/native.js";
 import Pictogram from "./Pictogram.jsx";
 
 /**
@@ -66,6 +67,11 @@ export default function GivingPanel({ charity, onSelectionChange }) {
   );
 
   const inputId = `custom-amount-${charity.id}`;
+
+  // In the iOS app, checkout opens in a sheet over the app and comes back to it
+  // afterwards (see lib/native and NativeBridge). Fixed for the life of the
+  // panel; it is false during prerender, which the client never hydrates.
+  const [native] = useState(isNative);
 
   /**
    * Every.org ignores a prefilled amount under $10 and hands the donor an empty
@@ -149,8 +155,8 @@ export default function GivingPanel({ charity, onSelectionChange }) {
     monthly,
     ref,
     referrer: getReferral(),
-    returnUrl: thanksUrl({ causeId: charity.id, amount, monthly }),
-    exitUrl: causeUrl(charity.id, { amount, monthly }),
+    returnUrl: thanksUrl({ causeId: charity.id, amount, monthly, app: native }),
+    exitUrl: causeUrl(charity.id, { amount, monthly, app: native }),
   });
 
   /**
@@ -197,7 +203,20 @@ export default function GivingPanel({ charity, onSelectionChange }) {
     // The browser follows the href as rendered; no preventDefault needed.
   }
 
+  /**
+   * In the app, the same links open in the checkout sheet instead. The href
+   * stays on the anchor, so a long-press still shows where it goes.
+   */
+  function openInApp(e, url, record) {
+    if (!native) return record?.();
+    e.preventDefault();
+    tapImpact();
+    record?.();
+    openCheckout(url);
+  }
+
   function pickLevel(next) {
+    tapSelection();
     setLevel(next);
     // `mode` alone decides which card is live, so the typed figure can stay
     // put: come back to "Other" and it is still there.
@@ -240,7 +259,10 @@ export default function GivingPanel({ charity, onSelectionChange }) {
           <input
             type="checkbox"
             checked={monthly}
-            onChange={(e) => setMonthly(e.target.checked)}
+            onChange={(e) => {
+              tapSelection();
+              setMonthly(e.target.checked);
+            }}
           />
           Monthly
         </label>
@@ -338,7 +360,9 @@ export default function GivingPanel({ charity, onSelectionChange }) {
           ref={donateRef}
           href={everyUrl || directUrl}
           rel="noreferrer"
-          onClick={everyUrl ? openEveryOrg : undefined}
+          onClick={(e) =>
+            openInApp(e, everyUrl || directUrl, everyUrl ? openEveryOrg : undefined)
+          }
         >
           Give {priceLabel(amount)}
         </a>
@@ -350,7 +374,12 @@ export default function GivingPanel({ charity, onSelectionChange }) {
             <>
               Every.org passes your gift to {charity.name} and sends the
               receipt; it suggests a tip you can set to zero. Or{" "}
-              <a href={directUrl} target="_blank" rel="noreferrer">
+              <a
+                href={directUrl}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => openInApp(e, directUrl)}
+              >
                 give on {host}
               </a>
               {directPrefilled ? " with the amount filled in" : ""}.
@@ -383,7 +412,9 @@ export default function GivingPanel({ charity, onSelectionChange }) {
             className="donate donate--bar"
             href={everyUrl || directUrl}
             rel="noreferrer"
-            onClick={everyUrl ? openEveryOrg : undefined}
+            onClick={(e) =>
+              openInApp(e, everyUrl || directUrl, everyUrl ? openEveryOrg : undefined)
+            }
           >
             Give {priceLabel(amount)}
           </a>

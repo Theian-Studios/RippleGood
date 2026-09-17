@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["994XY2M9Q4.org.ripplegood.app"],
+        "components": [
+          { "/": "/cause/*", "comment": "A cause page opens on that cause" },
+          { "/": "/share/*", "comment": "Shared preview links, routed to the cause" },
+          { "/": "/plan", "comment": "The giving plan" },
+          { "/": "/plan/", "comment": "The giving plan, prerendered path" },
+          { "/": "/", "?": { "ref": "?*" }, "comment": "Tagged referral links to the home page" }
+        ]
+      }
+    ]
+  }
+}

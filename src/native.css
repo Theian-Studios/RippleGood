@@ -1,0 +1,230 @@
+/*
+ * App-only surfaces: Your ripple, the thank-you extras, and the website's
+ * "back to the app" bar. Kept out of styles.css so the site's own stylesheet
+ * reads the same whether or not the app exists. Tokens come from styles.css.
+ */
+
+/* ── Website: handing a donor back to the app ─────────────────────────────── */
+
+.appHandoff {
+  position: fixed;
+  /* The 0px fallback matters: env() with no fallback is invalid wherever env()
+     isn't understood, and that drops the whole `inset` shorthand and leaves
+     the bar unpinned at its static position. Same guard .giveBar uses. */
+  inset: auto var(--s-4, 16px)
+    calc(var(--s-4, 16px) + env(safe-area-inset-bottom, 0px)) var(--s-4, 16px);
+  z-index: 60;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--r);
+  background: var(--navy);
+  color: var(--white);
+  box-shadow: var(--shadow-lift);
+  font-weight: 600;
+}
+
+.appHandoff__btn {
+  flex: none;
+}
+
+/*
+ * A donor who cancels a gift they started in the app comes back to a *cause*
+ * page carrying ?app=1 (see causeUrl's exitUrl) — which is the one page that
+ * also pins the give bar to the bottom. Both are fixed, and this one has the
+ * higher z-index, so it covered the Give button. `has-giveBar` is already on
+ * <body> to mean "something is pinned down there", so it does this job too.
+ */
+body.has-giveBar .appHandoff {
+  bottom: calc(84px + var(--s-4, 16px) + env(safe-area-inset-bottom, 0px));
+}
+
+/* ── Thank-you page, in the app ───────────────────────────────────────────── */
+
+.appThanks {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  margin-top: var(--s-6, 32px);
+}
+
+.appThanks p {
+  margin: 0;
+  font-size: var(--t-md);
+  color: var(--ink-soft);
+}
+
+.appThanks a {
+  color: var(--blue-ink, var(--blue));
+  font-weight: 600;
+}
+
+/* ── Your ripple ──────────────────────────────────────────────────────────── */
+
+.you {
+  padding-bottom: var(--s-9, 64px);
+}
+
+.you h2 {
+  margin: 0 0 12px;
+  font-size: var(--t-xl);
+}
+
+.you__totals,
+.you__gifts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.you__totals {
+  display: grid;
+  gap: 12px;
+  margin-top: var(--s-6, 32px);
+}
+
+.you__total {
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--white);
+  box-shadow: var(--shadow-lift);
+}
+
+.you__cause {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue-ink, var(--blue));
+  text-decoration: none;
+}
+
+.pageHead .you__total p {
+  margin: 8px 0 0;
+  font-size: var(--t-base);
+  color: var(--ink);
+}
+
+.you__total p span {
+  display: block;
+  color: var(--ink-soft);
+}
+
+.you__section {
+  margin-top: var(--s-7, 40px);
+}
+
+.you__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.you__row > span {
+  display: grid;
+  gap: 2px;
+}
+
+.you__row > span > span {
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.you__row select {
+  flex: none;
+  /* The row is a <label>, so the whole 60px of it toggles the control — but
+     the select is also tapped directly, and 38px was under the 44 floor. */
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--white);
+  font: inherit;
+  font-size: var(--t-md);
+  color: var(--ink);
+}
+
+.you__row input[type="checkbox"] {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  accent-color: var(--blue);
+}
+
+.you__gift {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--t-md);
+  color: var(--ink);
+}
+
+.you__date {
+  display: block;
+  font-size: var(--t-sm);
+  color: var(--ink-faint);
+}
+
+.you__forget {
+  flex: none;
+  display: grid;
+  place-items: center;
+  /* 44, not 36: this one is a standalone button with no label around it to
+     widen the target, and it deletes something. */
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--gray);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.pageHead .you__note {
+  margin-top: 14px;
+  font-size: var(--t-sm);
+  color: var(--ink-faint);
+}
+
+/* ── In the app: the native tab bar takes over ────────────────────────────── */
+
+/*
+ * `is-native` is set on <html> from Swift (TabbedBridgeViewController), not by
+ * the web app, so none of this can reach the public site and the site needs no
+ * knowledge of the app to carry it. `--rg-tabbar` arrives the same way, from
+ * the measured height of the real tab bar at its expanded size.
+ */
+
+/* Three copies of the same navigation, otherwise: the header's two links are
+   the About tab and a page it links to, and the footer's nav column is the
+   tab bar's entire job. The wordmark, tagline and legal line stay. */
+.is-native .siteNav,
+.is-native .footerNav,
+.is-native .siteFooter__money {
+  display: none;
+}
+
+/*
+ * The give bar is fixed to the bottom of the viewport, which is exactly where
+ * the glass tab bar floats. A fixed element can't see the WebView's safe-area
+ * inset — that only insets scrollable content — so the clearance has to come
+ * from the measured bar height instead.
+ *
+ * The home-indicator pad goes too: the tab bar already sits over it.
+ */
+.is-native .giveBar {
+  bottom: var(--rg-tabbar, 0px);
+  padding-bottom: var(--s-3);
+}

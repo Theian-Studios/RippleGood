@@ -249,13 +249,16 @@ export function directCarriesAmount(charity, { monthly } = {}) {
  * The donation itself is unaffected either way — this only decides whether the
  * donor lands on the thank-you page or on the home page.
  */
-export function thanksUrl({ causeId, amount, monthly }) {
+export function thanksUrl({ causeId, amount, monthly, app }) {
   const origin = siteOrigin();
   const base = import.meta.env.BASE_URL || "/";
   const q = new URLSearchParams({
     cause: causeId,
     amount: String(amount),
     ...(monthly ? { monthly: "1" } : {}),
+    // A gift started in the iOS app. The page hands the donor back to it
+    // (AppHandoff in lib/nativeLinks) instead of thanking them in Safari.
+    ...(app ? { app: "1" } : {}),
   });
   return `${origin}${base}thanks?${q.toString()}`;
 }
@@ -265,11 +268,11 @@ export function thanksUrl({ causeId, amount, monthly }) {
  * thanksUrl is: 404.html puts the hash back, and a redirect target that has
  * no "#" in it cannot be truncated at one. Verified against the live site.
  */
-export function causeUrl(causeId, { amount, monthly } = {}) {
+export function causeUrl(causeId, { amount, monthly, app } = {}) {
   const origin = siteOrigin();
   const base = import.meta.env.BASE_URL || "/";
   const url = `${origin}${base}cause/${causeId}`;
-  if (!amount) return url;
+  if (!amount) return app ? `${url}?app=1` : url;
 
   // Cancelling used to land the donor back on a freshly reset page, so the
   // amount and cadence they had just chosen were gone and had to be chosen
@@ -278,6 +281,7 @@ export function causeUrl(causeId, { amount, monthly } = {}) {
   const q = new URLSearchParams({
     amount: String(amount),
     ...(monthly ? { monthly: "1" } : {}),
+    ...(app ? { app: "1" } : {}),
   });
   return `${url}?${q.toString()}`;
 }

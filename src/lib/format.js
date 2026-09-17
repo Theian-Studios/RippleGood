@@ -3,6 +3,13 @@ export function money(amount) {
   return `$${amount.toLocaleString("en-US")}`;
 }
 
+/** 1 → "1st", 22 → "22nd". */
+export function ordinal(n) {
+  const tens = n % 100;
+  if (tens >= 11 && tens <= 13) return `${n}th`;
+  return `${n}${{ 1: "st", 2: "nd", 3: "rd" }[n % 10] || "th"}`;
+}
+
 /** "2026-08-14" → "August 14, 2026". Parsed as UTC so the date can't slip a day. */
 export function longDate(iso) {
   const [y, m, d] = iso.split("-").map(Number);
