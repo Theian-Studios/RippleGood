@@ -20,7 +20,9 @@
  *
  *   npm run build:icons
  */
+import { existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { createCanvas, Path2D } from "@napi-rs/canvas";
 
@@ -62,7 +64,7 @@ function heartLayer(size) {
   return canvas;
 }
 
-function icon(size) {
+function icon(size, scale = 0.62) {
   const canvas = createCanvas(size, size);
   const ctx = canvas.getContext("2d");
 
@@ -74,7 +76,7 @@ function icon(size) {
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, size, size);
 
-  const heart = Math.round(size * 0.62);
+  const heart = Math.round(size * scale);
   const offset = Math.round((size - heart) / 2);
   ctx.drawImage(heartLayer(heart), offset, offset);
 
@@ -93,4 +95,38 @@ const sizes = [
 for (const [name, size] of sizes) {
   await writeFile(`${out}/${name}`, icon(size));
   console.log(`icons: ${name} (${size}×${size})`);
+}
+
+// The iOS app (Capacitor, ios/) takes one 1024px icon and masks it itself.
+// App Store Connect refuses an icon with an alpha channel, even a fully opaque
+// one, and the canvas always writes one — so round-trip through JPEG with sips
+// to drop it. sips is macOS-only, but so is building the app.
+const iosIcons = here("../ios/App/App/Assets.xcassets/AppIcon.appiconset");
+if (existsSync(iosIcons) && process.platform === "darwin") {
+  const png = `${iosIcons}/AppIcon-512@2x.png`;
+  const jpg = `${iosIcons}/.icon.jpg`;
+  // 20% larger than the web icons. iOS masks to a rounded square, not the
+  // circle Android launchers may use, so the heart can take more of the tile.
+  await writeFile(png, icon(1024, 0.744));
+  execFileSync("sips", ["-s", "format", "jpeg", "-s", "formatOptions", "100", png, "--out", jpg], { stdio: "ignore" });
+  execFileSync("sips", ["-s", "format", "png", jpg, "--out", png], { stdio: "ignore" });
+  execFileSync("rm", [jpg]);
+  console.log("icons: iOS AppIcon (1024×1024)");
+
+  // The launch screen, which replaces Capacitor's own logo. Navy to match the
+  // theme-color, so the status bar doesn't flash a different colour as the web
+  // view takes over. The storyboard scales this to fill, so the heart stays
+  // small: a square this size is cropped to the middle third on a phone.
+  const splash = createCanvas(2732, 2732);
+  const sctx = splash.getContext("2d");
+  sctx.fillStyle = "#0A1B33";
+  sctx.fillRect(0, 0, 2732, 2732);
+  const mark = 504;
+  sctx.drawImage(heartLayer(mark), (2732 - mark) / 2, (2732 - mark) / 2);
+  const splashPng = splash.toBuffer("image/png");
+  const splashDir = here("../ios/App/App/Assets.xcassets/Splash.imageset");
+  for (const name of ["splash-2732x2732.png", "splash-2732x2732-1.png", "splash-2732x2732-2.png"]) {
+    await writeFile(`${splashDir}/${name}`, splashPng);
+  }
+  console.log("icons: iOS launch screen (2732×2732)");
 }

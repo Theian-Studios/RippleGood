@@ -39,9 +39,16 @@ const EVERY_ORG = "https://www.every.org";
  * donors back to itself rather than to production. The fallback exists because
  * these run during prerender too, in Node, where there is no window — and a
  * bare `window.location` there would crash the whole build.
+ *
+ * The iOS app serves these same files from capacitor://localhost, an address
+ * that only exists inside the app. Every.org redirects the donor in Safari and
+ * a shared link opens on someone else's phone, so neither can use it: anything
+ * that isn't http(s) falls back to the public site.
  */
-function siteOrigin() {
-  if (typeof window !== "undefined") return window.location.origin;
+export function siteOrigin() {
+  if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+    return window.location.origin;
+  }
   return import.meta.env.VITE_SITE_ORIGIN || "https://ripple-good.org";
 }
 

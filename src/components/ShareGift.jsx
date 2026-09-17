@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Check, Copy, Share2 } from "lucide-react";
+import { siteOrigin } from "../lib/donate.js";
 
 /**
  * "I just funded five nets."
@@ -17,7 +18,7 @@ import { Check, Copy, Share2 } from "lucide-react";
 export default function ShareGift({ charity, outcome }) {
   const [state, setState] = useState("idle");
 
-  const url = `${window.location.origin}/cause/${charity.id}/`;
+  const url = `${siteOrigin()}/cause/${charity.id}/`;
   // No amount. What someone gave is their business, and the sentence is
   // stronger describing the result than the sum.
   const text = outcome

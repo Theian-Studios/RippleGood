@@ -1,0 +1,9 @@
+{
+  "appId": "org.ripplegood.app",
+  "appName": "Ripple Good",
+  "webDir": "dist",
+  "backgroundColor": "#0A1B33",
+  "ios": {
+    "contentInset": "automatic"
+  }
+}
