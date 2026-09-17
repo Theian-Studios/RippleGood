@@ -15,6 +15,8 @@ export default function Logo({
   size = "md",
   onDark = false,
   animate = false,
+  // The heart alone, without "Ripple Good" beside it.
+  markOnly = false,
   className = "",
 }) {
   // Gradient and mask ids must be unique per instance, or a second logo on the
@@ -81,10 +83,12 @@ export default function Logo({
 
       {/* No ™ here. It lives on the colophon line in the footer instead —
           on the wordmark it competed with the mark it was attached to. */}
-      <span className="logo__word" aria-hidden="true">
-        <span className="logo__name">Ripple</span>
-        <span className="logo__script">Good</span>
-      </span>
+      {!markOnly && (
+        <span className="logo__word" aria-hidden="true">
+          <span className="logo__name">Ripple</span>
+          <span className="logo__script">Good</span>
+        </span>
+      )}
     </span>
   );
 }

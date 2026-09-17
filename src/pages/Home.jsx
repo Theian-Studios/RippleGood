@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import CauseCard from "../components/CauseCard.jsx";
 import HeroCurve from "../components/HeroCurve.jsx";
 import HomePanel from "../components/HomePanel.jsx";
+import Logo from "../components/Logo.jsx";
 import VerifiedTotal from "../components/VerifiedTotal.jsx";
 import { charities } from "../data/charities.js";
 import { usePageMeta } from "../lib/usePageMeta.js";
@@ -21,7 +22,11 @@ export default function Home() {
       <section className="hero hero--dark onDark">
         <div className="wrap">
           <div className="hero__inner">
-            <p className="eyebrow">The most good for every dollar.</p>
+            {/* The heart alone. Hidden from screen readers: the header logo
+                already names the site. */}
+            <div className="hero__logo" aria-hidden="true">
+              <Logo size="lg" onDark markOnly />
+            </div>
             <h1>
               Don't just donate.
               <br />
@@ -62,8 +67,14 @@ export default function Home() {
 
       <section className="section">
         <div className="wrap wrap--narrow aboutIntro">
-          <div className="sectionHead sectionHead--centered">
-            <h2>Why the choice matters more than the amount</h2>
+          {/* The same head the methodology panel below uses: title, then one
+              line under it. This one was centred at a larger size, so two
+              sibling sections read as two different kinds of thing. */}
+          <div className="homePanel__head">
+            <h2 className="homePanel__title">Why Ripple Good?</h2>
+            <p className="homePanel__blurb">
+              Doing the most good for every dollar.
+            </p>
           </div>
 
           <p>
@@ -72,8 +83,6 @@ export default function Home() {
             the same dollar, and the difference is rarely the thing people look
             at.
           </p>
-
-          <p>Every donation is really three numbers multiplied together:</p>
 
           {/* list-style is off, so role="list" keeps the semantics VoiceOver
               would otherwise drop. The numerals come from a counter and stay
@@ -135,7 +144,7 @@ export default function Home() {
           </p>
 
           <p className="aboutIntro__cta">
-            <Link to="/about" className="btn btn--primary">
+            <Link to="/about" className="btn btn--outline">
               More about why we built this
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
@@ -149,7 +158,7 @@ export default function Home() {
             title="Methodology"
             blurb="How a pick gets made, and what our figures mean."
             cta={
-              <Link to="/methodology" className="btn btn--primary">
+              <Link to="/methodology" className="btn btn--outline">
                 Read the full methodology
                 <ArrowRight size={18} aria-hidden="true" />
               </Link>

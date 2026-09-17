@@ -732,6 +732,12 @@ a.mark {
   font-size: var(--t-d3);
 }
 
+/* The one heading that introduces the product itself, so it runs a step
+   above the section heads further down the page. */
+#causes .sectionHead h2 {
+  font-size: var(--t-d2);
+}
+
 .sectionHead p {
   margin-top: var(--s-3);
   color: var(--ink-soft);
@@ -1508,70 +1514,72 @@ a.mark {
 }
 
 .homePanel__head {
-  margin-bottom: var(--s-4);
+  margin-bottom: var(--s-6);
 }
 
 .homePanel__title {
   margin: 0;
   color: var(--navy);
-  font-size: var(--t-d4);
+  font-size: var(--t-d3);
 }
 
 .homePanel__blurb {
-  margin: var(--s-1) 0 0;
+  margin: var(--s-2) 0 0;
   color: var(--ink-soft);
-  font-size: var(--t-md);
+  font-size: var(--t-lead);
 }
 
-.homePanel__body p {
-  margin: 0 0 var(--s-4);
-  color: var(--ink-soft);
-  line-height: 1.62;
-}
-
-.homePanel__body p:last-of-type {
-  margin-bottom: 0;
-}
-
-/* ------------------------------------------------------- about intro -- */
-
+/* One body voice for both home sections. These were 1.62 and 1.65 leading,
+   and the factor text a third size and colour again. */
+.homePanel__body p,
 .aboutIntro p {
   margin: 0 0 var(--s-4);
   color: var(--ink-soft);
   line-height: 1.65;
 }
 
+.homePanel__body p:last-of-type {
+  margin-bottom: 0;
+}
 
-/* The three factors, as a band rather than a long list: this sits above the
-   cause grid, so it has to be scannable before it is readable. */
+.aboutIntro .homePanel__blurb {
+  margin: var(--s-2) 0 0;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------- about intro -- */
+
+/* The three factors as one card with three rows, the way the cause cards
+   above are drawn: white, hairline border, large radius. They were loose
+   paragraphs with a badge each, which read as more body copy rather than as
+   the one diagram on the page. */
 .factors {
-  display: grid;
-  gap: var(--s-6);
-  margin: var(--s-6) 0 var(--s-6);
+  margin: var(--s-6) 0;
   padding: 0;
   list-style: none;
   counter-reset: factor;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
 }
 
-@media (min-width: 900px) {
-  .factors {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--s-6);
-  }
-}
-
-/* Two columns: the numeral and the name share the first row, and the body
-   drops beneath both. The numeral used to sit on a line of its own with the
-   name under it, which read as a heading orphaned from its own number. */
+/* Badge in the first column, name and body stacked in the second, so the
+   text keeps one left edge down the whole card. */
 .factors li {
   counter-increment: factor;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  column-gap: var(--s-3);
-  color: var(--ink-mid);
+  column-gap: var(--s-4);
+  row-gap: var(--s-1);
+  padding: var(--s-5);
+  color: var(--ink-soft);
   font-size: var(--t-md);
-  line-height: 1.65;
+  line-height: 1.6;
+}
+
+.factors li + li {
+  border-top: 1px solid var(--border);
 }
 
 /* The numeral is content, not decoration — the copy underneath refers to the
@@ -1579,42 +1587,57 @@ a.mark {
 .factors li::before {
   content: counter(factor);
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 1 / span 2;
+  align-self: start;
 }
 
 .factors strong {
   grid-column: 2;
-  grid-row: 1;
+  align-self: center;
   color: var(--navy);
-  font-size: var(--t-base);
+  font-size: var(--t-lg);
+  line-height: 1.3;
 }
 
-/* Full width under the badge, not indented to the name: at three columns on a
-   wide screen the indent cost the body a third of its measure. */
 .factors li > span {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  margin-top: var(--s-3);
+  grid-column: 2;
+}
+
+/* On a phone the indent costs the body a fifth of its measure, so there it
+   runs full width under the badge and the name. */
+@media (max-width: 639px) {
+  .factors li {
+    row-gap: var(--s-3);
+  }
+
+  .factors li::before {
+    grid-row: 1;
+  }
+
+  .factors li > span {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 640px) {
+  .factors li {
+    padding: var(--s-5) var(--s-6);
+  }
 }
 
 /* The CTA sits in its own paragraph, so that paragraph's own margins are the
-   ones in play — the .aboutIntro__cta rule that used to live here never
-   applied, losing to the more specific `.aboutIntro p` above. */
+   ones in play. */
 .aboutIntro p.aboutIntro__cta {
   margin: 0;
 }
 
 /* The last body paragraph's bottom margin would otherwise stack under the
-   button's own top margin and open 32px here against the 20px under the
-   methodology panel's identical CTA. The button sets the distance, in both. */
+   button's own top margin. The button sets the distance, in both sections. */
 .aboutIntro p:nth-last-of-type(2) {
   margin-bottom: 0;
 }
 
-.aboutIntro .btn {
-  margin-top: var(--s-6);
-}
-
+.aboutIntro .btn,
 .homePanel__body .btn {
   margin-top: var(--s-6);
 }
@@ -2734,6 +2757,30 @@ a.mark {
    The headline accent keeps --blue: at 62px it only needs 3:1. */
 .hero .eyebrow {
   color: var(--white);
+}
+
+/* The heart alone, centred over the headline. The svg carries width and
+   height attributes, which CSS overrides. */
+.hero__logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--s-5);
+}
+
+.hero__logo .logo__mark {
+  width: 102px;
+  height: 102px;
+}
+
+@media (min-width: 640px) {
+  .hero__logo {
+    margin-bottom: var(--s-6);
+  }
+
+  .hero__logo .logo__mark {
+    width: 128px;
+    height: 128px;
+  }
 }
 
 .hero__sub {
