@@ -101,7 +101,7 @@ export default function SameDollar({
             <li key={charity.id}>
               <Link to={linkTo(charity.id)} className="sameDollar__row">
                 <span className="tile tile--xs" data-cause={charity.id}>
-                  <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
+                  <Icon size={18} strokeWidth={1.75} aria-hidden="true" />
                 </span>
                 <span className="sameDollar__cause">{charity.category}</span>
                 <span className="sameDollar__outcome">{outcome}</span>

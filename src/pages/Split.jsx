@@ -146,7 +146,7 @@ export default function Split() {
                   >
                     <label className="slider__head" htmlFor={`w-${c.id}`}>
                       <span className="tile tile--xs" data-cause={c.id}>
-                        <Icon size={17} strokeWidth={1.75} aria-hidden="true" />
+                        <Icon size={18} strokeWidth={1.75} aria-hidden="true" />
                       </span>
                       <span className="slider__name">{c.category}</span>
                       <span className="slider__amount">
